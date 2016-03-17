@@ -27,7 +27,7 @@
 			
 			<h3 class="text-muted">
 				<a href="/">
-				Blog
+				Blogixx
 				</a>
 			</h3>
 			
