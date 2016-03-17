@@ -23,9 +23,20 @@ a markdown file Blog Module for [myMVC](https://www.mymvc.org/ )
 ## Installation
 
 1. Install myMVC https://www.mymvc.org/ (PHP>= 5.4 required)
-2. Download Blogixx and place/extract it to myMVC's /trunk/modules/, so that you finally will have the Blogixx module installed this way: `/trunk/modules/Blogixx/`
-3. copy /trunk/modules/Blogixx/_COPY_ME/config/* to /trunk/config/
-4. copy /trunk/modules/Blogixx/_COPY_ME/public/* to /trunk/public/
+2. cd into the modules folder `/trunk/modules` and download Blogixx from github via SVN or git:
+
+    SVN:
+    
+        svn co https://github.com/gueff/Blogixx.git/trunk/ ./Blogixx
+
+    git:
+    
+        git clone https://github.com/gueff/Blogixx.git ./Blogixx
+
+3. cd into the new folder `Blogixx`, and run the install bash script:
+
+	$ ./install.sh
+
 
 ## Run
 1. cd to myMVC's /trunk/public/ 
