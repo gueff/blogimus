@@ -5,8 +5,7 @@ MVC_APPLICATION_PATH='../../application';
 echo "copying Data...";
 cp -r ./_INSTALL/config/*			../../config/
 cp -r ./_INSTALL/public/*			../../public/
-cp -r ./_INSTALL/data/page/*		data/page/
-cp -r ./_INSTALL/data/post/*		data/post/
+cp -r ./_INSTALL/data				./
 echo "...done!";
 
 echo "installing libraries...";
