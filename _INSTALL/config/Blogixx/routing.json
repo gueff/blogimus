@@ -1,0 +1,27 @@
+{
+	"\/":
+			{
+				"Blogixx": true,
+		
+				"query":
+						"module=blogixx&c=index&m=index"
+				,
+				"title":
+						"Blog"
+				,
+				"ssl":
+						0
+			}
+	,
+	"\/Ajax\/":
+			{		
+				"query":
+						"module=blogixx&c=ajax&m=index"
+				,
+				"title":
+						"Blog"
+				,
+				"ssl":
+						0
+			}			
+}

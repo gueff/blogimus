@@ -1,0 +1,6 @@
+{
+	"require": {
+		"erusev/parsedown":
+				"dev-master"
+	}
+}
