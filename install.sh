@@ -1,0 +1,16 @@
+#!/bin/bash
+
+MVC_APPLICATION_PATH='../../application';
+
+echo "copying Data...";
+cp -r ./_INSTALL/config/*			../../config/
+cp -r ./_INSTALL/public/*			../../public/
+cp -r ./_INSTALL/data/page/*		data/page/
+cp -r ./_INSTALL/data/post/*		data/post/
+echo "...done!";
+
+echo "installing libraries...";
+php $MVC_APPLICATION_PATH/composer.phar --working-dir=../../config/Blogixx/ install;
+echo "...done!";
+
+
