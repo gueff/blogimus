@@ -316,7 +316,7 @@ class Index implements \MVC\MVCInterface\Controller
 		}
 
 		// iPaginationToGo
-		$iPaginationToGo = ( count ($aPost) / $iBlogMaxPostOnPage );
+		$iPaginationToGo = round( count ($aPost) / $iBlogMaxPostOnPage );
 		$aPaginationToGo = array ();
 
 		// pagination correction
