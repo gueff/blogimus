@@ -1,6 +1,9 @@
 # Blogixx
 
 a markdown file Blog Module for [myMVC](https://www.mymvc.org/ )
+
+Demo: http://blog.ueffing.net
+
 ## Overview
 - [Requirements](#Requirements)
 - [Features](#Features)
