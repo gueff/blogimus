@@ -58,7 +58,7 @@ _Install myMVC + Blogixx Module in one step:_
 ##<a name="Run"> Run
 cd to myMVC's `public/` folder and run php's internal server: 
 
-        export MVC_ENV="develop"; php -S localhost:1969;
+    export MVC_ENV="develop"; php -S localhost:1969;
     
 open Browser and call `http://localhost:1969`
 
@@ -70,29 +70,27 @@ For a live/production environment i recommended to use Apache2 Webserver and a D
 1. cd to /trunk/modules/Blogixx/data/post/
 2. say you want to post an article for date `2016-03-14`, then you need to create the folders:
 
-    $ mkdir -p 2016/03/14
+        $ mkdir -p 2016/03/14
     
 3. change into the new folder:
 
-    cd 2016/03/14 
+        cd 2016/03/14 
     
 4. create a new file. The filename should represent the title of the new post.
 
-    touch "Linux: how to use iptables.md"
+        touch "Linux: how to use iptables.md"
    
 Don't worry about spaces, colons and double-colons in the filename. It will work. 
 
 Now you can edit this file writing **Markdown** Syntax
 
 ##<a name="CreateAPage"> Create a Page
-1. cd to /trunk/modules/Blogixx/data/page/2
-2. create a new file. The filename should represent the title of the new Page.
+cd to `/trunk/modules/Blogixx/data/page/` and create a new file. The filename should represent the title of the new Page.
 
-    touch "Contact.md"
+        $ cd /trunk/modules/Blogixx/data/page/
+        $ touch "Contact.md"
     
 Now you can edit this file writing **Markdown** Syntax
-    
-
 
 ##<a name="Templating"> Templating / Design
 See `/trunk/modules/Blogixx/templates/` for the Smarty template files which will be used for Blogixx.
