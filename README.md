@@ -34,26 +34,30 @@ For Production Environment you want a Webserver like Apache2. For develop or tes
 
 ##<a name="Installation"> Installation
 
-1. Install myMVC https://www.mymvc.org/ (PHP>= 5.4 required)
-2. cd into the modules folder `/trunk/modules` and download Blogixx from github via subversion or git:
-
-    subversion:
+1. Install myMVC https://www.mymvc.org/ (PHP>= 5.4 required):
     
-        $ svn co https://github.com/gueff/Blogixx.git/trunk/ ./Blogixx
+    for a "develop" Environment
 
-    git:
+        $ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php
+        
+2. Install Blogixx Module
     
-        $ git clone https://github.com/gueff/Blogixx.git ./Blogixx
+    cd into myMVC's modules folder `myMVC/modules` and install Blogixx:
 
-3. cd into the new folder `Blogixx`, and run the install bash script
+        $ svn co https://github.com/gueff/Blogixx.git/trunk/ Blogixx; cd Blogixx; ./install.sh;
 
-        $ ./install.sh
+
+_Install myMVC + Blogixx Module in one step:_
+
+        $ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php; cd ../modules; svn co https://github.com/gueff/Blogixx.git/trunk/ Blogixx; cd Blogixx; ./install.sh;
 
 
 ##<a name="Run"> Run
-1. cd to myMVC's /trunk/public/ 
-2. run php internal server: `export MVC_ENV="develop";php -S 127.0.0.1:1969;`
-3. open Browser and call `http://127.0.0.1:1969`
+cd to myMVC's `public/` folder and run php's internal server: 
+
+        export MVC_ENV="develop"; php -S localhost:1969;
+    
+open Browser and call `http://localhost:1969`
 
 you could also "simulate" `test` and `live` environments, by just set the specific value. E.g: `export MVC_ENV="test";php -S 127.0.0.1:1969;`, and `export MVC_ENV="live";php -S 127.0.0.1:1969;`
 
