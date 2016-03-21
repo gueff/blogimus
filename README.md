@@ -67,7 +67,7 @@ you could also "simulate" `test` and `live` environments, by just set the specif
 For a live/production environment i recommended to use Apache2 Webserver and a Domain pointing to that. Using Apache2 Webserver will allow you to make use the .htaccess file located in `/trunk/public/.htaccess`. In there, you easily can set the environment variable. But of course, you also can make use of Nginx. See myMVC 's documentation for more Info.
 
 ##<a name="WriteAPost"> Write a Post
-1. cd to /trunk/modules/Blogixx/data/post/
+1. cd to `/trunk/modules/Blogixx/data/post/`
 2. say you want to post an article for date `2016-03-14`, then you need to create the folders:
 
         $ mkdir -p 2016/03/14
