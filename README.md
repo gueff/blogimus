@@ -1,6 +1,7 @@
-# Blogixx
+# Blogixx 
+a markdown file Blog Module for [myMVC](https://www.mymvc.org/ ).
 
-a markdown file Blog Module for [myMVC](https://www.mymvc.org/ )
+This is so called "_flat file blog system_", which means there is no database required
 
 Demo: http://blog.ueffing.net
 
