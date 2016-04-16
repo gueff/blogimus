@@ -262,7 +262,7 @@ class Index implements \MVC\MVCInterface\Controller
 	 */
 	public function concreteTag(array $aTag = array())
 	{
-		$sTagRequested = mb_substr (strtok ($_SERVER['REQUEST_URI'], '?'), (mb_strlen ($this->_aRoutingCurrent['path']) + (mb_strlen ('tag/'))), (mb_strlen (mb_substr (strtok ($_SERVER['REQUEST_URI'], '?'), (mb_strlen ($this->_aRoutingCurrent['path']) + (mb_strlen ('tag/'))))) - 1));
+		$sTagRequested = urldecode(mb_substr (strtok ($_SERVER['REQUEST_URI'], '?'), (mb_strlen ($this->_aRoutingCurrent['path']) + (mb_strlen ('tag/'))), (mb_strlen (mb_substr (strtok ($_SERVER['REQUEST_URI'], '?'), (mb_strlen ($this->_aRoutingCurrent['path']) + (mb_strlen ('tag/'))))) - 1)));
 
 		if (isset ($aTag[$sTagRequested]))
 		{
