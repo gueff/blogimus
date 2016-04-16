@@ -20,7 +20,7 @@ namespace Blogixx\Model;
  */
 class Index
 {
-
+	public $sDataDir;
 	public $sPageDir;
 	public $sPostDir;
 	private $_sCheckSum;
@@ -43,6 +43,7 @@ class Index
 	{
 		$this->createFolders ();
 		$this->aRoutingCurrent = \MVC\Registry::get('MVC_ROUTING_CURRENT');
+		$this->sDataDir = realpath (__DIR__ . '/../') . '/data';
 		$this->sPageDir = realpath (__DIR__ . '/../') . '/data/page';
 		$this->sPostDir = realpath (__DIR__ . '/../') . '/data/post';
 	}
@@ -270,7 +271,7 @@ class Index
 	private function getTags()
 	{
 		// get file list
-		$sCmd = 'grep -or "<tag>.*</tag>" ' . $this->sPostDir;		
+		$sCmd = 'grep -or "<tag>.*</tag>" ' . $this->sDataDir;		
 		$sList = shell_exec($sCmd);
 		$aList = preg_split("@\n@", $sList, NULL, PREG_SPLIT_NO_EMPTY);
 		
@@ -280,7 +281,7 @@ class Index
 		{
 			$aTmp = explode('<tag>', $sLine);
 			$sFile = mb_substr($aTmp[0], 0, (mb_strlen($aTmp[0]) - 1));
-			$sFile = str_replace($this->sPostDir, '', $sFile);
+			$sFile = str_replace($this->sDataDir, '', $sFile);
 			
 			$sTags = strip_tags($aTmp[1]);
 			$aTag = preg_split("@,@", $sTags, NULL, PREG_SPLIT_NO_EMPTY);
@@ -288,8 +289,8 @@ class Index
 			$sName = basename ($sFile, '.md');
 			$sNameSeo = $this->seoname ($sName);
 			$sFile = str_replace($sName, $sNameSeo, $sFile);
-			$sFile = mb_substr($sFile, 0, (mb_strlen ($sFile) - 3));
-			$sCacheFile = $this->toCacheName($this->aRoutingCurrent['path'] . 'post' . $sFile) . '#|#.json';
+			$sFile = mb_substr($sFile, 1, (mb_strlen ($sFile) - 4));
+			$sCacheFile = $this->toCacheName($this->aRoutingCurrent['path'] . $sFile) . '#|#.json';
 			
 			foreach($aTag as $sTag)
 			{
