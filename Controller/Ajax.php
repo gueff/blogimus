@@ -60,8 +60,6 @@ class Ajax implements \MVC\MVCInterface\Controller
 	
 	public function index($sString = '')
 	{
-//		\MVC\Log::WRITE($sString, 'ajax.log');
-		
 		$aFinal = array();
 		
 		$this->oBlogixxViewIndex->sendJsonHeader();
@@ -78,17 +76,14 @@ class Ajax implements \MVC\MVCInterface\Controller
 			$sBasenameSeo = \Blogixx\Model\Index::seoname($sBasename);
 			$aResult[$iKey] = str_replace($sBasename, $sBasenameSeo, $aResult[$iKey]);
 			
-			$sDateOrig = mb_substr($aResult[$iKey], 5, 16);
+			$sDateOrig = mb_substr($aResult[$iKey], 5, 11);
 			$sDate = str_replace('-', '#|#', $sDateOrig);
 			$aResult[$iKey] = str_replace($sDateOrig, $sDate, $aResult[$iKey]);			
 			
 			$aResult[$iKey] = str_replace('/', '#|#', '/' . $aResult[$iKey]);
 			$aResult[$iKey] = mb_substr($aResult[$iKey], 0, (strlen($aResult[$iKey]) - 3) ) . '#|#.json';
 			
-			
-			
 			$sCacheFile = \MVC\Registry::get ('MVC_CACHE_DIR') . '/Blogixx/' . $aResult[$iKey];
-//			\MVC\Log::WRITE($sCacheFile, 'ajax.log');
 			
 			if (file_exists ($sCacheFile))
 			{
