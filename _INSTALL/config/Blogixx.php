@@ -8,9 +8,16 @@ $aConfig['MVC_ROUTING_FALLBACK'] = $aConfig['MVC_GET_PARAM_MODULE'] . '=blogixx&
 
 // override request a
 $aConfig['MVC_REQUEST_WHITELIST_PARAMS']['GET']['a'] = array(
-	'regex' => '/[^a-zA-Z0-9üöäÜÖÄß\|\:\[\]\{\},"\'_ ]+/'
+	'regex' => "/[^\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{Pd}\\p{Pc},;.:_\\ ?!&\|\{\}\"']+/u"
 	, 'length' => 256
 );
+
+// Ajax request a
+$aConfig['BLOG_AJAX_FILTER'] = array(
+	'regex' => "/[^\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{Pd}\\p{Pc},;.:?!&']+/u"
+	, 'length' => 10
+);
+
 
 // max amount of pages teasered in overview
 $aConfig['BLOG_MAX_POST_ON_PAGE'] = 2;

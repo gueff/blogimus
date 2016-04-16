@@ -27,7 +27,7 @@ class Ajax
 	private $_sCheckSum;
 
 	/**
-	 * Construcor
+	 * Constructor
 	 * 
 	 * @access public
 	 * @return void
@@ -39,7 +39,19 @@ class Ajax
 
 	public function grep($sString = '')
 	{
-		$sCmd = '/bin/grep -ril "' . $sString . '" ' . $this->sBlogData . ' | /usr/bin/head -10';
+		$aFallback = array(
+			'regex' => "/[^\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{Pd}\\p{Pc}]+/u"
+			, 'length' => 10
+		);		
+		
+		$aFilter = (\MVC\Registry::isRegistered('BLOG_AJAX_FILTER')) ? \MVC\Registry::get('BLOG_AJAX_FILTER') : $aFallback;
+		(!isset($aFilter['regex'])) ? $aFilter['regex'] = $aFallback['regex'] : false;
+		(!isset($aFilter['length'])) ? $aFilter['length'] = $aFallback['length'] : false;
+		
+		// filter
+		$sString = preg_replace($aFilter['regex'], '', $sString);		
+		
+		$sCmd = '/bin/grep -ril "' . $sString . '" ' . $this->sBlogData . ' | /usr/bin/head -' . $aFilter['length'];
 		\MVC\Log::WRITE($sCmd, 'ajax.log');
 		$sResult = shell_exec($sCmd);
 		
