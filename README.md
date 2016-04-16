@@ -1,10 +1,6 @@
-# Blogixx 
-a markdown file Blog Module for [myMVC](https://www.mymvc.org/ ).
+# Blogixx
 
-This is so called "_flat file blog system_", which means there is no database required
-
-Demo: http://blog.ueffing.net
-
+a markdown file Blog Module for [myMVC](https://www.mymvc.org/ )
 ## Overview
 - [Requirements](#Requirements)
 - [Features](#Features)
@@ -38,60 +34,55 @@ For Production Environment you want a Webserver like Apache2. For develop or tes
 
 ##<a name="Installation"> Installation
 
-1. Install myMVC https://www.mymvc.org/ (PHP>= 5.4 required):
+1. Install myMVC https://www.mymvc.org/ (PHP>= 5.4 required)
+2. cd into the modules folder `/trunk/modules` and download Blogixx from github via subversion or git:
+
+    subversion:
     
-    for a "develop" Environment
+        $ svn co https://github.com/gueff/Blogixx.git/trunk/ ./Blogixx
 
-        $ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php
-        
-2. Install Blogixx Module
+    git:
     
-    cd into myMVC's modules folder `myMVC/modules` and install Blogixx:
+        $ git clone https://github.com/gueff/Blogixx.git ./Blogixx
 
-        $ svn co https://github.com/gueff/Blogixx.git/trunk/ Blogixx; cd Blogixx; ./install.sh;
+3. cd into the new folder `Blogixx`, and run the install bash script
 
-
-_Install myMVC + Blogixx Module in one step:_
-
-        $ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php; cd ../modules; svn co https://github.com/gueff/Blogixx.git/trunk/ Blogixx; cd Blogixx; ./install.sh;
+        $ ./install.sh
 
 
 ##<a name="Run"> Run
-cd to myMVC's `public/` folder and run php's internal server: 
-
-    export MVC_ENV="develop"; php -S localhost:1969;
-    
-open Browser and call `http://localhost:1969`
+1. cd to myMVC's /trunk/public/ 
+2. run php internal server: `export MVC_ENV="develop";php -S 127.0.0.1:1969;`
+3. open Browser and call `http://127.0.0.1:1969`
 
 you could also "simulate" `test` and `live` environments, by just set the specific value. E.g: `export MVC_ENV="test";php -S 127.0.0.1:1969;`, and `export MVC_ENV="live";php -S 127.0.0.1:1969;`
 
 For a live/production environment i recommended to use Apache2 Webserver and a Domain pointing to that. Using Apache2 Webserver will allow you to make use the .htaccess file located in `/trunk/public/.htaccess`. In there, you easily can set the environment variable. But of course, you also can make use of Nginx. See myMVC 's documentation for more Info.
 
 ##<a name="WriteAPost"> Write a Post
-1. cd to `/trunk/modules/Blogixx/data/post/`
-2. say you want to post an article for date `2016-03-14`, then you need to create the folders:
+Posts must have a leading `ISO Date` in the filename and a `.md` Suffix at the end.
 
-        $ mkdir -p 2016/03/14
-    
-3. change into the new folder:
+1. cd to `/trunk/modules/Bloggixx/data/post/` 
+2. create a new file with the Syntax `YYYY-MM-DD.title.md`. 
 
-        cd 2016/03/14 
-    
-4. create a new file. The filename should represent the title of the new post.
+Examples:
+- 2016-04-16.Linux: how to use iptables.md
+- 2015-06-19.How to do this and that.md
 
-        touch "Linux: how to use iptables.md"
    
 Don't worry about spaces, colons and double-colons in the filename. It will work. 
 
 Now you can edit this file writing **Markdown** Syntax
 
 ##<a name="CreateAPage"> Create a Page
-cd to `/trunk/modules/Blogixx/data/page/` and create a new file. The filename should represent the title of the new Page.
+1. cd to /trunk/modules/Blogixx/data/page/2
+2. create a new file. The filename should represent the title of the new Page.
 
-        $ cd /trunk/modules/Blogixx/data/page/
-        $ touch "Contact.md"
+    touch "Contact.md"
     
 Now you can edit this file writing **Markdown** Syntax
+    
+
 
 ##<a name="Templating"> Templating / Design
 See `/trunk/modules/Blogixx/templates/` for the Smarty template files which will be used for Blogixx.
