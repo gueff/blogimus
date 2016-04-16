@@ -77,8 +77,15 @@ class Ajax implements \MVC\MVCInterface\Controller
 			$sBasename = basename($aResult[$iKey], '.md');
 			$sBasenameSeo = \Blogixx\Model\Index::seoname($sBasename);
 			$aResult[$iKey] = str_replace($sBasename, $sBasenameSeo, $aResult[$iKey]);
+			
+			$sDateOrig = mb_substr($aResult[$iKey], 5, 16);
+			$sDate = str_replace('-', '#|#', $sDateOrig);
+			$aResult[$iKey] = str_replace($sDateOrig, $sDate, $aResult[$iKey]);			
+			
 			$aResult[$iKey] = str_replace('/', '#|#', '/' . $aResult[$iKey]);
 			$aResult[$iKey] = mb_substr($aResult[$iKey], 0, (strlen($aResult[$iKey]) - 3) ) . '#|#.json';
+			
+			
 			
 			$sCacheFile = \MVC\Registry::get ('MVC_CACHE_DIR') . '/Blogixx/' . $aResult[$iKey];
 //			\MVC\Log::WRITE($sCacheFile, 'ajax.log');

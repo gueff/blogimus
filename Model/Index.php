@@ -133,7 +133,7 @@ class Index
 		
 		// Post		
 		$aPost = $this->_getPosts();
-		$aJsonPost = json_encode($this->_getPosts());
+		$aJsonPost = json_encode($this->_getPosts());		
 		
 		$sFile = \MVC\Registry::get ('MVC_CACHE_DIR') . '/Blogixx/aPost.json';
 		(file_exists ($sFile)) ? unlink($sFile) : false;
@@ -236,13 +236,21 @@ class Index
 		{
 			$sFile = str_replace($this->sPostDir, '', $sFileAbs);
 			
-			// get dates
-			$aDate = preg_split("@\/@", $sFile, NULL, PREG_SPLIT_NO_EMPTY);
-			$iYear = $aDate[0];
-			$iMonth = $aDate[1];
-			$iDay = $aDate[2];
+//			// get dates
+//			$aDate = preg_split("@\/@", $sFile, NULL, PREG_SPLIT_NO_EMPTY);
+//			$iYear = $aDate[0];
+//			$iMonth = $aDate[1];
+//			$iDay = $aDate[2];			
+//			$sName = basename ($sFile, '.md');
+//			$sUrl = $aCurrent['path'] . 'post/' . $iYear . '/' . $iMonth . '/' . $iDay . '/' . $this->seoname ($sName) . '/';
 			
-			$sName = basename ($sFile, '.md');
+			// get dates
+			$sDate = mb_substr($sFile, 1, 10);
+			$iYear = mb_substr($sFile, 1, 4);
+			$iMonth = mb_substr($sFile, 6, 2);
+			$iDay = mb_substr($sFile, 9, 2);			
+
+			$sName = basename (mb_substr($sFile, 12, mb_strlen ($sFile)), '.md');
 			$sUrl = $aCurrent['path'] . 'post/' . $iYear . '/' . $iMonth . '/' . $iDay . '/' . $this->seoname ($sName) . '/';
 			
 			$aTmp = array ();
@@ -290,6 +298,11 @@ class Index
 			$sNameSeo = $this->seoname ($sName);
 			$sFile = str_replace($sName, $sNameSeo, $sFile);
 			$sFile = mb_substr($sFile, 1, (mb_strlen ($sFile) - 4));
+			
+			$sDateOrig = mb_substr($sFile, 5, 16);
+			$sDate = str_replace('-', '#|#', $sDateOrig);
+			$sFile = str_replace($sDateOrig, $sDate, $sFile);
+			
 			$sCacheFile = $this->toCacheName($this->aRoutingCurrent['path'] . $sFile) . '#|#.json';
 			
 			foreach($aTag as $sTag)
