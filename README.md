@@ -1,4 +1,4 @@
-# Bloggixx 
+# Blogixx 
 a markdown file Blog Module for [myMVC](https://www.mymvc.org/ ).
 
 This is so called "_flat file blog system_", which means there is no database required
@@ -44,16 +44,16 @@ For Production Environment you want a Webserver like Apache2. For develop or tes
 
         $ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php
         
-2. Install Bloggixx Module
+2. Install Blogixx Module
     
-    cd into myMVC's modules folder `myMVC/modules` and install Bloggixx:
+    cd into myMVC's modules folder `myMVC/modules` and install Blogixx:
 
-        $ svn co https://github.com/gueff/Bloggixx.git/trunk/ Bloggixx; cd Bloggixx; ./install.sh;
+        $ svn co https://github.com/gueff/Blogixx.git/trunk/ Blogixx; cd Blogixx; ./install.sh;
 
 
-_Install myMVC + Bloggixx Module in one step:_
+_Install myMVC + Blogixx Module in one step:_
 
-        $ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php; cd ../modules; svn co https://github.com/gueff/Bloggixx.git/trunk/ Bloggixx; cd Bloggixx; ./install.sh;
+        $ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php; cd ../modules; svn co https://github.com/gueff/Blogixx.git/trunk/ Blogixx; cd Blogixx; ./install.sh;
 
 
 ##<a name="Run"> Run
@@ -70,7 +70,7 @@ For a live/production environment i recommended to use Apache2 Webserver and a D
 ##<a name="WriteAPost"> Write a Post
 Posts must have a leading `ISO Date` in the filename and a `.md` Suffix at the end.
 
-1. cd to `/trunk/modules/Bloggixx/data/post/` 
+1. cd to `/trunk/modules/Blogixx/data/post/` 
 2. create a new file with the Syntax `YYYY-MM-DD.title.md`. 
 
 Examples:
@@ -83,15 +83,15 @@ Don't worry about spaces, colons and double-colons in the filename. It will work
 Now you can edit this file writing **Markdown** Syntax
 
 ##<a name="CreateAPage"> Create a Page
-cd to `/trunk/modules/Bloggixx/data/page/` and create a new file. The filename should represent the title of the new Page.
+cd to `/trunk/modules/Blogixx/data/page/` and create a new file. The filename should represent the title of the new Page.
 
-        $ cd /trunk/modules/Bloggixx/data/page/
+        $ cd /trunk/modules/Blogixx/data/page/
         $ touch "Contact.md"
     
 Now you can edit this file writing **Markdown** Syntax
 
 ##<a name="Templating"> Templating / Design
-See `/trunk/modules/Bloggixx/templates/` for the Smarty template files which will be used for Bloggixx.
+See `/trunk/modules/Blogixx/templates/` for the Smarty template files which will be used for Blogixx.
 
 
 
