@@ -291,9 +291,13 @@ class Index
 			$sFile = str_replace($sName, $sNameSeo, $sFile);
 			$sFile = mb_substr($sFile, 1, (mb_strlen ($sFile) - 4));
 			
-			$sDateOrig = mb_substr($sFile, 5, 11);
-			$sDate = str_replace('-', '#|#', $sDateOrig);
-			$sFile = str_replace($sDateOrig, $sDate, $sFile);
+			if ('post' === mb_substr($sFile, 0, 4))
+			{
+	                	// posts have a leading date
+		                $sDateOrig = mb_substr($sFile, 5, 11);
+		                $sDate = str_replace('-', '#|#', $sDateOrig);
+		                $sFile = str_replace($sDateOrig, $sDate, $sFile);
+            		}
 			
 			$sCacheFile = $this->toCacheName($this->aRoutingCurrent['path'] . $sFile) . '#|#.json';
 			
