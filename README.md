@@ -46,9 +46,9 @@ $ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myM
 ##<a name="Run"></a> Run
 cd to myMVC's `public/` folder and run php's internal server: 
 ~~~bash
-$ export MVC_ENV="develop"; php -S localhost:1969;
+$ export MVC_ENV="develop"; php -S 127.0.0.1:1969;
 ~~~    
-open Browser and call `http://localhost:1969`
+open Browser and call `http://127.0.0.1:1969`
 
 you could also "simulate" `test` and `live` environments, by just set the specific value. E.g: `export MVC_ENV="test";php -S 127.0.0.1:1969;`, and `export MVC_ENV="live";php -S 127.0.0.1:1969;`
 
