@@ -88,9 +88,8 @@ class Index implements \MVC\MVCInterface\Controller
 		}
 
 		$this->_oBlogixxModelIndex->init ();
-
-		// Standard Title
-		$this->oBlogixxViewIndex->assign ('sTitle', 'Blog');
+		$this->oBlogixxViewIndex->assign ('sTitle', \MVC\Registry::get ('BLOG_NAME'));
+		$this->oBlogixxViewIndex->assign ('sBlogName', \MVC\Registry::get ('BLOG_NAME'));
 	}
 
 	/**
@@ -104,7 +103,7 @@ class Index implements \MVC\MVCInterface\Controller
 		/**
 		 * @todo full page cache
 		 */
-		
+        
 		ASSIGNMENTS: {
 			
 			// All Dates
@@ -126,6 +125,18 @@ class Index implements \MVC\MVCInterface\Controller
 		
 		DELEGATE: {
 			
+			// Backend
+            $sRequest = mb_substr(strtok($_SERVER['REQUEST_URI'], '?'), 1, mb_strlen(strtok($_SERVER['REQUEST_URI'], '?')));
+            $oControllerBackend = new \Blogixx\Controller\Backend($this);
+            $this->oBlogixxViewIndex->assign ('sPageType', mb_substr($sRequest, 0, 4));
+            $this->oBlogixxViewIndex->assign ('sRequest', '/' . $sRequest);
+            $this->oBlogixxViewIndex->assign ('sLoginToken', mb_substr($sRequest, 0, 1));
+			if ('@' === mb_substr($sRequest, 0, 1))
+			{
+                $oControllerBackend->backend($sRequest);
+				return true;
+			}
+            
 			// PAGE
 			if (true === $this->_oBlogixxModelIndex->checkRequestOnToken ('page/'))
 			{
@@ -150,13 +161,15 @@ class Index implements \MVC\MVCInterface\Controller
 			elseif ($this->_aRoutingCurrent['path'] === strtok ($_SERVER['REQUEST_URI'], '?'))
 			{
 				$this->postOverview();
-			}
+			}           
 			// invalid Request
 			else
 			{
 				$this->notFound();		
 			}
 		}
+		
+		$this->_oBlogixxModelIndex->setMeta ($this->oBlogixxViewIndex);
 		
 		// Set Value in sContent Var
 		$this->oBlogixxViewIndex->assign (
@@ -309,11 +322,11 @@ class Index implements \MVC\MVCInterface\Controller
 		{
 			$aGetA = json_decode ($aQuery['GET']['a'], true);
 
-			if (array_key_exists ('start', $aGetA) && isset ($aGetA['start']))
+			if (is_array($aGetA) && array_key_exists('start', $aGetA) && isset($aGetA['start']))
 			{
 				$iGetA = $aGetA['start'];
 			}
-		}
+		}	
 
 		// iPaginationToGo
 		$iPaginationToGo = round( count ($aPost) / $iBlogMaxPostOnPage );
@@ -382,7 +395,7 @@ class Index implements \MVC\MVCInterface\Controller
 		$this->oBlogixxViewIndex->assign ('aPost', $aFinal);		
 	}
 
-	/**
+    /**
 	 * not found
 	 * 
 	 * @access public
@@ -405,5 +418,4 @@ class Index implements \MVC\MVCInterface\Controller
 	{
 		$this->oBlogixxViewIndex->render ();
 	}
-
 }
