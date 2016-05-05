@@ -37,6 +37,12 @@ class Ajax
 		$this->sBlogData = realpath (__DIR__ . '/../') . '/data';
 	}
 
+	/**
+	 * greps in contents for the requested string 
+	 * 
+	 * @param string $sString requested
+	 * @return string $sResult
+	 */
 	public function grep($sString = '')
 	{
 		$aFallback = array(
@@ -50,9 +56,12 @@ class Ajax
 		
 		// filter
 		$sString = preg_replace($aFilter['regex'], '', $sString);		
-		
-		$sCmd = '/bin/grep -ril "' . $sString . '" ' . $this->sBlogData . ' | /usr/bin/head -' . $aFilter['length'];
-		\MVC\Log::WRITE($sCmd, 'ajax.log');
+		$sCmd = \MVC\Registry::get('BLOG_BIN_GREP') . ' -ril "' . $sString . '" ' . $this->sBlogData . ' | ' . \MVC\Registry::get('BLOG_BIN_HEAD') . ' -' . $aFilter['length'];
+
+		// logs the Requests if enabled in config
+		(\MVC\Registry::isRegistered('BLOG_AJAX_LOG_REQUESTS') && true === \MVC\Registry::get('BLOG_AJAX_LOG_REQUESTS')) ? \MVC\Log::WRITE($sCmd, 'ajax.log') : false;
+
+		// execute
 		$sResult = shell_exec($sCmd);
 		
 		return $sResult;
