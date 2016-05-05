@@ -12,69 +12,6 @@ $(document).ready(function() {
 		$('#inputSearch').focus();
 	}	
 
-	var iSelectedIndex = 0;
-	$('#suggest').addClass('hide').attr("autocomplete", "off");			
-
-	// navigate through suggest pulldown
-	$('body').keydown(function (event) {
-
-		if (event.keyCode == 13)
-		{
-			var sHref = $('#suggest a:nth-child(' + iSelectedIndex + ')').attr('href');
-			('undefined' !== typeof sHref) ? location.href = sHref : false;
-			return false;
-		}
-
-		if (event.keyCode == 40) {
-			iSelectedIndex++;
-			(iSelectedIndex > $('#suggest a').length) ? iSelectedIndex = $('#suggest a').length : false;
-			$('#suggest a').removeClass('suggestHover');
-			$('#suggest a:nth-child(' + iSelectedIndex + ')').addClass('suggestHover');						
-		}					
-
-		if (event.keyCode == 38) {
-			iSelectedIndex--;
-			(iSelectedIndex <= 0) ? iSelectedIndex = 0 : false;
-			$('#suggest a').removeClass('suggestHover');
-			$('#suggest a:nth-child(' + iSelectedIndex + ')').addClass('suggestHover');						
-		}
-	});
-
-	// suggest
-	$('#inputSearch').on('keyup', function(event) {
-
-		if (event.keyCode == 40 || event.keyCode == 38 || event.keyCode == 13) {
-			return false;
-		}
-
-		var sInput = this.value;
-		sInput = sInput.trim();
-
-		if (sInput.length < 3)
-		{
-			$('#suggest').addClass('hide').attr("autocomplete", "off");
-			return false;
-		}
-
-		$.get("/Ajax/", 
-			{"a":sInput}, 
-			function(data, status) {
-
-				if (data.length > 0)
-				{
-					var sLink = '';
-					data.forEach(function(item){sLink+= '<a href="' + item[1] + '">' + item[0] + '</a>';});							
-					$('#suggest').removeClass('hide');
-					$('#suggest').html(sLink);
-				}
-				else
-				{
-					$('#suggest').addClass('hide').attr("autocomplete", "off");
-				}
-			}
-		);
-	});
-
 	// make images behave responsive
 	$('.container img').addClass('img-responsive');
 
@@ -93,16 +30,22 @@ $(document).ready(function() {
 		$(this).html('Tags: <strong>' + sTagUrls + '</strong>');					
 	});			
 	
-	// @see https://highlightjs.org
-	$('.language-bash').each(function(i, block) {hljs.highlightBlock(block);$(this).parent().css('padding',0);});	
-	$('.language-php').each(function(i, block) {hljs.highlightBlock(block);$(this).parent().css('padding',0);});	
-	$('.language-js').each(function(i, block) {hljs.highlightBlock(block);$(this).parent().css('padding',0);});		
-	$('.language-css').each(function(i, block) {hljs.highlightBlock(block);$(this).parent().css('padding',0);});		
-	$('.language-html').each(function(i, block) {hljs.highlightBlock(block);$(this).parent().css('padding',0);});		
-	
+	// delete
+	$('.btnDelete').on('click', function(){
+		$('modalDeleteType').html($(this).attr('data-type'));
+		$('modalDeleteSpecific').html('"<b>' + $(this).attr('data-name') + '</b>"');
+		$('modalDeleteUrl').html('<a href="' + $(this).attr('data-url') + '">' + $(this).attr('data-url') + '</a>');
+	});
+	$('#modalBtnDelete').on('click', function(e){
+		$('#modalDelete').modal('hide');
+		var sUrl = '/@delete?a={"type":"' + $('modalDeleteType').text() + '","url":"' + $('modalDeleteUrl').text() + '"}';
+		console.log(sUrl);
+		location.href = sUrl;
+	});
+
 	/* shows a progressbar beneath an input(or textarea) element. @see https://blog.ueffing.net/ */
 	function visualizeConsumption(oObject,a,b,c){var a=('undefined'===typeof a)?50:a;var b=('undefined'===typeof b)?70:b;var c=('undefined'===typeof c)?100:c;if(false===oObject.hasClass('visualizeConsumption')||null===oObject.val()){return false}$(oObject).on('blur',function(){$('.visualizeConsumptionBar').hide()});var iProgressBarId=oObject.next().attr('data-consumptionBar');if('undefined'===typeof iProgressBarId){$(oObject).wrap('<div style="position: relative;"></div>');$('<div id="'+Date.now()+'" data-consumptionBar="'+Date.now()+'" class="visualizeConsumptionBar progress progress-striped active" style="display: none;position: absolute;width: 100%;"><div class="progress-bar"><div class="progresstext"></div></div></div>').insertAfter(oObject);$(oObject).focus();$('.visualizeConsumptionBar').hide();return false}var iMaxlength=(('undefined'!==typeof oObject.attr('maxlength')?oObject.attr('maxlength'):(('undefined'!==typeof oObject.attr('data-maxlength'))?oObject.attr('data-maxlength'):false)));if(false===iMaxlength){return false}var iPercent=(oObject.val().length*100/iMaxlength);(iPercent>=a)?$('#'+iProgressBarId).show():$('#'+iProgressBarId).hide();(iPercent>=a&&iPercent<b)?$('#'+iProgressBarId+' .progress-bar').removeClass('progress-bar-warning progress-bar-danger').addClass('progress-bar-info'):false;(iPercent>=b&&iPercent<c)?$('#'+iProgressBarId+' .progress-bar').removeClass('progress-bar-info progress-bar-danger').addClass('progress-bar-warning'):false;(iPercent>=c)?$('#'+iProgressBarId+' .progress-bar').removeClass('progress-bar-info progress-bar-warning').addClass('progress-bar-danger'):false;$('#'+iProgressBarId).css({'width':oObject.css('width')});$('#'+iProgressBarId+' .progress-bar').css({width:iPercent+'%'});$('#'+iProgressBarId+' .progresstext').text(Math.round(iPercent)+'%');return true}
-	$(".visualizeConsumption").on('click keyup keypress', function() {visualizeConsumption($(this));}); 	
+	$(".visualizeConsumption").on('click keyup keypress', function() {visualizeConsumption($(this));}); 		
 });
 
 
