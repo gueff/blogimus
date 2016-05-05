@@ -41,7 +41,7 @@ class Index
 	 */
 	public function __construct ()
 	{
-		$this->createFolders ();
+		$this->_createFolders ();
 		$this->aRoutingCurrent = \MVC\Registry::get('MVC_ROUTING_CURRENT');
 		$this->sDataDir = realpath (__DIR__ . '/../') . '/data';
 		$this->sPageDir = realpath (__DIR__ . '/../') . '/data/page';
@@ -54,9 +54,9 @@ class Index
 	 */
 	public function init ()
 	{
-		if (true === $this->updateCheckSum())
+		if (true === $this->_updateCheckSum())
 		{
-			$this->buildCache();
+			$this->_buildCache();
 		}
 	}
 	
@@ -64,7 +64,7 @@ class Index
 	 * @access private
 	 * @return void
 	 */
-	private function createFolders ()
+	private function _createFolders ()
 	{
 		(!file_exists (realpath (__DIR__ . '/../') . '/data')) ? mkdir (realpath (__DIR__ . '/../') . '/data') : false;
 		(!file_exists (realpath (__DIR__ . '/../') . '/data/post')) ? mkdir (realpath (__DIR__ . '/../') . '/data/post') : false;
@@ -80,7 +80,7 @@ class Index
 	 * @access private
 	 * @return boolean update (true=there are changes in data folder | false=no changes)
 	 */
-	private function updateCheckSum()
+	private function _updateCheckSum()
 	{		
 		$sCmd = 'ls -alR ' . realpath (__DIR__ . '/../') . '/data' . ' | md5sum';
 		$this->_sCheckSum = shell_exec($sCmd);
@@ -110,7 +110,7 @@ class Index
 	 * @access private
 	 * @return void
 	 */
-	private function buildCache()
+	private function _buildCache()
 	{
 		// Page
 		$aPage = $this->_getPages();
@@ -159,7 +159,7 @@ class Index
 		}
 		
 		// Tags
-		$aTag = $this->getTags();
+		$aTag = $this->_getTags();
 		$sFile = \MVC\Registry::get ('MVC_CACHE_DIR') . '/Blogixx/aTag.json';
 		(file_exists ($sFile)) ? unlink($sFile) : false;
 		file_put_contents($sFile, json_encode($aTag));		
@@ -268,7 +268,7 @@ class Index
 	 * @access private
 	 * @return array $aFinalTag tags listed
 	 */
-	private function getTags()
+	private function _getTags()
 	{
 		// get file list
 		$sCmd = 'grep -or "<tag>.*</tag>" ' . $this->sDataDir;		
@@ -293,11 +293,11 @@ class Index
 			
 			if ('post' === mb_substr($sFile, 0, 4))
 			{
-	                	// posts have a leading date
-		                $sDateOrig = mb_substr($sFile, 5, 11);
-		                $sDate = str_replace('-', '#|#', $sDateOrig);
-		                $sFile = str_replace($sDateOrig, $sDate, $sFile);
-            		}
+                // posts have a leading date
+                $sDateOrig = mb_substr($sFile, 5, 11);
+                $sDate = str_replace('-', '#|#', $sDateOrig);
+                $sFile = str_replace($sDateOrig, $sDate, $sFile);
+            }
 			
 			$sCacheFile = $this->toCacheName($this->aRoutingCurrent['path'] . $sFile) . '#|#.json';
 			
@@ -396,6 +396,111 @@ class Index
 		);	
 	}
 
+    /**
+     * gets tag array from a string
+     * 
+     * @param string $sString
+     * @param string $sTag
+     * @return array
+     */
+    public function getTagArrayFromString($sString = '', $sTag = 'tag')
+    {
+        $aTag = array();
+        
+        preg_match_all(
+            '#<tag>(.*?)</tag>#', 
+            $sString, 
+            $aMatch
+        );             
+        
+        if (isset($aMatch[1]))
+        {
+            foreach ($aMatch[1] as $sLine)
+            {
+                $aTag = array_merge(
+                    $aTag, 
+                    preg_split(
+                        '~,~', 
+                        strip_tags($sLine), 
+                        null, 
+                        PREG_SPLIT_NO_EMPTY
+                ));
+            }
+        }
+        
+        return $aTag;
+    }
+
+	/**
+	 * get meta keyword string list out of tag array
+	 * 
+	 * @param array $aTagFromString
+	 * @return string
+	 */
+    public function getMetaKeywords($aTagFromString = array())
+    {
+        $sMetaKeywords = '';
+        
+        foreach ($aTagFromString as $sTag)
+        {
+            $sMetaKeywords.= $sTag . ',';
+        }
+        
+        $sMetaKeywords = mb_substr($sMetaKeywords, 0, -1);        
+
+        return $sMetaKeywords;
+    }
+    
+	/**
+	 * builds a meta description out of content
+	 * @param string $sString
+	 * @return string
+	 */
+    public function getMetaDescription($sString = '')
+    {
+        $sString = preg_replace(
+            '~\<tag\>([^{]*)\<\/tag\>~i', 
+            '', 
+            $sString
+        );         
+        $sString = trim($sString);
+        $sString = strip_tags($sString);
+        $sString = preg_replace('/[\r\t\n]/', ' ', $sString);
+        $sString = preg_replace('/\s+/', ' ', $sString);
+        $sString = mb_substr($sString, 0, 150) . '[..]';
+        $sString = '&#10004; ' . $sString;
+        $sString = html_entity_decode($sString);
+        
+        return $sString;
+    }
+        
+	/**
+	 * set meta tags
+	 * 
+	 * @param \Blogixx\View\Index $oBlogixxViewIndex
+	 * @param string $sContent
+	 */
+    public function setMeta(\Blogixx\View\Index $oBlogixxViewIndex, $sContent = '')
+    {
+        $aVar = $oBlogixxViewIndex->getTemplateVars();
+        
+        (isset($aVar['aSet']['sContent'])) ? $sContent = $aVar['aSet']['sContent'] : $sContent = $aVar['sTitle'] . '<tag>' . $aVar['sTitle'] . '</tag>';        
+        (isset($aVar['sPageType']) && 'date' === $aVar['sPageType']) ? $sContent = $aVar['sTitle'] . ', ' . $aVar['sBlogName'] . '<tag>' . $aVar['sTitle'] . '</tag>' : false;
+        (isset($aVar['sPageType']) && 'tag/' === $aVar['sPageType']) ? $sContent = $aVar['sTitle'] . ', ' . $aVar['sBlogName'] . '<tag>' . $aVar['sTitle'] . '</tag>' : false;       
+        
+        $oBlogixxViewIndex->assign(
+            'sMetaKeywords',
+            $this->getMetaKeywords(
+                $this->getTagArrayFromString($sContent)
+            )
+        );  
+        
+        $oBlogixxViewIndex->assign(
+            'sMetaDescription', 
+            $this->getMetaDescription($sContent)
+        );
+    }
+	
 	/**
 	 * converts a string seo-friendly
 	 * 
