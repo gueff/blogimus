@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>{$sTitle}</title>
-		<meta name="description" content="{$sMetaDescription}">
-		<meta name="keywords" content="{$sMetaKeywords}">
+		<title>{$sTitle|escape}</title>
+		<meta name="description" content="{$sMetaDescription|escape}">
+		<meta name="keywords" content="{$sMetaKeywords|escape}">
 		<meta name="robots" content="index,follow">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/cerulean/bootstrap.min.css">
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">

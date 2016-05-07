@@ -48,11 +48,12 @@ $aConfig['BLOG_CREATE_MAX_TITLE'] = 200;
 $aConfig['BLOG_CREATE_MAX_CONTENT'] = 10000;
 
 
-// path to Linux' grep binary
+// path to Linux' ls, find, grep, head, md5sum
+$aConfig['BLOG_BIN_LS'] = '/bin/ls';
+$aConfig['BLOG_BIN_FIND'] = '/usr/bin/find';
 $aConfig['BLOG_BIN_GREP'] = '/bin/grep';
-
-// path to Linux' head binary
 $aConfig['BLOG_BIN_HEAD'] = '/usr/bin/head';
+$aConfig['BLOG_BIN_MD5SUM'] = '/usr/bin/md5sum';
 
 /*
  * Ajax

@@ -82,7 +82,7 @@ class Index
 	 */
 	private function _updateCheckSum()
 	{		
-		$sCmd = 'ls -alR ' . realpath (__DIR__ . '/../') . '/data' . ' | md5sum';
+		$sCmd = \MVC\Registry::get('BLOG_BIN_LS') . ' -alR ' . realpath (__DIR__ . '/../') . '/data' . ' | ' . \MVC\Registry::get('BLOG_BIN_MD5SUM');
 		$this->_sCheckSum = shell_exec($sCmd);
 		$this->_sCheckSum.= '_BLOG_MAX_POST_ON_PAGE:' . \MVC\Registry::get ('BLOG_MAX_POST_ON_PAGE');
 		$sCheckSumOld = '';
@@ -222,7 +222,7 @@ class Index
 	private function _getPosts ()
 	{
 		// get file list
-		$sCmd = 'find ' . $this->sPostDir . ' -name "*.md" -type f -print';
+		$sCmd = \MVC\Registry::get('BLOG_BIN_FIND') . ' ' . $this->sPostDir . ' -name "*.md" -type f -print';
 		$sList = shell_exec($sCmd);
 		$aList = preg_split("@\n@", $sList, NULL, PREG_SPLIT_NO_EMPTY);
 		rsort($aList);
@@ -271,7 +271,7 @@ class Index
 	private function _getTags()
 	{
 		// get file list
-		$sCmd = 'grep -or "<tag>.*</tag>" ' . $this->sDataDir;		
+		$sCmd = \MVC\Registry::get('BLOG_BIN_GREP') . ' -or "<tag>.*</tag>" ' . $this->sDataDir;		
 		$sList = shell_exec($sCmd);
 		$aList = preg_split("@\n@", $sList, NULL, PREG_SPLIT_NO_EMPTY);
 		
@@ -447,7 +447,8 @@ class Index
         }
         
         $sMetaKeywords = mb_substr($sMetaKeywords, 0, -1);        
-
+		$sMetaKeywords = str_replace('"', '`', $sMetaKeywords);
+		$sMetaKeywords = str_replace("'", '`', $sMetaKeywords);
         return $sMetaKeywords;
     }
     
@@ -468,9 +469,10 @@ class Index
         $sString = preg_replace('/[\r\t\n]/', ' ', $sString);
         $sString = preg_replace('/\s+/', ' ', $sString);
         $sString = mb_substr($sString, 0, 150) . '[..]';
-        $sString = '&#10004; ' . $sString;
         $sString = html_entity_decode($sString);
         
+		$sString = str_replace('"', '`', $sString);
+		$sString = str_replace("'", '`', $sString);
         return $sString;
     }
         
