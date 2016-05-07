@@ -31,7 +31,7 @@ Demo: http://blog.ueffing.net
 
 ##<a name="Requirements"></a> Requirements
 - Linux OS
-- Permission to execute Linux' `grep` and `head` binary via PHP's `shell_exec` command
+- Permission to execute these Linux binaries via PHP's `shell_exec` command: `ls`, `find`, `grep`, `head`, `md5sum` 
 - PHP >=5.4
 - [myMVC](https://www.mymvc.org/) - will be installed automatically when following the [Installation Instruction](#Installation) here on this page.
 
