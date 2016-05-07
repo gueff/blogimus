@@ -11,8 +11,8 @@ $aConfig['BLOG_BACKEND'] = array(
 		
 		// 1. account
 		array(
-			'user' 		=> '', 
-			'password' 	=> ''
+			'user' 		=> 'test', 
+			'password' 	=> 'test'
 		)
 	),
 	
