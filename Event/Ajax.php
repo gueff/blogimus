@@ -36,11 +36,18 @@ class Ajax
 	protected function __construct()
 	{
 		// this is not bonded to an event, instead it is executed directly
-		\MVC\Helper::ENSURECORRECTPROTOCOL();
+		\MVC\Request::ENSURECORRECTPROTOCOL();
 
-		\MVC\Event::BIND('mvc.ids.impact', function($mPackage) {
-			\MVC\Log::WRITE($mPackage, 'ids.log');
-		});
+		/*
+		 * What to do if IDS detects an impact
+		 */
+		\MVC\Event::BIND ('mvc.ids.impact.warn', function($oIdsReport) {
+
+			\MVC\Log::WRITE("WARN\t" . \MVC\IDS::getReport ($oIdsReport), 'ids.log');
+			
+			// dispose infected Variables mentioned in report
+			\MVC\IDS::dispose($oIdsReport);
+		});	
 	}
 
 	/**

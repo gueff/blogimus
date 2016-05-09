@@ -35,15 +35,41 @@ class Index
 	 */
 	protected function __construct()
 	{
-		// this is not bonded to an event, instead it is executed directly
+		// this is not bonded to an event, instead it gets executed directly
 		\MVC\Request::ENSURECORRECTPROTOCOL();
-
-		\MVC\Event::BIND('mvc.ids.impact', function($mPackage) {
-			\MVC\Log::WRITE($mPackage, 'ids.log');
-		});
 
 		\MVC\Event::BIND('mvc.invalidRequest', function() {
 			\MVC\Request::REDIRECT('/');
+		});		
+		
+		// add Parameters which should be passed IDS through backend
+		\MVC\Event::BIND ('mvc.ids.init.after', function($oIdsInit) {
+			
+			// User logged into backend
+			if	(
+						isset($_SESSION['blogixx']['login']) 
+					&&	true === $_SESSION['blogixx']['login']
+				)
+			{
+				$oIdsInit->config['General']['exceptions'][] = 'POST.sMarkdown';
+				$oIdsInit->config['General']['exceptions'][] = 'GET.a';
+			}
+		});
+		
+		/*
+		 * What to do if IDS detects an impact
+		 */
+		\MVC\Event::BIND ('mvc.ids.impact.info', function($oIdsReport) {
+
+			\MVC\Log::WRITE("INFO\t" . \MVC\IDS::getReport ($oIdsReport), 'ids.log');
+		});
+		
+		\MVC\Event::BIND ('mvc.ids.impact.warn', function($oIdsReport) {
+
+			\MVC\Log::WRITE("WARN\t" . \MVC\IDS::getReport ($oIdsReport), 'ids.log');
+			
+			// dispose infected Variables mentioned in report
+			\MVC\IDS::dispose($oIdsReport);
 		});		
 		
 		/*

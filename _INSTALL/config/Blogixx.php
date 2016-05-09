@@ -3,16 +3,18 @@
 // Name of Blog
 $aConfig['BLOG_NAME'] = 'Blogixx';
 
-// Backend User Accounts for different Environments set by MVC_ENV
-// Notice: empty "user" or "password" means no login is possible
+/**
+ * Backend User Accounts for different Environments set by MVC_ENV
+ * Notice: empty "user" or "password" means no login is possible
+ */
 $aConfig['BLOG_BACKEND'] = array(
 
 	'develop' => array(
 		
 		// 1. account
 		array(
-			'user' 		=> 'test', 
-			'password' 	=> 'test'
+			'user' 		=> '', 
+			'password' 	=> ''
 		)
 	),
 	
@@ -35,6 +37,10 @@ $aConfig['BLOG_BACKEND'] = array(
 	)
 );
 
+
+/**
+ * Frontend Settings
+ */
 // max amount of posts teasered on Overview pages
 $aConfig['BLOG_MAX_POST_ON_PAGE'] = 2;
 
@@ -45,10 +51,13 @@ $aConfig['BLOG_TEASER_SIZE_IN_OVERVIEW'] = 500;
 $aConfig['BLOG_CREATE_MAX_TITLE'] = 200;
 
 // max length of content
-$aConfig['BLOG_CREATE_MAX_CONTENT'] = 10000;
+$aConfig['BLOG_CREATE_MAX_CONTENT'] = 20000;
 
 
-// path to Linux' ls, find, grep, head, md5sum
+/**
+ * Linux Binaries
+ * Set Paths to Linux' ls, find, grep, head, md5sum
+ */
 $aConfig['BLOG_BIN_LS'] = '/bin/ls';
 $aConfig['BLOG_BIN_FIND'] = '/usr/bin/find';
 $aConfig['BLOG_BIN_GREP'] = '/bin/grep';
@@ -73,6 +82,10 @@ $aConfig['BLOG_AJAX_FILTER'] = array(
 );
 $aConfig['BLOG_AJAX_LOG_REQUESTS'] = false;
 
+
+/**
+ * Misc
+ */
 // override MVC's fallback routing
 $aConfig['MVC_ROUTING_FALLBACK'] = $aConfig['MVC_GET_PARAM_MODULE'] . '=blogixx&'
 	. $aConfig['MVC_GET_PARAM_C'] . '=index&'
