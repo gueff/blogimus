@@ -121,7 +121,7 @@ class Backend
 				$this->_loginForm ();
 			}
 
-			$this->oControllerIndex->oBlogixxViewIndex->sTemplate = 'layout/backend.tpl';
+			$this->oControllerIndex->oBlogixxViewIndex->sTemplate = $this->oControllerIndex->oBlogixxViewIndex->sTemplateDir . '/layout/backend.tpl';
 		}
 	}
 
