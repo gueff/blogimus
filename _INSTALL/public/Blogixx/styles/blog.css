@@ -9,6 +9,7 @@ p, li, tag {
 hr {
 	border: 0;
 	height: 1px;
+	background: silver;
 }
 section #mainContent {
 	overflow-x: auto;
