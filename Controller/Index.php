@@ -392,7 +392,59 @@ class Index implements \MVC\MVCInterface\Controller
 		$this->oBlogixxViewIndex->assign ('iMinus', $iMinus);
 		$this->oBlogixxViewIndex->assign ('aParam', ((isset ($aQuery['GET']['a'])) ? json_decode ($aQuery['GET']['a'], true) : 0));
 		$this->oBlogixxViewIndex->assign ('iPlus', $iPlus);
-		$this->oBlogixxViewIndex->assign ('aPost', $aFinal);		
+		$this->oBlogixxViewIndex->assign ('aPost', $aFinal);	
+		
+        CALC_PAGINATION_SHRINK: {
+            
+            $iPaginationRange = round(\MVC\Registry::get('BLOG_MAX_AMOUNT_PAGINATION_STEPS') -1);
+            $iArrayIndexStart = null;
+            $iArrayIndexEnd = null;
+
+            // falls es mehr paginationsSeiten gibt als für range (plus vor/zurück) vorgesehen
+            if (count($aPaginationToGo) > ($iPaginationRange + 2))
+            {
+                $iTargetPaginationArrayIndex = ($iGetA / $iBlogMaxPostOnPage);
+
+                $iArrayIndexStart = ($iTargetPaginationArrayIndex - ($iPaginationRange / 2)); 
+                $iArrayIndexEnd = ($iTargetPaginationArrayIndex + ($iPaginationRange / 2)); 
+
+                ($iArrayIndexStart < 0) ? $iArrayIndexStart = 0: false;
+                ($iArrayIndexEnd < 0) ? $iArrayIndexEnd = 0: false;
+
+                ($iArrayIndexStart > ($iPaginationToGo - 1)) ? $iArrayIndexStart = ($iPaginationToGo - 1): false;
+                ($iArrayIndexEnd > ($iPaginationToGo - 1)) ? $iArrayIndexEnd = ($iPaginationToGo - 1): false;
+
+                // corrections
+                if ($iArrayIndexStart == 0)
+                {
+                    $iPaginationRange++;
+                    $iDiff = ($iArrayIndexEnd - $iArrayIndexStart);
+                    $iDiffMissing = ($iPaginationRange - $iDiff);
+
+                    if ($iDiffMissing > 0)
+                    {
+                        $iArrayIndexEnd = ($iArrayIndexEnd + $iDiffMissing);
+                    }
+                }
+
+                if ($iArrayIndexEnd == ($iPaginationToGo - 1))
+                {
+                    $iPaginationRange++;
+                    $iDiff = ($iArrayIndexEnd - $iArrayIndexStart);
+                    $iDiffMissing = ($iPaginationRange - $iDiff);
+
+                    if ($iDiffMissing > 0)
+                    {
+                        $iArrayIndexStart = ($iArrayIndexStart - $iDiffMissing);
+                    }
+                }
+            }
+        
+            $this->oBlogixxViewIndex->assign('iArrayIndexStart', $iArrayIndexStart);
+            $this->oBlogixxViewIndex->assign('iArrayIndexEnd', $iArrayIndexEnd);
+        }
+        
+        $this->oBlogixxViewIndex->assign('iPaginationToGo', $iPaginationToGo);		
 	}
 
     /**
