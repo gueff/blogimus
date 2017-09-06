@@ -123,6 +123,19 @@ label span {
     text-transform: uppercase;
 }
 
+/* 2017-09-06
+ * pagination look and feel
+ */
+.pagination li {
+    width: 48px;
+    height: 40px;
+    float: left;
+}
+.pagination li a {
+    text-align: center;
+    width: 100%;
+}
+
 /* progress CSS
  */
 .progresstext {

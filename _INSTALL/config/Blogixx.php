@@ -44,6 +44,9 @@ $aConfig['BLOG_BACKEND'] = array(
 // max amount of posts teasered on Overview pages
 $aConfig['BLOG_MAX_POST_ON_PAGE'] = 2;
 
+// max amount of pagination steps on Overview pages
+$aConfig['BLOG_MAX_AMOUNT_PAGINATION_STEPS'] = 13;
+
 // Teasertext size in Overview
 $aConfig['BLOG_TEASER_SIZE_IN_OVERVIEW'] = 500;
 
