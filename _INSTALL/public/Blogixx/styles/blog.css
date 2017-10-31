@@ -31,12 +31,6 @@ tag {
 	tag strong {
 		font-weight: normal;
 	}
-a[id] {/* bootstrap fixed nav anchor jump fix */
-  display: block; 
-  position: relative; 
-  top: -80px; 
-  visibility: hidden;
-}
 a[name] {/* bootstrap fixed nav anchor jump fix */
   display: block; 
   position: relative; 
