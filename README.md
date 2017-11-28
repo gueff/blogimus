@@ -15,7 +15,7 @@ Demo: http://blog.ueffing.net
 - [Templating / Design](#Templating)
 - [Blogixx Screenshots](#Blogixx-Screenshot)
 
-##<a name="Features"></a> Features
+## <a name="Features"></a> Features
 - no Database required
 - fast, secure and easy to understand
 - automatic Indexing of new Posts, Pages
@@ -29,7 +29,7 @@ Demo: http://blog.ueffing.net
 - easily add a new Page as a markdown file
 - HTML5 Bootstrap Frontend with Bootswatch Design
 
-##<a name="Requirements"></a> Requirements
+## <a name="Requirements"></a> Requirements
 - Linux OS
 - Permission to execute these Linux binaries via PHP's `shell_exec` command: `ls`, `find`, `grep`, `head`, `md5sum` 
 - PHP >=5.4
@@ -37,7 +37,7 @@ Demo: http://blog.ueffing.net
 
 For Production `live` Environments i strongly recommend a Webserver like Apache2. For `develop` or `test` you could easily run PHP's internal server (see Section [Run](#Run) here).
 
-##<a name="Installation"></a> Installation
+## <a name="Installation"></a> Installation
 This will install _myMVC_ + _Blogixx Module_ in one Step for a `develop` Environment (PHP >= 5.4 is required).
 ~~~bash
 $ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php; cd ../modules; svn co https://github.com/gueff/Blogixx.git/trunk/ Blogixx; cd Blogixx; ./install.sh;
@@ -162,7 +162,7 @@ See Folder `/public/Blogixx/` for CSS and Scripts
 
 ___
 
-##<a name="Blogixx-Screenshot"></a> Blogixx Screenshots
+## <a name="Blogixx-Screenshot"></a> Blogixx Screenshots
 
 ![](http://kanbanix.ueffing.net/Blogixx/screenshot9.png)
 
