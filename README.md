@@ -54,7 +54,7 @@ you could also "simulate" `test` and `live` environments, by just set the specif
 
 For a live/production environment i **strongly recommended to use Apache2 Webserver** and a Domain pointing to that. Using Apache2 Webserver will allow you to make use the .htaccess file located in `/trunk/public/.htaccess`. In there, you easily can set the environment variable. But of course, you also can make use of Nginx. See myMVC 's documentation for more Info.
 
-##<a name="Creating-Content"></a> Creating Content
+## <a name="Creating-Content"></a> Creating Content
 The easiest Way is to use the **Backend**. Therefore you need to set up a user and password once: 
 
 After you [installed Blogixx](#Installation) successfully, open `/trunk/config/Blogixx.php` and create an account for login. 
@@ -99,7 +99,7 @@ $aConfig['BLOG_BACKEND'] = array(
 Just login by calling `/@` and create a post or page.
 
 
-####<a name="Creating-Content-manually"></a> Manually (optional)
+#### <a name="Creating-Content-manually"></a> Manually (optional)
 
 Maybe you want to edit your Blog locally and `rsync` it to your Production `live` Server, or you just want to use the markdown editor of your choice (like ReText) locally, then the following way may be one for you. 
 
@@ -128,7 +128,7 @@ $ touch "Contact.md"
 ~~~
 Now you can edit this file writing **Markdown** Syntax
 
-##<a name="Templating"></a> Templating / Design
+## <a name="Templating"></a> Templating / Design
 
 ### Smarty Template Engine
 As myMVC makes use of the [Smarty Template Engine](http://www.smarty.net/), so -of course- does Blogixx.
