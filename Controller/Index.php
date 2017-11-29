@@ -136,40 +136,57 @@ class Index implements \MVC\MVCInterface\Controller
                 $oControllerBackend->backend($sRequest);
 				return true;
 			}
+			
+			\MVC\Event::RUN('blogixx.delegate.before');
             
 			// PAGE
 			if (true === $this->_oBlogixxModelIndex->checkRequestOnToken ('page/'))
 			{
+				\MVC\Event::RUN('blogixx.delegate.page.before');
 				$this->concretePage();
+				\MVC\Event::RUN('blogixx.delegate.page.after');
 			}
 			// POST
 			elseif (true === $this->_oBlogixxModelIndex->checkRequestOnToken ('post/'))
 			{
+				\MVC\Event::RUN('blogixx.delegate.post.before');
 				$this->concretePost();
+				\MVC\Event::RUN('blogixx.delegate.post.after');
 			}
 			// DATE
 			elseif (true === $this->_oBlogixxModelIndex->checkRequestOnToken ('date/'))
 			{
+				\MVC\Event::RUN('blogixx.delegate.date.before');
 				$this->concreteDate($aPostDate);
+				\MVC\Event::RUN('blogixx.delegate.date.after');
 			}
 			// TAG
 			elseif (true === $this->_oBlogixxModelIndex->checkRequestOnToken ('tag/'))
 			{
+				\MVC\Event::RUN('blogixx.delegate.tag.before');
 				$this->concreteTag($aTag);
+				\MVC\Event::RUN('blogixx.delegate.tag.after');
 			}
 			// BLOG OVERVIEW
 			elseif ($this->_aRoutingCurrent['path'] === strtok ($_SERVER['REQUEST_URI'], '?'))
 			{
+				\MVC\Event::RUN('blogixx.delegate.overview.before');
 				$this->postOverview();
+				\MVC\Event::RUN('blogixx.delegate.overview.after');
 			}           
 			// invalid Request
 			else
 			{
+				\MVC\Event::RUN('blogixx.delegate.notfound.before');
 				$this->notFound();		
+				\MVC\Event::RUN('blogixx.delegate.notfound.after');
 			}
+			
+			\MVC\Event::RUN('blogixx.delegate.after');
 		}
 		
 		$this->_oBlogixxModelIndex->setMeta ($this->oBlogixxViewIndex);
+		\MVC\Event::RUN('blogixx.delegate.meta.after');
 		
 		// Set Value in sContent Var
 		$this->oBlogixxViewIndex->assign (
