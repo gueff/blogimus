@@ -2,9 +2,11 @@
 					{*<!-- a Page -->*}
 					{if isset($sPage)}
 						<h1 title="{$sTitle}">
-							{$sTitle}
-						</h1>	
+							{$sTitle}<br />
+							<small>{$aSet.sCreateStamp|substr:0:10}</small>
+						</h1>
 						<div class="paper shadow prettyBorder padding20">
+							<small><i class="fa fa-edit"></i> {$aSet.sChangeStamp}</small>
 							{$sPage}
 						</div>
 						
@@ -19,6 +21,7 @@
 							<small>{$aSet.sCreateStamp}</small>
 						</h1>
 						<div class="paper shadow prettyBorder padding20">
+							<small><i class="fa fa-edit"></i> {$aSet.sChangeStamp}</small>
 							{$sPost}
 						</div>
 						<br>
