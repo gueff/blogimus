@@ -208,6 +208,8 @@ class Index
 			$aFinal[$sUrl]['sName'] = $sName;
 			$aFinal[$sUrl]['sUrl'] = $sUrl;
 			$aFinal[$sUrl]['sFilePath'] = $this->sPageDir . '/' . $sFile;
+			$aFinal[$sUrl]['sCreateStamp'] = date ("Y-m-d H:i:s", filectime ($aFinal[$sUrl]['sFilePath']));
+			$aFinal[$sUrl]['sChangeStamp'] = date ("Y-m-d H:i:s", filemtime ($aFinal[$sUrl]['sFilePath']));			
 		}
 
 		return $aFinal;
