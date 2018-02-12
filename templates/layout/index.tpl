@@ -3,10 +3,26 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>{$sTitle|escape}</title>
+		<title>
+                    {$sTitle|escape}
+                    {if isset($iPaginationPageCurrent)}Page {$iPaginationPageCurrent}{/if}
+                    {if isset($iPaginationPageMax)}/ {$iPaginationPageMax}{/if}
+                </title>
 		{if isset($sMetaDescription)}<meta name="description" content="{$sMetaDescription|escape}">{/if}
 		{if isset($sMetaKeywords)}<meta name="keywords" content="{$sMetaKeywords|escape}">{/if}
-		<meta name="robots" content="index,follow">
+		
+                {if isset($aPost)}{* Posts Overview *}
+                <meta name="robots" content="noindex,follow">
+                {elseif isset($sPage)}{* Page *}
+                <meta name="robots" content="index,follow">
+                <link rel="canonical" href="{$aCurrentRequest.full}">
+                {elseif isset($sPost)}{* Post *}
+                <meta name="robots" content="index,follow">
+                <link rel="canonical" href="{$aCurrentRequest.full}">
+                {else}
+                <meta name="robots" content="noindex,follow">
+                {/if}
+                
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/cerulean/bootstrap.min.css">
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/tomorrow-night-eighties.min.css">{*@see https://highlightjs.org/static/demo/*}		
