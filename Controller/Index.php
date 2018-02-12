@@ -3,7 +3,6 @@
 /**
  * Index.php
  *
- * @package myMVC
  * @copyright ueffing.net
  * @author Guido K.B.W. Üffing <info@ueffing.net>
  * @license GNU GENERAL PUBLIC LICENSE Version 3. See application/doc/COPYING
@@ -14,7 +13,6 @@
  */
 namespace Blogixx\Controller;
 
-
 /**
  * Index
  * 
@@ -24,7 +22,6 @@ class Index implements \MVC\MVCInterface\Controller
 {
 	/**
 	 * routing array for current page
-	 * 
 	 * @var array
 	 * @access protected
 	 */
@@ -32,7 +29,6 @@ class Index implements \MVC\MVCInterface\Controller
 
 	/**
 	 * Event Object
-	 * 
 	 * @var \Blogixx\Event\Index
 	 * @access protected
 	 */
@@ -40,7 +36,6 @@ class Index implements \MVC\MVCInterface\Controller
 
 	/**
 	 * View Object
-	 * 
 	 * @var \Blogixx\View\Index
 	 * @access public
 	 */
@@ -48,7 +43,6 @@ class Index implements \MVC\MVCInterface\Controller
 
 	/**
 	 * Model Object
-	 * 
 	 * @var \Blogixx\Model\Index 
 	 * @access protected
 	 */
@@ -58,7 +52,6 @@ class Index implements \MVC\MVCInterface\Controller
 	/**
 	 * this method is autom. called by MVC_Application->runTargetClassBeforeMethod()
 	 * in very early stage
-	 * 
 	 * @access public
 	 * @static
 	 */
@@ -70,14 +63,12 @@ class Index implements \MVC\MVCInterface\Controller
 
 	/**
 	 * Constructor
-	 * 
 	 * @access public
 	 * @return void
 	 */
 	public function __construct ()
 	{
 		$this->_aRoutingCurrent = \MVC\Registry::get ('MVC_ROUTING_CURRENT');
-
 		$this->oBlogixxViewIndex = new \Blogixx\View\Index();
 		$this->_oBlogixxModelIndex = new \Blogixx\Model\Index ();
 		
@@ -90,20 +81,16 @@ class Index implements \MVC\MVCInterface\Controller
 		$this->_oBlogixxModelIndex->init ();
 		$this->oBlogixxViewIndex->assign ('sTitle', \MVC\Registry::get ('BLOG_NAME'));
 		$this->oBlogixxViewIndex->assign ('sBlogName', \MVC\Registry::get ('BLOG_NAME'));
+        $this->oBlogixxViewIndex->assign ('aCurrentRequest', \MVC\Request::GETCURRENTREQUEST());
 	}
 
 	/**
 	 * index
-	 * 
 	 * @access public
 	 * @return void
 	 */
 	public function index ()
-	{		
-		/**
-		 * @todo full page cache
-		 */
-        
+	{		        
 		ASSIGNMENTS: {
 			
 			// All Dates
@@ -131,6 +118,7 @@ class Index implements \MVC\MVCInterface\Controller
             $this->oBlogixxViewIndex->assign ('sPageType', mb_substr($sRequest, 0, 4));
             $this->oBlogixxViewIndex->assign ('sRequest', '/' . $sRequest);
             $this->oBlogixxViewIndex->assign ('sLoginToken', mb_substr($sRequest, 0, 1));
+            
 			if ('@' === mb_substr($sRequest, 0, 1))
 			{
                 $oControllerBackend->backend($sRequest);
@@ -197,7 +185,6 @@ class Index implements \MVC\MVCInterface\Controller
 
 	/**
 	 * a concrete page
-	 * 
 	 * @access public
 	 * @return void
 	 */
@@ -219,6 +206,7 @@ class Index implements \MVC\MVCInterface\Controller
 	
 	/**
 	 * a concrete post
+	 * @access public     
 	 * @return void
 	 */
 	public function concretePost()
@@ -238,8 +226,7 @@ class Index implements \MVC\MVCInterface\Controller
 	}
 	
 	/**
-	 * results to a concrete date
-	 * 
+	 * results on a concrete date
 	 * @access public
 	 * @param array $aPostDate
 	 * @return void
@@ -254,9 +241,11 @@ class Index implements \MVC\MVCInterface\Controller
 		$iDay = (isset ($aDateRequested[2])) ? $aDateRequested[2] : false;
 
 		// handle invalid requests
-		if (
-			(false !== $iYear && !isset ($aPostDate[$iYear])) || (false !== $iMonth && !isset ($aPostDate[$iYear][$iMonth])) || (false !== $iDay && !isset ($aPostDate[$iYear][$iMonth][$iDay]))
-		)
+		if  (
+                    (false !== $iYear && !isset ($aPostDate[$iYear])) 
+                ||  (false !== $iMonth && !isset ($aPostDate[$iYear][$iMonth]))
+                ||  (false !== $iDay && !isset ($aPostDate[$iYear][$iMonth][$iDay]))
+            )
 		{
 			$this->notFound();
 		}
@@ -285,7 +274,6 @@ class Index implements \MVC\MVCInterface\Controller
 
 	/**
 	 * results to a concrete tag
-	 * 
 	 * @access public
 	 * @param array $aTag
 	 * @return void
@@ -318,7 +306,6 @@ class Index implements \MVC\MVCInterface\Controller
 
 	/**
 	 * posts for overview
-	 * 
 	 * @access public
 	 * @return void
 	 */
@@ -417,7 +404,7 @@ class Index implements \MVC\MVCInterface\Controller
             $iArrayIndexStart = null;
             $iArrayIndexEnd = null;
 
-            // falls es mehr paginationsSeiten gibt als für range (plus vor/zurück) vorgesehen
+            // if there are more pages as expected in range setting
             if (count($aPaginationToGo) > ($iPaginationRange + 2))
             {
                 $iTargetPaginationArrayIndex = ($iGetA / $iBlogMaxPostOnPage);
@@ -459,14 +446,14 @@ class Index implements \MVC\MVCInterface\Controller
         
             $this->oBlogixxViewIndex->assign('iArrayIndexStart', $iArrayIndexStart);
             $this->oBlogixxViewIndex->assign('iArrayIndexEnd', $iArrayIndexEnd);
-        }
-        
-        $this->oBlogixxViewIndex->assign('iPaginationToGo', $iPaginationToGo);		
+            $this->oBlogixxViewIndex->assign('iPaginationPageCurrent', (($iGetA / $iBlogMaxPostOnPage) + 1));		
+            $this->oBlogixxViewIndex->assign('iPaginationPageMax', count($aPaginationToGo));		       
+            $this->oBlogixxViewIndex->assign('iPaginationToGo', $iPaginationToGo);		
+        }        
 	}
 
     /**
 	 * not found
-	 * 
 	 * @access public
 	 * @return void
 	 */
@@ -478,8 +465,7 @@ class Index implements \MVC\MVCInterface\Controller
 	}
 
 	/**
-	 * Destructor
-	 * 
+	 * start rendering
 	 * @access public
 	 * @return void
 	 */
