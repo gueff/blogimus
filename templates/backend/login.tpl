@@ -12,6 +12,7 @@
 			   id="user" 
 			   class="form-control" 
 			   placeholder="User" 
+                           autofocus="autofocus"
 			   >
 	</div>
 	<div class="form-group">
