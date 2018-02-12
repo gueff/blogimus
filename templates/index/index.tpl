@@ -100,43 +100,43 @@
 					{if isset($aPost)}
 
 						<nav>
-                            <ul class="pagination hidden-print">
-                                <li class="pagination-prev">
-                                    <a href='?a={ldelim}"start":{$iMinus}{rdelim}' aria-label="Previous" title="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                {if null == $iArrayIndexStart && null == $iArrayIndexEnd}
-                                {foreach item=item key=key from=$aPaginationToGo}
-                                    <li{if $aParam.start == $item.iA} class="active"{/if}>
-                                        <a href='{$item.sUrl}'>{$item.iNr}</a>
-                                    </li>
-                                {/foreach}
-                                {else}
-                                    {if $iArrayIndexStart > 0}
-                                    <li class="disabled removable">
-                                        <a>..</a>
-                                    </li>
-                                    {/if}
-                                {foreach item=item key=key from=$aPaginationToGo}
-                                    {if $key >= $iArrayIndexStart && $key <= $iArrayIndexEnd}
-                                    <li{if $aParam.start == $item.iA} class="active"{/if}>
-                                        <a href='{$item.sUrl}'>{$item.iNr}</a>
-                                    </li>
-                                    {/if}
-                                {/foreach}
-                                    {if $iArrayIndexEnd < ($iPaginationToGo-1)}
-                                    <li class="disabled removable">
-                                        <a>..</a>
-                                    </li>
-                                    {/if}
-                                {/if}
-                                <li class="pagination-next">
-                                    <a href='?a={ldelim}"start":{$iPlus}{rdelim}' aria-label="Next" title="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
+                                                    <ul class="pagination hidden-print">
+                                                        <li class="pagination-prev">
+                                                            <a href='?a={ldelim}"start":{$iMinus}{rdelim}' aria-label="Previous" title="Previous" rel="prev">
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                            </a>
+                                                        </li>
+                                                        {if null == $iArrayIndexStart && null == $iArrayIndexEnd}
+                                                        {foreach item=item key=key from=$aPaginationToGo}
+                                                            <li{if $aParam.start == $item.iA} class="active"{/if}>
+                                                                <a href='{$item.sUrl}'>{$item.iNr}</a>
+                                                            </li>
+                                                        {/foreach}
+                                                        {else}
+                                                            {if $iArrayIndexStart > 0}
+                                                            <li class="disabled removable">
+                                                                <a>..</a>
+                                                            </li>
+                                                            {/if}
+                                                        {foreach item=item key=key from=$aPaginationToGo}
+                                                            {if $key >= $iArrayIndexStart && $key <= $iArrayIndexEnd}
+                                                            <li{if $aParam.start == $item.iA} class="active"{/if}>
+                                                                <a href='{$item.sUrl}'>{$item.iNr}</a>
+                                                            </li>
+                                                            {/if}
+                                                        {/foreach}
+                                                            {if $iArrayIndexEnd < ($iPaginationToGo-1)}
+                                                            <li class="disabled removable">
+                                                                <a>..</a>
+                                                            </li>
+                                                            {/if}
+                                                        {/if}
+                                                        <li class="pagination-next">
+                                                            <a href='?a={ldelim}"start":{$iPlus}{rdelim}' aria-label="Next" title="Next" rel="next">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
 						</nav>		
 
 						{foreach item=aArticle from=$aPost}<h2 title="{$aArticle.sName}">
@@ -149,43 +149,43 @@
 						{/foreach}		
 
 						<nav>
-                            <ul class="pagination hidden-print">
-                                <li class="pagination-prev">
-                                    <a href='?a={ldelim}"start":{$iMinus}{rdelim}' aria-label="Previous" title="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                {if null == $iArrayIndexStart && null == $iArrayIndexEnd}
-                                {foreach item=item key=key from=$aPaginationToGo}
-                                    <li{if $aParam.start == $item.iA} class="active"{/if}>
-                                        <a href='{$item.sUrl}'>{$item.iNr}</a>
-                                    </li>
-                                {/foreach}
-                                {else}
-                                    {if $iArrayIndexStart > 0}
-                                    <li class="disabled removable">
-                                        <a>..</a>
-                                    </li>
-                                    {/if}
-                                {foreach item=item key=key from=$aPaginationToGo}
-                                    {if $key >= $iArrayIndexStart && $key <= $iArrayIndexEnd}
-                                    <li{if $aParam.start == $item.iA} class="active"{/if}>
-                                        <a href='{$item.sUrl}'>{$item.iNr}</a>
-                                    </li>
-                                    {/if}
-                                {/foreach}
-                                    {if $iArrayIndexEnd < ($iPaginationToGo-1)}
-                                    <li class="disabled removable">
-                                        <a>..</a>
-                                    </li>
-                                    {/if}
-                                {/if}
-                                <li class="pagination-next">
-                                    <a href='?a={ldelim}"start":{$iPlus}{rdelim}' aria-label="Next" title="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
+                                                    <ul class="pagination hidden-print">
+                                                        <li class="pagination-prev">
+                                                            <a href='?a={ldelim}"start":{$iMinus}{rdelim}' aria-label="Previous" title="Previous" rel="prev">
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                            </a>
+                                                        </li>
+                                                        {if null == $iArrayIndexStart && null == $iArrayIndexEnd}
+                                                        {foreach item=item key=key from=$aPaginationToGo}
+                                                            <li{if $aParam.start == $item.iA} class="active"{/if}>
+                                                                <a href='{$item.sUrl}'>{$item.iNr}</a>
+                                                            </li>
+                                                        {/foreach}
+                                                        {else}
+                                                            {if $iArrayIndexStart > 0}
+                                                            <li class="disabled removable">
+                                                                <a>..</a>
+                                                            </li>
+                                                            {/if}
+                                                        {foreach item=item key=key from=$aPaginationToGo}
+                                                            {if $key >= $iArrayIndexStart && $key <= $iArrayIndexEnd}
+                                                            <li{if $aParam.start == $item.iA} class="active"{/if}>
+                                                                <a href='{$item.sUrl}'>{$item.iNr}</a>
+                                                            </li>
+                                                            {/if}
+                                                        {/foreach}
+                                                            {if $iArrayIndexEnd < ($iPaginationToGo-1)}
+                                                            <li class="disabled removable">
+                                                                <a>..</a>
+                                                            </li>
+                                                            {/if}
+                                                        {/if}
+                                                        <li class="pagination-next">
+                                                            <a href='?a={ldelim}"start":{$iPlus}{rdelim}' aria-label="Next" title="Next" rel="next">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
 						</nav>		
 							
 						<div class="shariff"></div>						
