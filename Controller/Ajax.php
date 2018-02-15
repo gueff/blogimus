@@ -77,8 +77,13 @@ class Ajax implements \MVC\MVCInterface\Controller
 			$aResult[$iKey] = str_replace($sBasename, $sBasenameSeo, $aResult[$iKey]);
 			
 			$sDateOrig = mb_substr($aResult[$iKey], 5, 11);
-			$sDate = str_replace('-', '#|#', $sDateOrig);
-			$aResult[$iKey] = str_replace($sDateOrig, $sDate, $aResult[$iKey]);			
+			
+			// filename has leading date
+			if ((int) $sDateOrig > 0)
+			{
+				$sDate = str_replace('-', '#|#', $sDateOrig);
+				$aResult[$iKey] = str_replace($sDateOrig, $sDate, $aResult[$iKey]);			
+	    		}			
 			
 			$aResult[$iKey] = str_replace('/', '#|#', '/' . $aResult[$iKey]);
 			$aResult[$iKey] = mb_substr($aResult[$iKey], 0, (strlen($aResult[$iKey]) - 3) ) . '#|#.json';
