@@ -13,6 +13,7 @@
 		
                 {if isset($aPost)}{* Posts Overview *}
                 <meta name="robots" content="noindex,follow">
+                <link rel="canonical" href="{$aCurrentRequest.protocol}{$aCurrentRequest.host}{$aCurrentRequest.path}">
                 {elseif isset($sPage)}{* Page *}
                 <meta name="robots" content="index,follow">
                 <link rel="canonical" href="{$aCurrentRequest.full}">
