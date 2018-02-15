@@ -55,22 +55,7 @@ class Index
 				$oIdsInit->config['General']['exceptions'][] = 'GET.a';
 			}
 		});
-		
-		/*
-		 * What to do if IDS detects an impact
-		 */
-		\MVC\Event::BIND ('mvc.ids.impact.info', function($oIdsReport) {
-
-			\MVC\Log::WRITE("INFO\t" . \MVC\IDS::getReport ($oIdsReport), 'ids.log');
-		});
-		
-		\MVC\Event::BIND ('mvc.ids.impact.warn', function($oIdsReport) {
-
-			\MVC\Log::WRITE("WARN\t" . \MVC\IDS::getReport ($oIdsReport), 'ids.log');
-			
-			// dispose infected Variables mentioned in report
-			\MVC\IDS::dispose($oIdsReport);
-		});		
+	
 		
 		/*
 		 * switch on the debug toolbar in develop environment
