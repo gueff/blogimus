@@ -37,17 +37,6 @@ class Ajax
 	{
 		// this is not bonded to an event, instead it is executed directly
 		\MVC\Request::ENSURECORRECTPROTOCOL();
-
-		/*
-		 * What to do if IDS detects an impact
-		 */
-		\MVC\Event::BIND ('mvc.ids.impact.warn', function($oIdsReport) {
-
-			\MVC\Log::WRITE("WARN\t" . \MVC\IDS::getReport ($oIdsReport), 'ids.log');
-			
-			// dispose infected Variables mentioned in report
-			\MVC\IDS::dispose($oIdsReport);
-		});	
 	}
 
 	/**
