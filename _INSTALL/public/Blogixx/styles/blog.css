@@ -1,18 +1,15 @@
 body {
 	margin: 80px 0 0 0;
 	background-color: #efefef;
-	color: #333333;
 }	
 h1,h2,h3,h4,h5,h6 {
-	color: #DD4814;
 }
 p, li, tag {
-	color: #333333;
 }
 hr {
 	border: 0;
-	background-color: silver;
 	height: 1px;
+	background: silver;
 }
 section #mainContent {
 	overflow-x: auto;
@@ -34,9 +31,6 @@ tag {
 	tag strong {
 		font-weight: normal;
 	}
-nav .active {
-	background-color: #AE3910;
-}
 a[name] {/* bootstrap fixed nav anchor jump fix */
   display: block; 
   position: relative; 
@@ -51,39 +45,13 @@ blockquote {
 footer {
 	padding: 20px;
 }
-	footer .container span {
-		/*display: block;*/
-		/*border: 1px solid red;*/
-		/*margin: -10px 10px 0 0;*/
-	}
-	footer .container span a {
-		/*float: left;*/
-		/*display: block;*/
-	}
-	#footerInfo {
-		margin-top: 10px;
-		border-top: 1px solid silver;
-		border-bottom: 1px solid silver;
-	}
-	#footerInfo div img {
-		padding: 0;
-		margin: 3px 0 0 0;
-	}
-	#footerInfo div {
-		padding: 10px 40px 10px 0;
-	}
-img {
-	border-radius: 3px;
-}
+label span {
+	font-size: smaller;
+	font-style: italic;	
+	font-weight: normal;
+}	
 
 
-#header {
-	background-color: #fff;
-}
-	#header h3 img {
-		position: relative;
-		top: 2px;
-	}
 #inputSearch{
 	margin: 0 20px 0 0;
 }
@@ -108,11 +76,6 @@ img {
 	.suggestHover {
 		background-color: #f5f5f5;
 	}	
-label span {
-	font-size: smaller;
-	font-style: italic;	
-	font-weight: normal;
-}
 
 .text-black {
 	color: #303030 !important;
@@ -141,16 +104,6 @@ label span {
 	height: 1000px;
 }
 
-.un {
-	font-weight: bold;
-	font-size: 24px;
-	padding: 0;
-	margin: 0;
-}
-	.un .n {
-		margin-left: -6px;
-	}
-	
 .dates li a {
 	margin-top: 2px;
 	display: inline-block;
@@ -163,78 +116,39 @@ label span {
 }	
 	.tags li a .badge {
 		font-family: monospace;
-		/*font-size: 10px;*/
 		padding: 1px 3px;
-		background-color: #DD4814;
-		color: #fff;
 	}	
-spec {
-	display: none !important;
-}	
 .ucfirst:first-letter
 {
     text-transform: uppercase;
-}	
-.shariff ul li.info, .share_text {
-	display: none;
 }
-	/*.shariff ul li, .shariff-button, .twitter, .googleplus {
-		max-width: 35px !important;
-		margin: 0;
-		padding: 0;
-		float: left;
-	}*/
-	.shariff ul li a {
-		/*max-width: 35px !important;*/
-		/*background-color: #aea79f !important;*/
-		color: white;
-		border: 1px solid silver;
-		border-radius: 3px;
-		/*opacity: 0.3;*/
-		/*font-weight: bold;*/
-	}
-	.shariff ul li a:hover {
-		/*background-color: #978E83 !important;*/
-		color: white;
-		/*border: 1px solid gray;*/
-		border-radius: 3px;
-		opacity: 1;
-	}
-.printOnly{
-    display: none;
+
+/* 2017-09-06
+ * pagination look and feel
+ */
+.pagination li {
+    width: 48px;
+    height: 40px;
+    float: left;
 }
+.pagination li a {
+    text-align: center;
+    width: 100%;
+}
+
 /* progress CSS
  */
-.visualizeConsumption {
-}
-
-.progress {
+.progresstext {
+	padding: 0px 2px;
 	position: absolute;
-}		
-	.progresstext {
-		position: absolute;
-		left: 10px;
-	}	
+}	
 	
 @media print {
-
-	body {
-		margin: 0;
-	}	
 	body,h1,h2,h3,h4,h5,h6,p,li,tag {
 		color: #000;
 		background-color: transparent;
 		font-family: serif;
 	}
-        .container, #mainContent {
-            width: 100%;
-        }
-        #navbar, section .col-lg-3, .noPrint {
-            display: none;
-        }
-        .printOnly {
-            display: inherit;
-        }
 	pre {
 		font-family: monospace;
 	}
@@ -248,15 +162,3 @@ spec {
 }	
 
 
-.adTable, .adTable tr, .adTable td {
-    border-collapse: collapse !important;
-    border: none !important;    
-    margin: 0 !important;
-    padding: 0 !important;
-}
-.adTable:hover, .adTable tr:hover, .adTable td:hover {
-    background-color: transparent !important;
-}
-sub {
-    color: gray;
-}
