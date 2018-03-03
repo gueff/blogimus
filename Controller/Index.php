@@ -137,6 +137,18 @@ class Index implements \MVC\MVCInterface\Controller
 			// POST
 			elseif (true === $this->_oBlogixxModelIndex->checkRequestOnToken ('post/'))
 			{
+				// Url was date-hacked, redirect to proper date presentation
+				$aSplit = preg_split('@/@', $_SERVER['REQUEST_URI'], NULL, PREG_SPLIT_NO_EMPTY);
+
+				// concrete page is missing, we have date infos in path only if array is < 5
+				if (count($aSplit) < 5) 
+				{
+				    // new target is date
+				    $aSplit[0] = 'date';
+				    $sPath = '/' . implode('/', $aSplit) . '/';
+				    \MVC\Request::REDIRECT($sPath);
+				}
+
 				\MVC\Event::RUN('blogixx.delegate.post.before');
 				$this->concretePost();
 				\MVC\Event::RUN('blogixx.delegate.post.after');
