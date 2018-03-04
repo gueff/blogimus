@@ -1,123 +1,123 @@
 body {
-	margin: 80px 0 0 0;
-	background-color: #efefef;
+    margin: 80px 0 0 0;
+    background-color: #efefef;
 }	
 h1,h2,h3,h4,h5,h6 {
 }
 p, li, tag {
 }
 hr {
-	border: 0;
-	height: 1px;
-	background: silver;
+    border: 0;
+    height: 1px;
+    background: silver;
 }
 section #mainContent {
-	overflow-x: auto;
+    overflow-x: auto;
 }
 aside {
-	height: 100%;
-	padding: 20px;
+    height: 100%;
+    padding: 20px;
 }
-	aside ul {
-		list-style: none;
-	}
-		aside ul li {
-			margin: 2px 0 0 -30px;
-		}
+aside ul {
+    list-style: none;
+}
+aside ul li {
+    margin: 2px 0 0 -30px;
+}
 tag {
-	margin: 0 0 20px 0;
-	display: block;
+    margin: 0 0 20px 0;
+    display: block;
 }
-	tag strong {
-		font-weight: normal;
-	}
+tag strong {
+    font-weight: normal;
+}
 a[name] {/* bootstrap fixed nav anchor jump fix */
-  display: block; 
-  position: relative; 
-  top: -80px; 
-  visibility: hidden;
+    display: block; 
+    position: relative; 
+    top: -80px; 
+    visibility: hidden;
 }
 blockquote {
-	font-size: small;
-	font-style: italic;
-	font-family: monospace;
+    font-size: small;
+    font-style: italic;
+    font-family: monospace;
 }
 footer {
-	padding: 20px;
+    padding: 20px;
 }
 label span {
-	font-size: smaller;
-	font-style: italic;	
-	font-weight: normal;
+    font-size: smaller;
+    font-style: italic;	
+    font-weight: normal;
 }	
 
 
 #inputSearch{
-	margin: 0 20px 0 0;
+    margin: 0 20px 0 0;
 }
 #suggest {
-	z-index: 10;
-	position: absolute;
-	background-color: white;
-	border: 1px solid silver;
-	height: auto;
-	width: 400px;
-	padding: 10px 20px;
+    z-index: 10;
+    position: absolute;
+    background-color: white;
+    border: 1px solid silver;
+    height: auto;
+    width: 400px;
+    padding: 10px 20px;
 }
-	#suggest a {
-		display: block;
-		padding: 5px !important;
-		margin: 0 !important;
-		border-bottom: 1px dotted silver;
-	}
-	#suggest a:hover {
-		background-color: #f5f5f5;
-	}
-	.suggestHover {
-		background-color: #f5f5f5;
-	}	
+#suggest a {
+    display: block;
+    padding: 5px !important;
+    margin: 0 !important;
+    border-bottom: 1px dotted silver;
+}
+#suggest a:hover {
+    background-color: #f5f5f5;
+}
+.suggestHover {
+    background-color: #f5f5f5;
+}	
 
 .text-black {
-	color: #303030 !important;
+    color: #303030 !important;
 }
 .text-shadow {
     text-shadow: 0px 0px 3px #000;
 }
 .topShadow {
-	box-shadow:0px -10px 40px rgba(0, 0, 0, 0.8);
+    box-shadow:0px -10px 40px rgba(0, 0, 0, 0.8);
 }	
 .paper {
-	background-color: #fff; 
+    background-color: #fff; 
 }
 .shadow {
-	box-shadow: 0px 0px 10px #d0d0d0;
+    box-shadow: 0px 0px 10px #d0d0d0;
 }
 .padding20 {
-	padding: 20px;
+    padding: 20px;
 }
 .prettyBorder {
-	border: 1px solid #d0d0d0;
-	border-radius: 3px;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
 }
 .space {
-	display: block;
-	height: 1000px;
+    display: block;
+    height: 1000px;
 }
 
 .dates li a {
-	margin-top: 2px;
-	display: inline-block;
-	padding: 5px 10px;
+    margin-top: 2px;
+    display: inline-block;
+    padding: 5px 10px;
 }	
 .tags li a {
-	margin: 2px 2px;
-	display: inline-block;
-	float: left;
+    margin: 2px 2px;
+    display: inline-block;
+    float: left;
 }	
-	.tags li a .badge {
-		font-family: monospace;
-		padding: 1px 3px;
-	}	
+.tags li a .badge {
+    font-family: monospace;
+    padding: 1px 3px;
+}	
 .ucfirst:first-letter
 {
     text-transform: uppercase;
@@ -139,26 +139,24 @@ label span {
 /* progress CSS
  */
 .progresstext {
-	padding: 0px 2px;
-	position: absolute;
+    padding: 0px 2px;
+    position: absolute;
 }	
-	
+
 @media print {
-	body,h1,h2,h3,h4,h5,h6,p,li,tag {
-		color: #000;
-		background-color: transparent;
-		font-family: serif;
-	}
-	pre {
-		font-family: monospace;
-	}
-	section {
-		margin: 0;
-		padding: 0;
-	}
-	.prettyBorder {
-		border: none;
-	}
+    body,h1,h2,h3,h4,h5,h6,p,li,tag {
+        color: #000;
+        background-color: transparent;
+        font-family: serif;
+    }
+    pre {
+        font-family: monospace;
+    }
+    section {
+        margin: 0;
+        padding: 0;
+    }
+    .prettyBorder {
+        border: none;
+    }
 }	
-
-

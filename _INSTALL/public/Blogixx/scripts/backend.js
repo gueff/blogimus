@@ -7,9 +7,8 @@ $(document).ready(function() {
 	  return check;
 	}
 	
-	if (false === mobileAndTabletcheck())
-	{
-		$('#inputSearch').focus();
+	if (false === mobileAndTabletcheck()) {
+            $('#inputSearch').focus();
 	}	
 
 	// make images behave responsive
@@ -18,34 +17,63 @@ $(document).ready(function() {
 	// better tables
 	$('table').addClass('table table-hover table-bordered');
 	
-	// convert <tag> list into clickable hyperlinks
-	$('.container tag').each(function( index ) {
-		var sTag = $(this).html();
-		var aTag = sTag.split(',');
-		var sTagUrls = '';
-		aTag.forEach(function(item){
-			sTagUrls+= '<a href="/tag/' + item.trim() + '/" class="label label-info">' + item.trim() + '</a> ';
-		});
-		
-		$(this).html('Tags: <strong>' + sTagUrls + '</strong>');					
-	});			
-	
 	// delete
 	$('.btnDelete').on('click', function(){
-		$('modalDeleteType').html($(this).attr('data-type'));
-		$('modalDeleteSpecific').html('"<b>' + $(this).attr('data-name') + '</b>"');
-		$('modalDeleteUrl').html('<a href="' + $(this).attr('data-url') + '">' + $(this).attr('data-url') + '</a>');
+            $('modalDeleteType').html($(this).attr('data-type'));
+            $('modalDeleteSpecific').html('"<b>' + $(this).attr('data-name') + '</b>"');
+            $('modalDeleteUrl').html('<a href="' + $(this).attr('data-url') + '">' + $(this).attr('data-url') + '</a>');
 	});
 	$('#modalBtnDelete').on('click', function(e){
-		$('#modalDelete').modal('hide');
-		var sUrl = '/@delete?a={"type":"' + $('modalDeleteType').text() + '","url":"' + $('modalDeleteUrl').text() + '"}';
-		console.log(sUrl);
-		location.href = sUrl;
+            $('#modalDelete').modal('hide');
+            var sUrl = '/@delete?a={"type":"' + $('modalDeleteType').text() + '","url":"' + $('modalDeleteUrl').text() + '"}';
+            console.log(sUrl);
+            location.href = sUrl;
 	});
 
 	/* shows a progressbar beneath an input(or textarea) element. @see https://blog.ueffing.net/ */
 	function visualizeConsumption(oObject,a,b,c){var a=('undefined'===typeof a)?50:a;var b=('undefined'===typeof b)?70:b;var c=('undefined'===typeof c)?100:c;if(false===oObject.hasClass('visualizeConsumption')||null===oObject.val()){return false}$(oObject).on('blur',function(){$('.visualizeConsumptionBar').hide()});var iProgressBarId=oObject.next().attr('data-consumptionBar');if('undefined'===typeof iProgressBarId){$(oObject).wrap('<div style="position: relative;"></div>');$('<div id="'+Date.now()+'" data-consumptionBar="'+Date.now()+'" class="visualizeConsumptionBar progress progress-striped active" style="display: none;position: absolute;width: 100%;"><div class="progress-bar"><div class="progresstext"></div></div></div>').insertAfter(oObject);$(oObject).focus();$('.visualizeConsumptionBar').hide();return false}var iMaxlength=(('undefined'!==typeof oObject.attr('maxlength')?oObject.attr('maxlength'):(('undefined'!==typeof oObject.attr('data-maxlength'))?oObject.attr('data-maxlength'):false)));if(false===iMaxlength){return false}var iPercent=(oObject.val().length*100/iMaxlength);(iPercent>=a)?$('#'+iProgressBarId).show():$('#'+iProgressBarId).hide();(iPercent>=a&&iPercent<b)?$('#'+iProgressBarId+' .progress-bar').removeClass('progress-bar-warning progress-bar-danger').addClass('progress-bar-info'):false;(iPercent>=b&&iPercent<c)?$('#'+iProgressBarId+' .progress-bar').removeClass('progress-bar-info progress-bar-danger').addClass('progress-bar-warning'):false;(iPercent>=c)?$('#'+iProgressBarId+' .progress-bar').removeClass('progress-bar-info progress-bar-warning').addClass('progress-bar-danger'):false;$('#'+iProgressBarId).css({'width':oObject.css('width')});$('#'+iProgressBarId+' .progress-bar').css({width:iPercent+'%'});$('#'+iProgressBarId+' .progresstext').text(Math.round(iPercent)+'%');return true}
 	$(".visualizeConsumption").on('click keyup keypress', function() {visualizeConsumption($(this));}); 		
+        
+        /**
+         * using taggle for tagging
+         * @see https://sean.is/poppin/tags/
+         * @see https://www.devbridge.com/sourcery/components/jquery-autocomplete/
+         */
+        if (($("#taglist").length > 0)){
+            
+            var oTaggle = new Taggle('taglist', {
+                "placeholder": "",
+                "tabIndex": 4,
+                tags: aTagList,
+                "preserveCase": true
+            });            
+            
+            var oContainerTaglist = oTaggle.getContainer();
+            var input = oTaggle.getInput();
+
+            $.get(
+                "/Ajax/taglist/",
+                "all",
+                function(getTags, status) {
+
+                    if (getTags.length > 0)
+                    {
+                        $('#taglist input').autocomplete({
+                            source: getTags,
+                            appendTo: oContainerTaglist,
+                            position: { at: "left bottom", of: oContainerTaglist },
+                            select: function(event, data) {
+                                event.preventDefault();
+                                //Add the tag if user clicks
+                                if (event.which === 1) {
+                                    oTaggle.add(data.item.value);
+                                }
+                            }
+                        });                     
+                    }
+                }
+            );
+        }
 });
 
 

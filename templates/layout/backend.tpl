@@ -7,6 +7,8 @@
 
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/cerulean/bootstrap.min.css">
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+                <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />                
+                <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.css" />
 		<link rel="stylesheet" href="/Blogixx/styles/backend.css">
 		
 		<link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
@@ -60,6 +62,10 @@
 		<!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->	
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" type="text/javascript"></script>		
 		<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"></script>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/taggle/1.13.0/taggle.min.js"></script>
+                <script>var aTagList = [{if isset($sTag)}{$sTag}{/if}];</script>
 		<script src="/Blogixx/scripts/backend.js" type="text/javascript"></script>
 	</body>
 </html>

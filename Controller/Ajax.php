@@ -58,6 +58,11 @@ class Ajax implements \MVC\MVCInterface\Controller
 		$this->_aRoutingCurrent = \MVC\Registry::get('MVC_ROUTING_CURRENT');
 	}
 	
+    /**
+     * echos out results to requested string as JSON array
+     * @access public
+     * @return void 
+     */
 	public function index($sString = '')
 	{
 		$aFinal = array();
@@ -83,7 +88,7 @@ class Ajax implements \MVC\MVCInterface\Controller
 			{
 				$sDate = str_replace('-', '#|#', $sDateOrig);
 				$aResult[$iKey] = str_replace($sDateOrig, $sDate, $aResult[$iKey]);			
-	    		}			
+            }			
 			
 			$aResult[$iKey] = str_replace('/', '#|#', '/' . $aResult[$iKey]);
 			$aResult[$iKey] = mb_substr($aResult[$iKey], 0, (strlen($aResult[$iKey]) - 3) ) . '#|#.json';
@@ -103,9 +108,25 @@ class Ajax implements \MVC\MVCInterface\Controller
 		
 		echo json_encode($aFinal);
 	}
+    
+    /**
+     * echos out the taglist as JSON array
+     * @access public
+     * @return void 
+     */
+    public function taglist()
+    {
+        $this->oBlogixxViewIndex->sendJsonHeader();
+        $oModelIndex = new \Blogixx\Model\Index();        
+        echo json_encode(
+            array_keys(
+                $oModelIndex->getTags()
+            )
+        );
+    }
 
-	/**
-	 * Destrucor
+    /**
+	 * Destructor
 	 * 
 	 * @access public
 	 * @return void

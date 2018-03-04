@@ -159,7 +159,7 @@ class Index
 		}
 		
 		// Tags
-		$aTag = $this->_getTags();
+		$aTag = $this->getTags();
 		$sFile = \MVC\Registry::get ('MVC_CACHE_DIR') . '/Blogixx/aTag.json';
 		(file_exists ($sFile)) ? unlink($sFile) : false;
 		file_put_contents($sFile, json_encode($aTag));		
@@ -267,10 +267,10 @@ class Index
 	/**
 	 * checks which tags exist in posts
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array $aFinalTag tags listed
 	 */
-	private function _getTags()
+	public function getTags()
 	{
 		// get file list
 		$sCmd = \MVC\Registry::get('BLOG_BIN_GREP') . ' -or "<tag>.*</tag>" ' . $this->sDataDir;		

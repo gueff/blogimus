@@ -205,8 +205,15 @@ class Backend
         )
         {
             // delete old
-            (file_exists($sFilePath)) ? unlink($sFilePath) : false;
-
+            (file_exists($sFilePath)) ? unlink($sFilePath) : false;      
+            
+            $_POST['sMarkdown'] = trim(''
+                // prepend new tag
+                . ((!empty($_POST['taggles'])) ? '<tag>' . implode(',', $_POST['taggles']) . '</tag>' . "\n" : '')
+                // remove former tags from markup
+                . preg_replace('#<tag>(.*?)</tag>#', '', $_POST['sMarkdown'])
+            );
+            
             // write new
             file_put_contents(
                 $sFilePathNew, 
@@ -220,6 +227,10 @@ class Backend
 
         // load content
         $sMarkdown = (file_exists($sFilePath)) ? file_get_contents($sFilePath) : '';
+        $sTag = "'" . implode("','", $this->oModelIndex->getTagArrayFromString($sMarkdown)) . "'";
+        $this->oControllerIndex->oBlogixxViewIndex->assign('sTag', $sTag);
+        
+        $sMarkdown = preg_replace('#<tag>(.*?)</tag>#', '', $sMarkdown);
 
         $this->oControllerIndex->oBlogixxViewIndex->assign('sError', $sMessage);
         $this->oControllerIndex->oBlogixxViewIndex->assign('aParam', $aParam);
@@ -282,7 +293,14 @@ class Backend
             {
                 $sMessage .= 'a  ' . ucfirst($_POST['type']) . ' "' . $_POST['title'] . '" ' . ((isset($sDate)) ? ' with date "' . $sDate . '" ' : '') . 'already exists.<br>';
             }
-
+            
+            $_POST['sMarkdown'] = ''
+                // prepend new tag
+                . ((!empty($_POST['taggles'])) ? '<tag>' . implode(',', $_POST['taggles']) . '</tag>' . "\n" : '')
+                // remove former tags from markup
+                . preg_replace('#<tag>(.*?)</tag>#', '', $_POST['sMarkdown']);
+            
+            // save
             if (false === file_put_contents($sFilename, $_POST['sMarkdown'], LOCK_EX))
             {
                 return false;

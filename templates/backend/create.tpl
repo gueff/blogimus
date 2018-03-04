@@ -28,24 +28,27 @@
 	  >
 	
 	<button type="submit" class="btn btn-success btnWidth100">Save</button>
-	<div class="radio">
-		<label>
-			<input type="radio" name="type" value="post" checked onclick="document.getElementById('date').disabled = false;">
-			Post
-		</label>
-	</div>
-	<div class="radio">
-		<label>
-			<input type="radio" name="type" value="page" onclick="document.getElementById('date').disabled = true;">
-			Page
-		</label>
-	</div>
-	
-	<div class="form-group">
-		<label for="date">Date <small class="text-muted">mandatory when creating a Post</small></label>
-		<input type="text" id="date" class="form-control" name="date" value="{$smarty.now|date_format:"%Y-%m-%d"}" placeholder="yyyy-mm-dd">
-	</div>
-	
+        
+        <div class="pull-left">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="type" value="post" checked onclick="document.getElementById('date').disabled = false;">
+                    <div class="btn btn-default">Post</div>
+                </label>
+            </div>
+        </div>
+        <div class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <div class="pull-left">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="type" value="page" onclick="document.getElementById('date').disabled = true;">
+                    <div class="btn btn-block btn-default">Page</div>
+                </label>
+            </div>
+        </div>
+        
+        <div class="clearfix"></div>
+                
 	<div class="form-group">
 		<label for="title">Title</label>
 		<input type="text" 
@@ -55,15 +58,38 @@
 			   placeholder="Title" 
 			   autofocus="autofocus" 
 			   maxlength="{$BLOG_CREATE_MAX_TITLE}" 
+                           tabindex="1" 
+                           required="1" 
 			   >
 	</div>	
 	
+	<div class="form-group">
+            <label for="date">Date <small class="text-muted">mandatory when creating a Post</small></label>
+            <input type="text" 
+                   id="date" 
+                   class="form-control" 
+                   name="date" 
+                   value="{$smarty.now|date_format:"%Y-%m-%d"}" 
+                   placeholder="yyyy-mm-dd" 
+                   tabindex="2" 
+                   required="1"
+                   >
+	</div>
+                           
 	<label for="markdownEdit">Content</label>
 	<textarea id="markdownEdit" 
 			  class="visualizeConsumption markdown prettyBorder shadow padding20" 
 			  name="sMarkdown" 
-			  maxlength="{$BLOG_CREATE_MAX_CONTENT}"
+			  maxlength="{$BLOG_CREATE_MAX_CONTENT}" 
+                          tabindex="3" 
+                          required="1"
 			  ></textarea>				  
+	
+	<div class="form-group">
+            <label for="taglist">Tags <small class="text-muted">enter a tagname, then press <code>&lt;enter&gt;</code> key to confirm</small></label>
+            <div id="taglist" class="form-control"></div>
+	</div>	                           
+                          
 	<button type="submit" class="btn btn-success btnWidth100">Save</button>
 </form>
 		
