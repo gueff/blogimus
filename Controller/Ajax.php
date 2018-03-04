@@ -118,9 +118,11 @@ class Ajax implements \MVC\MVCInterface\Controller
     {
         $this->oBlogixxViewIndex->sendJsonHeader();
         $oModelIndex = new \Blogixx\Model\Index();        
+        $aTag = $oModelIndex->getTags();
+        ksort($aTag, SORT_STRING | SORT_FLAG_CASE);
         echo json_encode(
             array_keys(
-                $oModelIndex->getTags()
+                $aTag
             )
         );
     }
