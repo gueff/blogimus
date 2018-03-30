@@ -40,19 +40,6 @@ class Index
             \MVC\Request::REDIRECT('/');
         });
         
-		/*
-		 * switch on the debug toolbar in develop environment
-		 * immediatly after the target class/method was called
-		 */
-		if ('develop' === \MVC\Registry::get('MVC_ENV'))
-		{
-			\MVC\Event::BIND ('mvc.reflect.targetObject.after', function ($oObject)
-			{
-				// switch on ToolBar
-				new \InfoTool\Model\Index ($oObject->oView);
-			});
-		}        
-
         /*
          * We want to log the end of the request
          */
