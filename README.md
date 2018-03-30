@@ -138,22 +138,24 @@ See `/trunk/modules/Blogixx/templates/` for the Smarty template files which will
 ### Frontend
 For the Frontend, Blogixx further makes use of 
 
-- [Bootstrap](http://getbootstrap.com/)
-- [Bootswatch](http://bootswatch.com/) (HTML5 Boostrap Designs)
-- [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
-- [jQuery](https://jquery.com/)
+- [Bootstrap 4](http://getbootstrap.com/)
+- [Bootswatch 4](http://bootswatch.com/) (HTML5 Boostrap Designs)
+- [Font Awesome 4.7](http://fortawesome.github.io/Font-Awesome/)
+- [jQuery 3](https://jquery.com/)
 - [highlight.js](https://highlightjs.org/)
+- [Shariff](https://github.com/heiseonline/shariff)
+- 
 
-So Blogixx makes use of Bootswatch, where its Design `cerulean` here is set as the default one. 
+So Blogixx makes use of Bootswatch 4, where its Design `cosmo` here is set as the default one. 
 But you can easily switch to another Bootswatch Design by changing in `/modules/Blogixx/templates/layout/index.tpl`:
 
-For example, you can change `cerulean`
+For example, you can change `cosmo`
 ~~~html
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/cerulean/bootstrap.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/cosmo/bootstrap.min.css">
 ~~~
 into `united`:
 ~~~html
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/united/bootstrap.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/united/bootstrap.min.css">
 ~~~
    
 See  [Bootswatch](http://bootswatch.com/) for available Bootswatch Designs.
@@ -163,25 +165,9 @@ See Folder `/public/Blogixx/` for CSS and Scripts
 ___
 
 ## <a name="Blogixx-Screenshot"></a> Blogixx Screenshots
-
-![](http://kanbanix.ueffing.net/Blogixx/screenshot9.png)
-
-![](http://kanbanix.ueffing.net/Blogixx/screenshot10.png)
-
-![](http://kanbanix.ueffing.net/Blogixx/screenshot11.png)
-
-![](http://kanbanix.ueffing.net/Blogixx/screenshot7.png)
-
-![](http://kanbanix.ueffing.net/Blogixx/screenshot1.png)
-
-![](http://kanbanix.ueffing.net/Blogixx/screenshot2.png)
-
-![](http://kanbanix.ueffing.net/Blogixx/screenshot3.png)
-
-![](http://kanbanix.ueffing.net/Blogixx/screenshot4.png)
-
-![](http://kanbanix.ueffing.net/Blogixx/screenshot5.png)
-
-![](http://kanbanix.ueffing.net/Blogixx/screenshot6.png)
-
-![](http://kanbanix.ueffing.net/Blogixx/screenshot12.png)
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot1.png)
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot2.png)
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot3.png)
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot4.png)
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot5.png)
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot6.png)
