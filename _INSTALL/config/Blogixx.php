@@ -3,6 +3,9 @@
 // Name of Blog
 $aConfig['BLOG_NAME'] = 'Blogixx';
 
+// short Description; will be shown in RSS Feed XML "/feed/post/"
+$aConfig['BLOG_DESCRIPTION'] = 'Blog about relevant Stuff';
+
 /**
  * Backend User Accounts for different Environments set by MVC_ENV
  * Notice: empty "user" or "password" means no login is possible
@@ -13,8 +16,8 @@ $aConfig['BLOG_BACKEND'] = array(
 		
 		// 1. account
 		array(
-			'user' 		=> '', 
-			'password' 	=> ''
+			'user' 		=> 'test', 
+			'password' 	=> 'test'
 		)
 	),
 	
@@ -37,6 +40,22 @@ $aConfig['BLOG_BACKEND'] = array(
 	)
 );
 
+/**
+ * responsible Classes
+ */
+$aConfig['BLOG_CLASS_CONTROLLER_AJAX'] =    '\\Blogixx\\Controller\\Ajax';
+$aConfig['BLOG_CLASS_CONTROLLER_BACKEND'] = '\\Blogixx\\Controller\\Backend';
+$aConfig['BLOG_CLASS_CONTROLLER_INDEX'] =   '\\Blogixx\\Controller\\Index';
+$aConfig['BLOG_CLASS_MODEL_AJAX'] =         '\\Blogixx\\Model\\Ajax';
+$aConfig['BLOG_CLASS_MODEL_INDEX'] =        '\\Blogixx\\Model\\Index';
+$aConfig['BLOG_CLASS_MODEL_BACKEND'] =      '\\Blogixx\\Model\\Backend';
+$aConfig['BLOG_CLASS_VIEW_INDEX'] =         '\\Blogixx\\View\\Index';
+
+/**
+ * Data Directory
+ * Place where your Posts and Pages reside
+ */
+$aConfig['BLOG_DATA_DIR'] = realpath(__DIR__ . '/../') . '/modules/Blogixx/data';
 
 /**
  * Frontend Settings

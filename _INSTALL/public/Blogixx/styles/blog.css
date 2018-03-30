@@ -1,9 +1,32 @@
+@import url(http://fonts.googleapis.com/css?family=Oxygen+Mono);
+
 body {
     margin: 80px 0 0 0;
     background-color: #efefef;
 }	
 h1,h2,h3,h4,h5,h6 {
+    /*font-weight: inherit;*/
 }
+
+#mainContent > div a {
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+
+pre {
+    font-family: 'Oxygen Mono', sans-serif !important;
+    background-color: #efefef !important;
+    border: 1px solid #DEE2E6 !important;
+    white-space: pre-wrap;
+}
+    pre code {
+        font-family: 'Oxygen Mono', sans-serif !important;
+        white-space: pre-wrap;
+    }
 p, li, tag {
 }
 hr {
@@ -41,6 +64,8 @@ blockquote {
     font-size: small;
     font-style: italic;
     font-family: monospace;
+    border-left: 3px solid silver;
+    padding: 0 0 0 20px;
 }
 footer {
     padding: 20px;
@@ -58,21 +83,22 @@ label span {
 #suggest {
     z-index: 10;
     position: absolute;
+    top: 50px;
     background-color: white;
-    border: 1px solid silver;
+    border: 1px solid #DEE2E6;
     height: auto;
     width: 400px;
     padding: 10px 20px;
 }
-#suggest a {
-    display: block;
-    padding: 5px !important;
-    margin: 0 !important;
-    border-bottom: 1px dotted silver;
-}
-#suggest a:hover {
-    background-color: #f5f5f5;
-}
+    #suggest a {
+        display: block;
+        padding: 5px !important;
+        margin: 0 !important;
+        border-bottom: 1px dotted silver;
+    }
+        #suggest a:hover {
+            background-color: #f5f5f5;
+        }
 .suggestHover {
     background-color: #f5f5f5;
 }	
@@ -97,7 +123,6 @@ label span {
 }
 .prettyBorder {
     border: 1px solid #d0d0d0;
-    border-radius: 3px;
 }
 .space {
     display: block;
@@ -138,10 +163,27 @@ label span {
 
 /* progress CSS
  */
-.progresstext {
-    padding: 0px 2px;
+.visualizeConsumption {
+}
+.progress {
     position: absolute;
-}	
+}
+    .progress-bar {
+        background-color: #EEEEEE;
+    }
+    .progress-bar-info {
+        background-color: #FFC107;
+    }
+    .progress-bar-warning {
+        background-color: #FF9800;
+    }
+    .progress-bar-danger {
+        background-color: #E51C23;
+    }
+    .progresstext {
+        padding: 0px 2px;
+        position: absolute;
+    }	
 
 @media print {
     body,h1,h2,h3,h4,h5,h6,p,li,tag {

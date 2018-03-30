@@ -1,5 +1,4 @@
 <tag>PHP, myMVC, Blogixx,Documentation</tag>
-
 # Blogixx 
 a markdown file Blog Module for [myMVC](https://www.mymvc.org/).
 
@@ -16,7 +15,7 @@ Demo: http://blog.ueffing.net
 - [Templating / Design](#Templating)
 - [Blogixx Screenshots](#Blogixx-Screenshot)
 
-##<a name="Features"></a> Features
+## <a name="Features"></a> Features
 - no Database required
 - fast, secure and easy to understand
 - automatic Indexing of new Posts, Pages
@@ -30,7 +29,7 @@ Demo: http://blog.ueffing.net
 - easily add a new Page as a markdown file
 - HTML5 Bootstrap Frontend with Bootswatch Design
 
-##<a name="Requirements"></a> Requirements
+## <a name="Requirements"></a> Requirements
 - Linux OS
 - Permission to execute these Linux binaries via PHP's `shell_exec` command: `ls`, `find`, `grep`, `head`, `md5sum` 
 - PHP >=5.4
@@ -38,13 +37,13 @@ Demo: http://blog.ueffing.net
 
 For Production `live` Environments i strongly recommend a Webserver like Apache2. For `develop` or `test` you could easily run PHP's internal server (see Section [Run](#Run) here).
 
-##<a name="Installation"></a> Installation
+## <a name="Installation"></a> Installation
 This will install _myMVC_ + _Blogixx Module_ in one Step for a `develop` Environment (PHP >= 5.4 is required).
 ~~~bash
 $ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php; cd ../modules; svn co https://github.com/gueff/Blogixx.git/trunk/ Blogixx; cd Blogixx; ./install.sh;
 ~~~
 
-##<a name="Run"></a> Run
+## <a name="Run"></a> Run
 cd to myMVC's `public/` folder and run php's internal server: 
 ~~~bash
 $ export MVC_ENV="develop"; php -S 127.0.0.1:1969;
@@ -55,7 +54,7 @@ you could also "simulate" `test` and `live` environments, by just set the specif
 
 For a live/production environment i **strongly recommended to use Apache2 Webserver** and a Domain pointing to that. Using Apache2 Webserver will allow you to make use the .htaccess file located in `/trunk/public/.htaccess`. In there, you easily can set the environment variable. But of course, you also can make use of Nginx. See myMVC 's documentation for more Info.
 
-##<a name="Creating-Content"></a> Creating Content
+## <a name="Creating-Content"></a> Creating Content
 The easiest Way is to use the **Backend**. Therefore you need to set up a user and password once: 
 
 After you [installed Blogixx](#Installation) successfully, open `/trunk/config/Blogixx.php` and create an account for login. 
@@ -100,7 +99,7 @@ $aConfig['BLOG_BACKEND'] = array(
 Just login by calling `/@` and create a post or page.
 
 
-####<a name="Creating-Content-manually"></a> Manually (optional)
+#### <a name="Creating-Content-manually"></a> Manually (optional)
 
 Maybe you want to edit your Blog locally and `rsync` it to your Production `live` Server, or you just want to use the markdown editor of your choice (like ReText) locally, then the following way may be one for you. 
 
@@ -129,7 +128,7 @@ $ touch "Contact.md"
 ~~~
 Now you can edit this file writing **Markdown** Syntax
 
-##<a name="Templating"></a> Templating / Design
+## <a name="Templating"></a> Templating / Design
 
 ### Smarty Template Engine
 As myMVC makes use of the [Smarty Template Engine](http://www.smarty.net/), so -of course- does Blogixx.
@@ -163,26 +162,11 @@ See Folder `/public/Blogixx/` for CSS and Scripts
 
 ___
 
-##<a name="Blogixx-Screenshot"></a> Blogixx Screenshots
-
-![](/Blogixx/images/screenshot9.png)
-
-![](/Blogixx/images/screenshot10.png)
-
-![](/Blogixx/images/screenshot11.png)
-
-![](/Blogixx/images/screenshot7.png)
+## <a name="Blogixx-Screenshot"></a> Blogixx Screenshots
 
 ![](/Blogixx/images/screenshot1.png)
-
 ![](/Blogixx/images/screenshot2.png)
-
 ![](/Blogixx/images/screenshot3.png)
-
 ![](/Blogixx/images/screenshot4.png)
-
 ![](/Blogixx/images/screenshot5.png)
-
 ![](/Blogixx/images/screenshot6.png)
-
-![](/Blogixx/images/screenshot12.png)

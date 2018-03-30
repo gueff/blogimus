@@ -1,7 +1,26 @@
+@import url(http://fonts.googleapis.com/css?family=Oxygen+Mono);
+
 body {
 	margin: 80px 0 0 0;
 	background-color: #efefef;
 }	
+h1,h2,h3,h4,h5,h6 {
+    /*font-weight: inherit;*/
+}
+#editor pre {
+    border-bottom: 1px dotted #efefef;
+}
+#preview pre {
+    font-family: 'Oxygen Mono', sans-serif !important;
+    background-color: #efefef !important;
+    border: 1px solid #DEE2E6 !important;
+    white-space: pre-wrap;
+}
+    #preview pre code {
+        font-family: 'Oxygen Mono', sans-serif !important;
+        white-space: pre-wrap;
+    }
+
 a[name] {/* bootstrap fixed nav anchor jump fix */
   display: block; 
   position: relative; 
@@ -11,7 +30,16 @@ a[name] {/* bootstrap fixed nav anchor jump fix */
 footer {
 	padding: 20px;
 }
-
+blockquote {
+    font-size: small;
+    font-style: italic;
+    font-family: monospace;
+    border-left: 3px solid silver;
+    padding: 0 0 0 20px;
+}
+.hide {
+    display: none;
+}
 .text-black {
 	color: #303030 !important;
 }
@@ -184,4 +212,24 @@ footer {
   top: -500px;
   z-index: -1;
   visibility: hidden;
+}
+
+.ui-autocomplete {
+    height: 100px !important;
+    max-height: 100px !important;
+    width: 100% !important;
+    max-width: 99% !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    border: 1px solid #d0d0d0 !important;
+    border-radius: 3px !important;
+    box-shadow: 0px 0px 10px #d0d0d0 !important;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+    height: 100px !important;
+    width: 100% !important;
 }

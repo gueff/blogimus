@@ -5,35 +5,23 @@
 
                 "query":
                         "module=blogixx&c=index&m=index"
-                ,
-                "title":
-                        "Blog"
-                ,
-                "ssl":
-                        0
             }
     ,
     "/Ajax/":
             {		
                 "query":
                         "module=blogixx&c=ajax&m=index"
-                ,
-                "title":
-                        "Blog"
-                ,
-                "ssl":
-                        0
             }
     ,
     "/Ajax/taglist/":
             {		
                 "query":
                         "module=blogixx&c=ajax&m=taglist"
-                ,
-                "title":
-                        "Blog"
-                ,
-                "ssl":
-                        0
             }                        
+    ,
+    "/feed/post/":
+            {
+                "query":
+                        "module=blogixx&c=feed&m=post"
+            }                         
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Ajax.php
  *
@@ -18,64 +19,63 @@ namespace Blogixx\Event;
  */
 class Ajax
 {
-	/**
-	 * Blogixx\Event\Ajax
-	 * 
-	 * @var Blogixx\Event\Ajax
-	 * @access private
-	 * @static
-	 */
-	private static $_oInstance = NULL;
-	
-	/**
-	 * Constructor
-	 * 
-	 * @access protected
-	 * @return void
-	 */
-	protected function __construct()
-	{
-		// this is not bonded to an event, instead it is executed directly
-		\MVC\Request::ENSURECORRECTPROTOCOL();
-	}
+    /**
+     * Blogixx\Event\Ajax
+     * 
+     * @var Blogixx\Event\Ajax
+     * @access private
+     * @static
+     */
+    private static $_oInstance = NULL;
 
-	/**
-	 * Singleton instance
-	 *
-	 * @access public
-	 * @static
-	 * @return Blogixx\Event\Ajax
-	 */
-	public static function getInstance ()
-	{
-		if (null === self::$_oInstance)
-		{
-			self::$_oInstance = new self ();
-		}
+    /**
+     * Constructor
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function __construct()
+    {
+        // this is not bonded to an event, instead it is executed directly
+//        \MVC\Request::ENSURECORRECTPROTOCOL();
+    }
 
-		return self::$_oInstance;
-	}	
-	
-	/**
-	 * prevent any cloning
-	 * 
-	 * @access private
-	 * @return void
-	 */
-	private function __clone ()
-	{
-		;
-	}
-	
-	/**
-	 * Destructor
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function __destruct()
-	{
-		;
-	}
+    /**
+     * Singleton instance
+     *
+     * @access public
+     * @static
+     * @return Blogixx\Event\Ajax
+     */
+    public static function getInstance()
+    {
+        if (null === self::$_oInstance)
+        {
+            self::$_oInstance = new self ();
+        }
+
+        return self::$_oInstance;
+    }
+
+    /**
+     * prevent any cloning
+     * 
+     * @access private
+     * @return void
+     */
+    private function __clone()
+    {
+        ;
+    }
+
+    /**
+     * Destructor
+     * 
+     * @access public
+     * @return void
+     */
+    public function __destruct()
+    {
+        ;
+    }
 }
- 

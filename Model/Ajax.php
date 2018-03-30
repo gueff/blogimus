@@ -34,7 +34,7 @@ class Ajax
 	 */
 	public function __construct ()
 	{
-		$this->sBlogData = realpath (__DIR__ . '/../') . '/data';
+		;
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Ajax
 		
 		// filter
 		$sString = preg_replace($aFilter['regex'], '', $sString);		
-		$sCmd = \MVC\Registry::get('BLOG_BIN_GREP') . ' -ril "' . $sString . '" ' . $this->sBlogData . ' | ' . \MVC\Registry::get('BLOG_BIN_HEAD') . ' -' . $aFilter['length'];
+		$sCmd = \MVC\Registry::get('BLOG_BIN_GREP') . ' -ril "' . $sString . '" ' . \MVC\Registry::get('BLOG_DATA_DIR') . ' | ' . \MVC\Registry::get('BLOG_BIN_HEAD') . ' -' . $aFilter['length'];
 
 		// logs the Requests if enabled in config
 		(\MVC\Registry::isRegistered('BLOG_AJAX_LOG_REQUESTS') && true === \MVC\Registry::get('BLOG_AJAX_LOG_REQUESTS')) ? \MVC\Log::WRITE($sCmd, 'ajax.log') : false;

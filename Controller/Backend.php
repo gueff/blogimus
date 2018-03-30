@@ -18,38 +18,28 @@ namespace Blogixx\Controller;
  */
 class Backend
 {
-    /**
-     * \Blogixx\Controller\Index
-     * @var \Blogixx\Controller\Index
-     */
     public $oControllerIndex;
-
-    /**
-     * \Blogixx\Model\Index
-     * @var \Blogixx\Model\Index
-     */
     public $oModelIndex;
-    
-    /**
-     * \Blogixx\Model\Backend
-     * @var \Blogixx\Model\Backend
-     */
     public $oModelBackend;
 
     /**
      * Constructor
-     * @param \Blogixx\Controller\Index $oControllerIndex
+     * @param object $oControllerIndex
      * @access public
      * @return void 
      */
     public function __construct($oControllerIndex)
-    {
+    {        
+        $sModelIndex = \MVC\Registry::get('BLOG_CLASS_MODEL_INDEX');
+        $sModelBackend = \MVC\Registry::get('BLOG_CLASS_MODEL_BACKEND');
+        
         $this->oControllerIndex = $oControllerIndex;
-        $this->oModelIndex = new \Blogixx\Model\Index();
-        $this->oModelBackend = new \Blogixx\Model\Backend();
-
-        $this->oControllerIndex->oBlogixxViewIndex->assign('BLOG_CREATE_MAX_TITLE', ((\MVC\Registry::isRegistered('BLOG_CREATE_MAX_TITLE')) ? \MVC\Registry::get('BLOG_CREATE_MAX_TITLE') : ''));
-        $this->oControllerIndex->oBlogixxViewIndex->assign('BLOG_CREATE_MAX_CONTENT', ((\MVC\Registry::isRegistered('BLOG_CREATE_MAX_CONTENT')) ? \MVC\Registry::get('BLOG_CREATE_MAX_CONTENT') : ''));
+        $this->oModelIndex = new $sModelIndex(); # \Blogixx\Model\Index();
+        $this->oModelBackend = new $sModelBackend(); # \Blogixx\Model\Backend();
+        
+        $this->oControllerIndex->oView->assign('aParam', (isset($_GET['a'])) ? json_decode($_GET['a'], true) : array());        
+        $this->oControllerIndex->oView->assign('BLOG_CREATE_MAX_TITLE', ((\MVC\Registry::isRegistered('BLOG_CREATE_MAX_TITLE')) ? \MVC\Registry::get('BLOG_CREATE_MAX_TITLE') : ''));
+        $this->oControllerIndex->oView->assign('BLOG_CREATE_MAX_CONTENT', ((\MVC\Registry::isRegistered('BLOG_CREATE_MAX_CONTENT')) ? \MVC\Registry::get('BLOG_CREATE_MAX_CONTENT') : ''));
     }
 
     /**
@@ -91,7 +81,8 @@ class Backend
                 switch ($sRequest)
                 {
                     case '@':
-                        $this->_overview();
+//                        $this->_overview();
+                        \MVC\Request::REDIRECT('/');
                         break;
 
                     case '@edit':
@@ -116,8 +107,6 @@ class Backend
             {
                 $this->_loginForm();
             }
-
-            $this->oControllerIndex->oBlogixxViewIndex->sTemplate = $this->oControllerIndex->oBlogixxViewIndex->sTemplateDir . '/layout/backend.tpl';
         }
     }
 
@@ -131,14 +120,15 @@ class Backend
     {
         // get all posts
         $aPost = $this->oModelIndex->getPostsOverview();
-        $this->oControllerIndex->oBlogixxViewIndex->assign('aPost', $aPost);
+        $this->oControllerIndex->oView->sTemplate = $this->oControllerIndex->oView->sTemplateDir . '/layout/backend.tpl';        
+        $this->oControllerIndex->oView->assign('aPost', $aPost);
 
         // get all pages
         $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPage.json'), true);
-        $this->oControllerIndex->oBlogixxViewIndex->assign('aPage', $aPage);
+        $this->oControllerIndex->oView->assign('aPage', $aPage);
 
-        $this->oControllerIndex->oBlogixxViewIndex->assign(
-            'sContent', $this->oControllerIndex->oBlogixxViewIndex->loadTemplateAsString('backend/overview.tpl')
+        $this->oControllerIndex->oView->assign(
+            'sContent', $this->oControllerIndex->oView->loadTemplateAsString('backend/overview.tpl')
         );
     }
 
@@ -149,9 +139,15 @@ class Backend
      */
     private function _edit()
     {
+        /** @see https://stackoverflow.com/a/44687900/2487859 */
+        header('X-XSS-Protection:0');
+        
+        $bSuccess = false;
+        $sSuccess = '';
         $sMarkdown = '';
         $sMessage = '';
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sContent', '');
+        $this->oControllerIndex->oView->sTemplate = $this->oControllerIndex->oView->sTemplateDir . '/layout/backend.tpl';        
+        $this->oControllerIndex->oView->assign('sContent', '');
 
         (!isset($_GET['a'])) ? \MVC\Request::REDIRECT('/@') : false;
         $aParam = json_decode($_GET['a'], true);
@@ -168,7 +164,7 @@ class Backend
         {
             $aSet = ('' === $this->oModelBackend->getPageOnUrl($aParam['url'])) ? \MVC\Request::REDIRECT('/@') : $this->oModelBackend->getPageOnUrl($aParam['url']);
         }
-
+        
         if (!array_key_exists('sFilePath', $aSet))
         {
             \MVC\Request::REDIRECT('/@');
@@ -186,11 +182,11 @@ class Backend
         // new filename
         if (isset($_POST['type']) && isset($_POST['title']))
         {
-            $sFilePathNew = realpath(__DIR__ . '/../') . '/data/' . $_POST['type'] . '/' . ((isset($sDate)) ? $sDate . '.' : '') . $_POST['title'] . '.md';
+            $sFilePathNew = \MVC\Registry::get('BLOG_DATA_DIR') . '/' . $_POST['type'] . '/' . ((isset($sDate)) ? $sDate . '.' : '') . $_POST['title'] . '.md';
         }
         
         if ($_POST)
-        {
+        {            
             (false === isset($_POST['sMarkdown'])) ? $sMessage .= 'Missing Content.<br>' : false;
             (true === file_exists($sFilePathNew) && $sFilePathNew !== $sFilePath) ? $sMessage .= 'a  ' . ucfirst($_POST['type']) . ' "' . $_POST['title'] . '" ' . ((isset($sDate)) ? ' with date "' . $sDate . '" ' : '') . 'already exists.<br>' : false;
         }
@@ -215,31 +211,35 @@ class Backend
             );
             
             // write new
-            file_put_contents(
+            $bSuccess = (boolean) file_put_contents(
                 $sFilePathNew, 
                 $_POST['sMarkdown'], 
                 LOCK_EX
             );
-
+            $sSuccess = ((true === $bSuccess) ? 'true' : 'false');
+            
             $sRedirect = '/@edit?a={"type":"' . $aParam['type'] . '","url":"/' . $aParam['type'] . ((isset($sDate)) ? '/' . str_replace('-', '/', $sDate) : '') . '/' . \Blogixx\Model\Index::seoname($_POST['title']) . '/"}';
             \MVC\Request::REDIRECT($sRedirect);
         }
 
         // load content
         $sMarkdown = (file_exists($sFilePath)) ? file_get_contents($sFilePath) : '';
-        $sTag = "'" . implode("','", $this->oModelIndex->getTagArrayFromString($sMarkdown)) . "'";
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sTag', $sTag);
+        $aTagArray = $this->oModelIndex->getTagArrayFromString($sMarkdown);
+        $sTag = (!empty($aTagArray)) ? "'" . implode("','", $aTagArray) . "'" : "";
+
+        $this->oControllerIndex->oView->assign('sTag', $sTag);
         
         $sMarkdown = preg_replace('#<tag>(.*?)</tag>#', '', $sMarkdown);
 
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sError', $sMessage);
-        $this->oControllerIndex->oBlogixxViewIndex->assign('aParam', $aParam);
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sDate', (isset($aSet['sCreateStamp'])) ? $aSet['sCreateStamp'] : '');
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sName', $aSet['sName']);
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sType', $aParam['type']);
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sUrl', $aSet['sUrl']);
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sMarkdown', $sMarkdown);
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sContent', $this->oControllerIndex->oBlogixxViewIndex->loadTemplateAsString('backend/edit.tpl'));
+        $this->oControllerIndex->oView->assign('sError', $sMessage);
+        $this->oControllerIndex->oView->assign('bSuccess', $sSuccess);
+        $this->oControllerIndex->oView->assign('sNotifyText', (('true' == $sSuccess) ? 'successfully edited' : ''));
+        $this->oControllerIndex->oView->assign('sDate', (isset($aSet['sCreateStamp'])) ? $aSet['sCreateStamp'] : '');
+        $this->oControllerIndex->oView->assign('sName', $aSet['sName']);
+        $this->oControllerIndex->oView->assign('sType', $aParam['type']);
+        $this->oControllerIndex->oView->assign('sUrl', $aSet['sUrl']);
+        $this->oControllerIndex->oView->assign('sMarkdown', $sMarkdown);
+        $this->oControllerIndex->oView->assign('sContent', $this->oControllerIndex->oView->loadTemplateAsString('backend/edit.tpl'));
     }
 
     /**
@@ -249,9 +249,13 @@ class Backend
      */
     private function _create()
     {
-        $this->oControllerIndex->oBlogixxViewIndex->assign('bSuccess', 'false');
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sFilename', '');
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sContent', $this->oControllerIndex->oBlogixxViewIndex->loadTemplateAsString('backend/create.tpl'));
+        /** @see https://stackoverflow.com/a/44687900/2487859 */
+        header('X-XSS-Protection:0');
+        
+        $this->oControllerIndex->oView->sTemplate = $this->oControllerIndex->oView->sTemplateDir . '/layout/backend.tpl';        
+        $this->oControllerIndex->oView->assign('bSuccess', 'false');
+        $this->oControllerIndex->oView->assign('sFilename', '');
+        $this->oControllerIndex->oView->assign('sContent', $this->oControllerIndex->oView->loadTemplateAsString('backend/create.tpl'));
 
         if ($_POST)
         {
@@ -272,8 +276,8 @@ class Backend
 
             // Path
             $sFilePath = '';
-            ('post' == $_POST['type']) ? $sFilePath = realpath(__DIR__ . '/../') . '/data/post/' : false;
-            ('page' == $_POST['type']) ? $sFilePath = realpath(__DIR__ . '/../') . '/data/page/' : false;
+            ('post' == $_POST['type']) ? $sFilePath = \MVC\Registry::get('BLOG_DATA_DIR') . '/post/' : false;
+            ('page' == $_POST['type']) ? $sFilePath = \MVC\Registry::get('BLOG_DATA_DIR') . '/page/' : false;
 
             if ('' === $sFilePath)
             {
@@ -306,10 +310,11 @@ class Backend
                 return false;
             }
 
-            $this->oControllerIndex->oBlogixxViewIndex->assign('sError', $sMessage);
-            $this->oControllerIndex->oBlogixxViewIndex->assign('bSuccess', 'true');
-            $this->oControllerIndex->oBlogixxViewIndex->assign('sFilename', basename($sFilename, '.md'));
-            $this->oControllerIndex->oBlogixxViewIndex->assign('sContent', $this->oControllerIndex->oBlogixxViewIndex->loadTemplateAsString('backend/create.tpl'));
+            $this->oControllerIndex->oView->assign('sError', $sMessage);
+            $this->oControllerIndex->oView->assign('bSuccess', 'true');
+            $this->oControllerIndex->oView->assign('sNotifyText', 'successfully created: ' . basename($sFilename, '.md'));
+            $this->oControllerIndex->oView->assign('sFilename', basename($sFilename, '.md'));
+            $this->oControllerIndex->oView->assign('sContent', $this->oControllerIndex->oView->loadTemplateAsString('backend/create.tpl'));
             
             return true;
         }
@@ -324,7 +329,8 @@ class Backend
      */
     private function _delete()
     {
-        $this->oControllerIndex->oBlogixxViewIndex->assign('sContent', '');
+        $this->oControllerIndex->oView->sTemplate = $this->oControllerIndex->oView->sTemplateDir . '/layout/backend.tpl';        
+        $this->oControllerIndex->oView->assign('sContent', '');
 
         (!isset($_GET['a'])) ? \MVC\Request::REDIRECT('/@') : false;
         $aParam = json_decode($_GET['a'], true);
@@ -372,9 +378,11 @@ class Backend
         unset($_SESSION['blogixx']);
         $_SESSION['blogixx'] = null;
 
-        $this->oControllerIndex->oBlogixxViewIndex->assign(
+        $this->oControllerIndex->oView->sTemplate = $this->oControllerIndex->oView->sTemplateDir . '/layout/index.tpl';
+        
+        $this->oControllerIndex->oView->assign(
             'sContent', 
-            $this->oControllerIndex->oBlogixxViewIndex->loadTemplateAsString('backend/login.tpl')
+            $this->oControllerIndex->oView->loadTemplateAsString('backend/login.tpl')
         );
     }
 }
