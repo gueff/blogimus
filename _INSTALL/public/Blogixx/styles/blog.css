@@ -102,7 +102,9 @@ label span {
 .suggestHover {
     background-color: #f5f5f5;
 }	
-
+.text-white {
+    color: #fff;
+}
 .text-black {
     color: #303030 !important;
 }

@@ -49,17 +49,17 @@
           <div class="card-body">
                 <div class="list-group">
                     
-{*                    <a class="list-group-item list-group-item-action active bg-info" href='/@'>
+{*                    <a class="list-group-item list-group-item-action text-white bg-info" href='/@'>
                         <i class="fa fa-info"></i> Overview
                     </a>  *}          
                     
-                    <a class="list-group-item list-group-item-action active bg-success tooltipper" href="/@create" data-toggle="tooltip" data-placement="right" title="" data-original-title="Create new Content">
+                    <a class="list-group-item list-group-item-action text-white bg-success tooltipper" href="/@create" data-toggle="tooltip" data-placement="right" title="" data-original-title="Create new Content">
                         <i class="fa fa-plus-square-o"></i> Create
                     </a>
                     
                     <!-- Edit -->
                     {if '@' != $sLoginToken && ('post' == $sPageType || 'page' == $sPageType)}
-                    <a class="list-group-item list-group-item-action active bg-warning tooltipper" href='/@edit?a={ldelim}"type":"{$sPageType}","url":"{$sRequest}"{rdelim}' data-toggle="tooltip" data-placement="right" title="" data-original-title="Edit this Content">
+                    <a class="list-group-item list-group-item-action text-white bg-warning tooltipper" href='/@edit?a={ldelim}"type":"{$sPageType}","url":"{$sRequest}"{rdelim}' data-toggle="tooltip" data-placement="right" title="" data-original-title="Edit this Content">
                         <i class="fa fa-edit"></i> Edit
                     </a>
                     {else}
@@ -70,7 +70,7 @@
                         
                     <!-- Delete -->
                     {if '@' != $sLoginToken && ('post' == $sPageType || 'page' == $sPageType)}
-                    <a class="list-group-item list-group-item-action active bg-danger" 
+                    <a class="list-group-item list-group-item-action text-white bg-danger" 
                        href="#" 
                        data-deleteUrl='/@delete?a={ldelim}"type":"{$sPageType}","url":"{$sRequest}"{rdelim}' 
                        data-type="{$sPageType}" 
@@ -90,7 +90,7 @@
                 
                     <!-- Logout -->
                     {if isset($smarty.session.blogixx.login) && 'true' == $smarty.session.blogixx.login}
-                    <a class="list-group-item list-group-item-action active bg-info tooltipper" href="/@logout" data-toggle="tooltip" data-placement="right" title="" data-original-title="Logout from Backend">
+                    <a class="list-group-item list-group-item-action text-white bg-info tooltipper" href="/@logout" data-toggle="tooltip" data-placement="right" title="" data-original-title="Logout from Backend">
                         <i class="fa fa-sign-out"></i> Logout
                     </a>
                     {/if}
