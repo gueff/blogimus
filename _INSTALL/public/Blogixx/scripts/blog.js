@@ -112,6 +112,7 @@ $(document).ready(function() {
     }); 
 
     $('.shariff ul').removeClass('col-4');
+    $('.shariff').fadeIn();
 });
 
 
