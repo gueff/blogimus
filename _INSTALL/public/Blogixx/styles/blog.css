@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Oxygen+Mono);
+@import url(//fonts.googleapis.com/css?family=Oxygen+Mono);
 
 body {
     margin: 80px 0 0 0;
@@ -148,6 +148,9 @@ label span {
 .ucfirst:first-letter
 {
     text-transform: uppercase;
+}
+.shariff {
+    display: none;
 }
 
 /* 2017-09-06
