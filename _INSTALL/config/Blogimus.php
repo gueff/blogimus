@@ -1,7 +1,7 @@
 <?php
 
 // Name of Blog
-$aConfig['BLOG_NAME'] = 'Blogimus';
+$aConfig['BLOG_NAME'] = 'blogimus';
 
 // short Description; will be shown in RSS Feed XML "/feed/post/"
 $aConfig['BLOG_DESCRIPTION'] = 'Blog about relevant Stuff';
