@@ -109,7 +109,7 @@ $aConfig['BLOG_AJAX_LOG_REQUESTS'] = false;
  * Misc
  */
 // override MVC's fallback routing
-$aConfig['MVC_ROUTING_FALLBACK'] = $aConfig['MVC_GET_PARAM_MODULE'] . '=blogixx&'
+$aConfig['MVC_ROUTING_FALLBACK'] = $aConfig['MVC_GET_PARAM_MODULE'] . '=blogimus&'
 	. $aConfig['MVC_GET_PARAM_C'] . '=index&'
 	. $aConfig['MVC_GET_PARAM_M'] . '=index';	
 
