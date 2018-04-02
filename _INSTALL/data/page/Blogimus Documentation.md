@@ -1,8 +1,9 @@
 <tag>PHP, myMVC, Blogixx,Documentation</tag>
-# Blogixx 
-a markdown file Blog Module for [myMVC](https://www.mymvc.org/).
 
-This is so called "_flat file blog system_", which means there is no database required
+# blogimus 
+a PHP markdown Blog System using [myMVC](https://www.mymvc.org/).
+
+This is so called "_flat file blog system_", which means there is no database required.
 
 Demo: http://blog.ueffing.net
 
@@ -13,7 +14,7 @@ Demo: http://blog.ueffing.net
 - [Run](#Run)
 - [Creating Content](#Creating-Content)
 - [Templating / Design](#Templating)
-- [Blogixx Screenshots](#Blogixx-Screenshot)
+- [blogimus Screenshots](#blogimus-Screenshot)
 
 ## <a name="Features"></a> Features
 - no Database required
@@ -38,9 +39,9 @@ Demo: http://blog.ueffing.net
 For Production `live` Environments i strongly recommend a Webserver like Apache2. For `develop` or `test` you could easily run PHP's internal server (see Section [Run](#Run) here).
 
 ## <a name="Installation"></a> Installation
-This will install _myMVC_ + _Blogixx Module_ in one Step for a `develop` Environment (PHP >= 5.4 is required).
+This will install _myMVC_ + _blogimus Module_ in one Step for a `develop` Environment (PHP >= 5.4 is required).
 ~~~bash
-$ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php; cd ../modules; svn co https://github.com/gueff/Blogixx.git/trunk/ Blogixx; cd Blogixx; ./install.sh;
+$ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php; cd ../modules; svn co https://github.com/gueff/blogimus.git/trunk/ Blogimus; cd Blogimus; ./install.sh;
 ~~~
 
 ## <a name="Run"></a> Run
@@ -48,7 +49,7 @@ cd to myMVC's `public/` folder and run php's internal server:
 ~~~bash
 $ export MVC_ENV="develop"; php -S 127.0.0.1:1969;
 ~~~    
-open Browser and call `http://127.0.0.:1969`
+open Browser and call `http://127.0.0.1:1969`
 
 you could also "simulate" `test` and `live` environments, by just set the specific value. E.g: `export MVC_ENV="test";php -S 127.0.0.1:1969;`, and `export MVC_ENV="live";php -S 127.0.0.1:1969;`
 
@@ -57,7 +58,7 @@ For a live/production environment i **strongly recommended to use Apache2 Webser
 ## <a name="Creating-Content"></a> Creating Content
 The easiest Way is to use the **Backend**. Therefore you need to set up a user and password once: 
 
-After you [installed Blogixx](#Installation) successfully, open `/trunk/config/Blogixx.php` and create an account for login. 
+After you [installed blogimus](#Installation) successfully, open `/trunk/config/blogimus.php` and create an account for login. 
 
 **Example** 
 
@@ -107,7 +108,7 @@ Maybe you want to edit your Blog locally and `rsync` it to your Production `live
 
 Posts must have a leading `ISO Date` in the filename and a `.md` Suffix at the end.
 
-1. cd to `/trunk/modules/Blogixx/data/post/` 
+1. cd to `/trunk/modules/blogimus/data/post/` 
 2. create a new file with the Syntax `YYYY-MM-DD.title.md`. 
 
 Examples:
@@ -121,9 +122,9 @@ Now you can edit this file writing **Markdown** Syntax
 
 **<a name="CreateAPage"></a> Create a Page**
 
-cd to `/trunk/modules/Blogixx/data/page/` and create a new file. The filename should represent the title of the new Page.
+cd to `/trunk/modules/blogimus/data/page/` and create a new file. The filename should represent the title of the new Page.
 ~~~bash
-$ cd /trunk/modules/Blogixx/data/page/
+$ cd /trunk/modules/blogimus/data/page/
 $ touch "Contact.md"
 ~~~
 Now you can edit this file writing **Markdown** Syntax
@@ -131,42 +132,43 @@ Now you can edit this file writing **Markdown** Syntax
 ## <a name="Templating"></a> Templating / Design
 
 ### Smarty Template Engine
-As myMVC makes use of the [Smarty Template Engine](http://www.smarty.net/), so -of course- does Blogixx.
+As myMVC makes use of the [Smarty Template Engine](http://www.smarty.net/), so -of course- does blogimus.
 
-See `/trunk/modules/Blogixx/templates/` for the Smarty template files which will be used for Blogixx.
+See `/trunk/modules/blogimus/templates/` for the Smarty template files which will be used for blogimus.
 
 ### Frontend
-For the Frontend, Blogixx further makes use of 
+For the Frontend, blogimus further makes use of 
 
-- [Bootstrap](http://getbootstrap.com/)
-- [Bootswatch](http://bootswatch.com/) (HTML5 Boostrap Designs)
-- [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
-- [jQuery](https://jquery.com/)
+- [Bootstrap 4](http://getbootstrap.com/)
+- [Bootswatch 4](http://bootswatch.com/) (HTML5 Boostrap Designs)
+- [Font Awesome 4.7](http://fortawesome.github.io/Font-Awesome/)
+- [jQuery 3](https://jquery.com/)
 - [highlight.js](https://highlightjs.org/)
+- [Shariff](https://github.com/heiseonline/shariff)
+- 
 
-So Blogixx makes use of Bootswatch, where its Design `cerulean` here is set as the default one. 
-But you can easily switch to another Bootswatch Design by changing in `/modules/Blogixx/templates/layout/index.tpl`:
+So blogimus makes use of Bootswatch 4, where its Design `cosmo` here is set as the default one. 
+But you can easily switch to another Bootswatch Design by changing in `/modules/blogimus/templates/layout/index.tpl`:
 
-For example, you can change `cerulean`
+For example, you can change `cosmo`
 ~~~html
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/cerulean/bootstrap.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/cosmo/bootstrap.min.css">
 ~~~
 into `united`:
 ~~~html
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/united/bootstrap.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/united/bootstrap.min.css">
 ~~~
    
 See  [Bootswatch](http://bootswatch.com/) for available Bootswatch Designs.
 
-See Folder `/public/Blogixx/` for CSS and Scripts
+See Folder `/public/blogimus/` for CSS and Scripts
 
 ___
 
-## <a name="Blogixx-Screenshot"></a> Blogixx Screenshots
-
-![](/Blogixx/images/screenshot1.png)
-![](/Blogixx/images/screenshot2.png)
-![](/Blogixx/images/screenshot3.png)
-![](/Blogixx/images/screenshot4.png)
-![](/Blogixx/images/screenshot5.png)
-![](/Blogixx/images/screenshot6.png)
+## <a name="blogimus-Screenshot"></a> blogimus Screenshots
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot1.png)
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot2.png)
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot3.png)
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot4.png)
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot5.png)
+![](http://kanbanix.ueffing.net/Blogixx2/screenshot6.png)
