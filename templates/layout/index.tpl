@@ -3,11 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>
-            {$sTitle|escape}
-            {if isset($iPaginationPageCurrent)}Page {$iPaginationPageCurrent}{/if}
-            {if isset($iPaginationPageMax)}/ {$iPaginationPageMax}{/if}
-        </title>
+        <title>{$sTitle|escape}{if isset($iPaginationPageCurrent)}Page {$iPaginationPageCurrent}{/if}{if isset($iPaginationPageMax)}/ {$iPaginationPageMax}{/if}</title>
         {if isset($sMetaDescription)}<meta name="description" content="{$sMetaDescription|escape}">{/if}
         {if isset($sMetaKeywords)}<meta name="keywords" content="{$sMetaKeywords|escape}">{/if}
 

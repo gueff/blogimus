@@ -1,4 +1,4 @@
-<tag>PHP, myMVC, Blogixx,Documentation</tag>
+<tag>PHP,myMVC,Blogimus,Documentation</tag>
 
 # blogimus 
 a PHP markdown Blog System using [myMVC](https://www.mymvc.org/).
