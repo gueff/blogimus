@@ -1,6 +1,6 @@
 
 # blogimus 
-a PHP markdown Blog System using [myMVC](https://www.mymvc.org/).
+a PHP markdown Blog System using [myMVC](https://mymvc.ueffing.net/).
 
 This is so called "_flat file blog system_", which means there is no database required.
 
