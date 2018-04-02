@@ -27,7 +27,18 @@
             </ul>
             <ul class="nav navbar-nav navbar-right ml-auto">							 
               {foreach item=page from=$aPage}<li class="nav-item{if $smarty.server.REQUEST_URI == $page.sUrl} active{/if}"><a class="nav-link" href="{$page.sUrl}">{$page.sName}</a></li>
-              {/foreach}						  
+              {/foreach}			
+              <li class="nav-item">
+                  {if isset($smarty.session.blogixx.login) && 'true' == $smarty.session.blogixx.login}
+                  <a class="nav-link tooltipper" href="/@logout" data-toggle="tooltip" data-placement="bottom" title="Logout" data-original-title="Logout">
+                      <i class="fa fa-sign-out"></i>
+                  </a>
+                  {else}
+                  <a class="nav-link tooltipper" href="/@" data-toggle="tooltip" data-placement="bottom" title="Login" data-original-title="Login">
+                      <i class="fa fa-sign-in"></i>
+                  </a>
+                  {/if}
+              </li>              
             </ul>
         </div>
     </div>
