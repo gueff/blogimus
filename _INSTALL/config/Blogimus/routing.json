@@ -1,27 +1,27 @@
 {
     "/":
             {
-                "Blogixx": true,
+                "Blogimus": true,
 
                 "query":
-                        "module=blogixx&c=index&m=index"
+                        "module=blogimus&c=index&m=index"
             }
     ,
     "/Ajax/":
             {		
                 "query":
-                        "module=blogixx&c=ajax&m=index"
+                        "module=blogimus&c=ajax&m=index"
             }
     ,
     "/Ajax/taglist/":
             {		
                 "query":
-                        "module=blogixx&c=ajax&m=taglist"
+                        "module=blogimus&c=ajax&m=taglist"
             }                        
     ,
     "/feed/post/":
             {
                 "query":
-                        "module=blogixx&c=feed&m=post"
+                        "module=blogimus&c=feed&m=post"
             }                         
 }
