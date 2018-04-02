@@ -1,7 +1,7 @@
 <?php
 
 // Name of Blog
-$aConfig['BLOG_NAME'] = 'Blogixx';
+$aConfig['BLOG_NAME'] = 'Blogimus';
 
 // short Description; will be shown in RSS Feed XML "/feed/post/"
 $aConfig['BLOG_DESCRIPTION'] = 'Blog about relevant Stuff';
@@ -43,19 +43,19 @@ $aConfig['BLOG_BACKEND'] = array(
 /**
  * responsible Classes
  */
-$aConfig['BLOG_CLASS_CONTROLLER_AJAX'] =    '\\Blogixx\\Controller\\Ajax';
-$aConfig['BLOG_CLASS_CONTROLLER_BACKEND'] = '\\Blogixx\\Controller\\Backend';
-$aConfig['BLOG_CLASS_CONTROLLER_INDEX'] =   '\\Blogixx\\Controller\\Index';
-$aConfig['BLOG_CLASS_MODEL_AJAX'] =         '\\Blogixx\\Model\\Ajax';
-$aConfig['BLOG_CLASS_MODEL_INDEX'] =        '\\Blogixx\\Model\\Index';
-$aConfig['BLOG_CLASS_MODEL_BACKEND'] =      '\\Blogixx\\Model\\Backend';
-$aConfig['BLOG_CLASS_VIEW_INDEX'] =         '\\Blogixx\\View\\Index';
+$aConfig['BLOG_CLASS_CONTROLLER_AJAX'] =    '\\Blogimus\\Controller\\Ajax';
+$aConfig['BLOG_CLASS_CONTROLLER_BACKEND'] = '\\Blogimus\\Controller\\Backend';
+$aConfig['BLOG_CLASS_CONTROLLER_INDEX'] =   '\\Blogimus\\Controller\\Index';
+$aConfig['BLOG_CLASS_MODEL_AJAX'] =         '\\Blogimus\\Model\\Ajax';
+$aConfig['BLOG_CLASS_MODEL_INDEX'] =        '\\Blogimus\\Model\\Index';
+$aConfig['BLOG_CLASS_MODEL_BACKEND'] =      '\\Blogimus\\Model\\Backend';
+$aConfig['BLOG_CLASS_VIEW_INDEX'] =         '\\Blogimus\\View\\Index';
 
 /**
  * Data Directory
  * Place where your Posts and Pages reside
  */
-$aConfig['BLOG_DATA_DIR'] = realpath(__DIR__ . '/../') . '/modules/Blogixx/data';
+$aConfig['BLOG_DATA_DIR'] = realpath(__DIR__ . '/../') . '/modules/Blogimus/data';
 
 /**
  * Frontend Settings
@@ -114,7 +114,7 @@ $aConfig['MVC_ROUTING_FALLBACK'] = $aConfig['MVC_GET_PARAM_MODULE'] . '=blogixx&
 	. $aConfig['MVC_GET_PARAM_M'] . '=index';	
 
 // extra composer dir
-$aConfig['MVC_COMPOSER_DIR'] = __DIR__ . '/Blogixx';
+$aConfig['MVC_COMPOSER_DIR'] = __DIR__ . '/Blogimus';
 
 // routing.json file
-$aConfig['MVC_ROUTING_JSON'] = __DIR__ . '/Blogixx/routing.json';
+$aConfig['MVC_ROUTING_JSON'] = __DIR__ . '/Blogimus/routing.json';
