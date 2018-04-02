@@ -40,7 +40,7 @@ For Production `live` Environments i strongly recommend a Webserver like Apache2
 ## <a name="Installation"></a> Installation
 This will install _myMVC_ + _blogimus Module_ in one Step for a `develop` Environment (PHP >= 5.4 is required).
 ~~~bash
-$ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php; cd ../modules; svn co https://github.com/gueff/blogimus.git/trunk/ blogimus; cd blogimus; ./install.sh;
+$ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php; cd ../modules; svn co https://github.com/gueff/blogimus.git/trunk/ Blogimus; cd Blogimus; ./install.sh;
 ~~~
 
 ## <a name="Run"></a> Run
