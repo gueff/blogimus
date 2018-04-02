@@ -1,7 +1,7 @@
 
 				<div class="container">
 					<span class="pull-left">
-						&copy; {$smarty.now|date_format:"%Y"} &bull; Blog built with <a href="https://blogixx.ueffing.net/">Blogixx</a><br>
+						&copy; {$smarty.now|date_format:"%Y"} &bull; Blog built with <a href="https://blogimus.ueffing.net/">Blogimus</a><br>
 						
 						{if isset($smarty.session.blogixx.login) && 'true' == $smarty.session.blogixx.login}
 							{if '@' != $sLoginToken && ('post' == $sPageType || 'page' == $sPageType)}

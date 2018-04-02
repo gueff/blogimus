@@ -10,9 +10,9 @@
  */
 
 /**
- * @name $BlogixxEvent
+ * @name $BlogimusEvent
  */
-namespace Blogixx\Event;
+namespace Blogimus\Event;
 
 /**
  * Ajax
@@ -20,9 +20,9 @@ namespace Blogixx\Event;
 class Ajax
 {
     /**
-     * Blogixx\Event\Ajax
+     * Blogimus\Event\Ajax
      * 
-     * @var Blogixx\Event\Ajax
+     * @var Blogimus\Event\Ajax
      * @access private
      * @static
      */
@@ -45,7 +45,7 @@ class Ajax
      *
      * @access public
      * @static
-     * @return Blogixx\Event\Ajax
+     * @return Blogimus\Event\Ajax
      */
     public static function getInstance()
     {

@@ -9,9 +9,9 @@
  */
 
 /**
- * @name $BlogixxModel
+ * @name $BlogimusModel
  */
-namespace Blogixx\Model;
+namespace Blogimus\Model;
 
 /**
  * Backend
@@ -70,7 +70,7 @@ class Backend
      */
     public function getPostOnUrl($sUrl = '')
     {
-        $aPost = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPost.json'), true);
+        $aPost = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPost.json'), true);
 
         if (!array_key_exists($sUrl, $aPost['sUrl']))
         {
@@ -89,7 +89,7 @@ class Backend
      */
     public function getPageOnUrl($sUrl = '')
     {
-        $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPage.json'), true);
+        $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPage.json'), true);
 
         if (!array_key_exists($sUrl, $aPage))
         {

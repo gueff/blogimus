@@ -10,9 +10,9 @@
  */
 
 /**
- * @name $BlogixxController
+ * @name $BlogimusController
  */
-namespace Blogixx\Controller;
+namespace Blogimus\Controller;
 
 /**
  * Index
@@ -70,7 +70,7 @@ class Feed implements \MVC\MVCInterface\Controller
         $aPost = json_decode(
             file_get_contents(
                 \MVC\Registry::get('MVC_CACHE_DIR')
-                . '/Blogixx/aPostUrl.json'
+                . '/Blogimus/aPostUrl.json'
             ), true
         );
 

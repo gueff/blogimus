@@ -9,9 +9,9 @@
  */
 
 /**
- * @name $BlogixxController
+ * @name $BlogimusController
  */
-namespace Blogixx\Controller;
+namespace Blogimus\Controller;
 
     
 /**
@@ -30,10 +30,10 @@ class Index implements \MVC\MVCInterface\Controller
 
     /**
      * Event Object
-     * @var \Blogixx\Event\Index
+     * @var \Blogimus\Event\Index
      * @access protected
      */
-    protected $_oBlogixxEventIndex;
+    protected $_oBlogimusEventIndex;
 
     /**
      * View Object
@@ -62,7 +62,7 @@ class Index implements \MVC\MVCInterface\Controller
     public static function __preconstruct()
     {
         // start event listener
-        \Blogixx\Event\Index::getInstance();
+        \Blogimus\Event\Index::getInstance();
     }
 
     /**
@@ -103,15 +103,15 @@ class Index implements \MVC\MVCInterface\Controller
 
             // All Dates
             // load Post dates
-            $aPostDate = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPostDate.json'), true);
+            $aPostDate = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPostDate.json'), true);
 
             // All Tags
             // Sort multidimensional array by number of (value) items @see http://stackoverflow.com/a/7433611/2487859
-            $aTag = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aTag.json'), true);
+            $aTag = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aTag.json'), true);
             array_multisort(array_map('count', $aTag), SORT_DESC, $aTag);
 
             // All Pages
-            $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPage.json'), true);
+            $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPage.json'), true);
 
             $this->oView->assign('aPostDate', $aPostDate);
             $this->oView->assign('aTag', $aTag);

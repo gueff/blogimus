@@ -9,9 +9,9 @@
  */
 
 /**
- * @name $BlogixxPolicy
+ * @name $BlogimusPolicy
  */
-namespace Blogixx\Policy;
+namespace Blogimus\Policy;
 
 /**
  * Index

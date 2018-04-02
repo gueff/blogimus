@@ -9,9 +9,9 @@
  */
 
 /**
- * @name $BlogixxView
+ * @name $BlogimusView
  */
-namespace Blogixx\View;
+namespace Blogimus\View;
 
 /**
  * Index

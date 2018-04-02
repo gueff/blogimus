@@ -10,9 +10,9 @@
  */
 
 /**
- * @name $BlogixxController
+ * @name $BlogimusController
  */
-namespace Blogixx\Controller;
+namespace Blogimus\Controller;
 
 /**
  * Index
@@ -41,7 +41,7 @@ class Ajax implements \MVC\MVCInterface\Controller
     public static function __preconstruct()
     {
         // start event listener
-        \Blogixx\Event\Ajax::getInstance();
+        \Blogimus\Event\Ajax::getInstance();
     }
 
     /**
@@ -96,7 +96,7 @@ class Ajax implements \MVC\MVCInterface\Controller
             $aResult[$iKey] = str_replace('/', '#|#', $aResult[$iKey]);
             $aResult[$iKey] = mb_substr($aResult[$iKey], 0, (strlen($aResult[$iKey]) - 3)) . '#|#.json';
 
-            $sCacheFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/' . $aResult[$iKey];
+            $sCacheFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . $aResult[$iKey];
 
             if (file_exists($sCacheFile))
             {

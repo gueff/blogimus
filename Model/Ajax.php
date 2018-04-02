@@ -9,11 +9,11 @@
  * @license GNU GENERAL PUBLIC LICENSE Version 3. See application/doc/COPYING
  */
 /**
- * @name $BlogixxModel
+ * @name $BlogimusModel
  */
 
 
-namespace Blogixx\Model;
+namespace Blogimus\Model;
 
 
 /**

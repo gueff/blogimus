@@ -9,9 +9,9 @@
  */
 
 /**
- * @name $BlogixxController
+ * @name $BlogimusController
  */
-namespace Blogixx\Controller;
+namespace Blogimus\Controller;
 
 /**
  * Backend
@@ -34,8 +34,8 @@ class Backend
         $sModelBackend = \MVC\Registry::get('BLOG_CLASS_MODEL_BACKEND');
         
         $this->oControllerIndex = $oControllerIndex;
-        $this->oModelIndex = new $sModelIndex(); # \Blogixx\Model\Index();
-        $this->oModelBackend = new $sModelBackend(); # \Blogixx\Model\Backend();
+        $this->oModelIndex = new $sModelIndex(); # \Blogimus\Model\Index();
+        $this->oModelBackend = new $sModelBackend(); # \Blogimus\Model\Backend();
         
         $this->oControllerIndex->oView->assign('aParam', (isset($_GET['a'])) ? json_decode($_GET['a'], true) : array());        
         $this->oControllerIndex->oView->assign('BLOG_CREATE_MAX_TITLE', ((\MVC\Registry::isRegistered('BLOG_CREATE_MAX_TITLE')) ? \MVC\Registry::get('BLOG_CREATE_MAX_TITLE') : ''));
@@ -124,7 +124,7 @@ class Backend
         $this->oControllerIndex->oView->assign('aPost', $aPost);
 
         // get all pages
-        $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPage.json'), true);
+        $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPage.json'), true);
         $this->oControllerIndex->oView->assign('aPage', $aPage);
 
         $this->oControllerIndex->oView->assign(
@@ -218,7 +218,7 @@ class Backend
             );
             $sSuccess = ((true === $bSuccess) ? 'true' : 'false');
             
-            $sRedirect = '/@edit?a={"type":"' . $aParam['type'] . '","url":"/' . $aParam['type'] . ((isset($sDate)) ? '/' . str_replace('-', '/', $sDate) : '') . '/' . \Blogixx\Model\Index::seoname($_POST['title']) . '/"}';
+            $sRedirect = '/@edit?a={"type":"' . $aParam['type'] . '","url":"/' . $aParam['type'] . ((isset($sDate)) ? '/' . str_replace('-', '/', $sDate) : '') . '/' . \Blogimus\Model\Index::seoname($_POST['title']) . '/"}';
             \MVC\Request::REDIRECT($sRedirect);
         }
 
@@ -345,14 +345,14 @@ class Backend
 
             if ('post' === $aParam['type'])
             {
-                $aPost = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPost.json'), true);
+                $aPost = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPost.json'), true);
                 (!array_key_exists($aParam['url'], $aPost['sUrl'])) ? \MVC\Request::REDIRECT('/@') : false;
                 $aSet = $aPost['sUrl'][$aParam['url']];
                 $sFilePath = $aSet['sFilePath'];
             }
             elseif ('page' === $aParam['type'])
             {
-                $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPage.json'), true);
+                $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPage.json'), true);
                 (!array_key_exists($aParam['url'], $aPage)) ? \MVC\Request::REDIRECT('/@') : false;
                 $aSet = $aPage[$aParam['url']];
                 $sFilePath = $aSet['sFilePath'];

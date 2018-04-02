@@ -10,9 +10,9 @@
  */
 
 /**
- * @name $BlogixxEvent
+ * @name $BlogimusEvent
  */
-namespace Blogixx\Event;
+namespace Blogimus\Event;
 
 /**
  * Index
@@ -20,9 +20,9 @@ namespace Blogixx\Event;
 class Index
 {
     /**
-     * Blogixx\Event\Index
+     * Blogimus\Event\Index
      * 
-     * @var Blogixx\Event\Index
+     * @var Blogimus\Event\Index
      * @access private
      * @static
      */
@@ -54,7 +54,7 @@ class Index
      *
      * @access public
      * @static
-     * @return Blogixx\Event\Index
+     * @return Blogimus\Event\Index
      */
     public static function getInstance()
     {

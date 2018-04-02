@@ -10,9 +10,9 @@
  */
 
 /**
- * @name $BlogixxModel
+ * @name $BlogimusModel
  */
-namespace Blogixx\Model;
+namespace Blogimus\Model;
 
 /**
  * Index
@@ -68,7 +68,7 @@ class Index
         (!file_exists(\MVC\Registry::get('BLOG_DATA_DIR')))                 ? mkdir(\MVC\Registry::get('BLOG_DATA_DIR')) : false;
         (!file_exists(\MVC\Registry::get('BLOG_DATA_DIR') . '/post'))       ? mkdir(\MVC\Registry::get('BLOG_DATA_DIR') . '/post') : false;
         (!file_exists(\MVC\Registry::get('BLOG_DATA_DIR') . '/page'))       ? mkdir(\MVC\Registry::get('BLOG_DATA_DIR') . '/page') : false;
-        (!file_exists(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx'))    ? mkdir(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx') : false;
+        (!file_exists(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus'))    ? mkdir(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus') : false;
     }
 
     /**
@@ -115,13 +115,13 @@ class Index
         $aPage = $this->_getPages();
         $sJsonPage = json_encode($aPage);
 
-        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPage.json';
+        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPage.json';
         (file_exists($sFile)) ? unlink($sFile) : false;
         file_put_contents($sFile, $sJsonPage);
 
         foreach ($aPage as $sUrl => $aValue)
         {
-            $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/' . self::toCacheName($sUrl) . '.json';
+            $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . self::toCacheName($sUrl) . '.json';
             (file_exists($sFile)) ? unlink($sFile) : false;
 
             file_put_contents(
@@ -133,21 +133,21 @@ class Index
         $aPost = $this->_getPosts();
         $aJsonPost = json_encode($this->_getPosts());
 
-        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPost.json';
+        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPost.json';
         (file_exists($sFile)) ? unlink($sFile) : false;
         file_put_contents($sFile, $aJsonPost);
 
-        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPostDate.json';
+        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPostDate.json';
         (file_exists($sFile)) ? unlink($sFile) : false;
         file_put_contents($sFile, json_encode($aPost['sCreateStamp']));
 
-        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPostUrl.json';
+        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPostUrl.json';
         (file_exists($sFile)) ? unlink($sFile) : false;
         file_put_contents($sFile, json_encode($aPost['sUrl']));
 
         foreach ($aPost['sUrl'] as $sUrl => $aValue)
         {
-            $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/' . self::toCacheName($sUrl) . '.json';
+            $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . self::toCacheName($sUrl) . '.json';
             (file_exists($sFile)) ? unlink($sFile) : false;
 
             file_put_contents(
@@ -157,7 +157,7 @@ class Index
 
         // Tags
         $aTag = $this->getTags();
-        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aTag.json';
+        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aTag.json';
         (file_exists($sFile)) ? unlink($sFile) : false;
         file_put_contents($sFile, json_encode($aTag));
     }
@@ -302,7 +302,7 @@ class Index
 
             foreach ($aTag as $sTag)
             {
-                $aFinalTag[trim($sTag)][] = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/' . $sCacheFile;
+                $aFinalTag[trim($sTag)][] = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . $sCacheFile;
             }
         }
 
@@ -321,7 +321,7 @@ class Index
 
         foreach ($aRouting as $sKey => $aRoute)
         {
-            if (array_key_exists('Blogixx', $aRoute) && isset($aRoute['Blogixx']))
+            if (array_key_exists('Blogimus', $aRoute) && isset($aRoute['Blogimus']))
             {
                 $aTmp = $aRouting[$sKey];
                 parse_str($aTmp['query']);
@@ -347,7 +347,7 @@ class Index
      */
     public function getConcreteFile()
     {
-        $sCacheFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/' . \Blogixx\Model\Index::toCacheName(strtok($_SERVER['REQUEST_URI'], '?')) . '.json';
+        $sCacheFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . \Blogimus\Model\Index::toCacheName(strtok($_SERVER['REQUEST_URI'], '?')) . '.json';
 
         if (!file_exists($sCacheFile))
         {
@@ -381,7 +381,7 @@ class Index
      */
     public function getPostsOverview()
     {
-        $sCacheFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogixx/aPostUrl.json';
+        $sCacheFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPostUrl.json';
 
         if (!file_exists($sCacheFile))
         {
@@ -468,24 +468,24 @@ class Index
     /**
      * set meta tags
      * 
-     * @param \Blogixx\View\Index $oBlogixxViewIndex
+     * @param \Blogimus\View\Index $oBlogimusViewIndex
      * @param string $sContent
      */
-    public function setMeta(\Blogixx\View\Index $oBlogixxViewIndex, $sContent = '')
+    public function setMeta(\Blogimus\View\Index $oBlogimusViewIndex, $sContent = '')
     {
-        $aVar = $oBlogixxViewIndex->getTemplateVars();
+        $aVar = $oBlogimusViewIndex->getTemplateVars();
 
         (isset($aVar['aSet']['sContent'])) ? $sContent = $aVar['aSet']['sContent'] : $sContent = $aVar['sTitle'] . '<tag>' . $aVar['sTitle'] . '</tag>';
         (isset($aVar['sPageType']) && 'date' === $aVar['sPageType']) ? $sContent = $aVar['sTitle'] . ', ' . $aVar['sBlogName'] . '<tag>' . $aVar['sTitle'] . '</tag>' : false;
         (isset($aVar['sPageType']) && 'tag/' === $aVar['sPageType']) ? $sContent = $aVar['sTitle'] . ', ' . $aVar['sBlogName'] . '<tag>' . $aVar['sTitle'] . '</tag>' : false;
 
-        $oBlogixxViewIndex->assign(
+        $oBlogimusViewIndex->assign(
             'sMetaKeywords', $this->getMetaKeywords(
                 $this->getTagArrayFromString($sContent)
             )
         );
 
-        $oBlogixxViewIndex->assign(
+        $oBlogimusViewIndex->assign(
             'sMetaDescription', $this->getMetaDescription($sContent)
         );
     }
