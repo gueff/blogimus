@@ -56,6 +56,7 @@ class Index
         if (true === $this->_updateCheckSum())
         {
             $this->_buildCache();
+            $this->buildGoogleSitemap();
         }
     }
 
@@ -68,7 +69,7 @@ class Index
         (!file_exists(\MVC\Registry::get('BLOG_DATA_DIR')))                 ? mkdir(\MVC\Registry::get('BLOG_DATA_DIR')) : false;
         (!file_exists(\MVC\Registry::get('BLOG_DATA_DIR') . '/post'))       ? mkdir(\MVC\Registry::get('BLOG_DATA_DIR') . '/post') : false;
         (!file_exists(\MVC\Registry::get('BLOG_DATA_DIR') . '/page'))       ? mkdir(\MVC\Registry::get('BLOG_DATA_DIR') . '/page') : false;
-        (!file_exists(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus'))    ? mkdir(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus') : false;
+        (!file_exists(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus'))   ? mkdir(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus') : false;
     }
 
     /**
@@ -162,6 +163,45 @@ class Index
         file_put_contents($sFile, json_encode($aTag));
     }
 
+	
+	/**
+	 * build google sitemap.txt
+     * @see https://support.google.com/webmasters/answer/183668?hl=en
+	 */
+	public function buildGoogleSitemap()
+	{
+		$aPage = array_keys(json_decode(file_get_contents(\MVC\Registry::get ('MVC_CACHE_DIR') . '/Blogimus/aPage.json'), true));
+		$aPage[] = '/';		
+		$aPost = array_keys(json_decode(file_get_contents(\MVC\Registry::get ('MVC_CACHE_DIR') . '/Blogimus/aPostUrl.json'), true));
+		$aTmp = $aFinal = array();
+        
+		$aFinal = array_map(
+			function($sUrl) {
+				$aUrl = \MVC\Request::GETCURRENTREQUEST();
+				return $aUrl['protocol'] . $aUrl['host'] . $sUrl;
+			}, 
+			array_unique(
+				array_merge(
+					$aPage, 
+                    $aPost, 
+                    $aTmp
+				)
+			)
+		);
+		
+		$sSitemapAbsFile = \MVC\Registry::get('MVC_BASE_PATH') . '/public/sitemap.txt';
+		(file_exists($sSitemapAbsFile)) ? unlink($sSitemapAbsFile) : false;
+			
+		foreach ($aFinal as $sUrl)
+		{
+			file_put_contents(
+                $sSitemapAbsFile, 
+                $sUrl . "\n", 
+                FILE_APPEND
+            );
+		}
+	}    
+    
     /**
      * converts a filepath string into cachename string
      * 
