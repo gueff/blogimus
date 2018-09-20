@@ -364,11 +364,14 @@ class Index
             if (array_key_exists('Blogimus', $aRoute) && isset($aRoute['Blogimus']))
             {
                 $aTmp = $aRouting[$sKey];
-                parse_str($aTmp['query']);
-
+                parse_str(
+                    $aTmp['query'],
+                    $aParseString
+                );
+                
                 $aTmp['path'] = $sKey;
-                $aTmp['class'] = ucfirst($module) . "\\Controller\\" . ucfirst($c);
-                $aTmp['method'] = $m;
+                $aTmp['class'] = ucfirst($aParseString['module']) . "\\Controller\\" . ucfirst($aParseString['c']);
+                $aTmp['method'] = $aParseString['m'];
 
                 \MVC\Registry::set('MVC_ROUTING_CURRENT', $aTmp);
 
