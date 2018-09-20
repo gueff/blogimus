@@ -18,9 +18,28 @@ namespace Blogimus\Controller;
  */
 class Backend
 {
+    /**
+     * @var \Blogimus\Controller\Index
+     */
     public $oControllerIndex;
+
+    /**
+     * @var \Blogimus\Model\Index
+     */
     public $oModelIndex;
+
+    /**
+     * @var \Blogimus\Model\Backend
+     */
     public $oModelBackend;
+
+    /**
+     * pages callable at backend
+     * @var array
+     */
+    private $aPage = array(
+        '@', '@edit', '@create', '@delete'
+    );
 
     /**
      * Constructor
@@ -44,7 +63,7 @@ class Backend
 
     /**
      * checks login into backend and delegates actions
-     * @param type $sRequest
+     * @param string $sRequest
      * @access public
      * @return void 
      */
@@ -58,21 +77,45 @@ class Backend
 
         if (true === \MVC\Registry::isRegistered('BLOG_BACKEND'))
         {
+            /** @var array $aBlogBackend */
             $aBlogBackend = \MVC\Registry::get('BLOG_BACKEND');
 
+            // invalid page request
+            if (false === in_array($sRequest, $this->aPage))
+            {
+                $this->oControllerIndex->oView->sendHeader404();
+            }
+
             // checks login
-            if (
-                (isset($_SESSION['blogixx']['login']) && true === $_SESSION['blogixx']['login']) || (
-                isset($_POST['user']) && isset($_POST['password']) && (
-                '' !== trim($_POST['user']) || '' !== trim($_POST['password'])
-                ) && array_key_exists(\MVC\Registry::get('MVC_ENV'), $aBlogBackend) && is_array($aBlogBackend[\MVC\Registry::get('MVC_ENV')]) && true === in_array(
-                    array(
-                    'user' => $_POST['user'],
-                    'password' => $_POST['password'],
-                    ), $aBlogBackend[\MVC\Registry::get('MVC_ENV')]
+            if  (
+                    // login already succeeded before
+                    (
+                            isset($_SESSION['blogixx']['login'])
+                        &&  true === $_SESSION['blogixx']['login']
+                    )
+                    OR
+                    // login success first time
+                    (
+                            isset($_POST['user'])
+                        &&  isset($_POST['password'])
+                        &&  (
+                                    '' !== trim($_POST['user'])
+                                ||  '' !== trim($_POST['password'])
+                            )
+                        &&  array_key_exists(
+                                \MVC\Registry::get('MVC_ENV'),
+                                $aBlogBackend
+                            )
+                        &&  is_array($aBlogBackend[\MVC\Registry::get('MVC_ENV')])
+                        &&  true === in_array(
+                            array(
+                                'user' => $_POST['user'],
+                                'password' => $_POST['password'],
+                            ),
+                            $aBlogBackend[\MVC\Registry::get('MVC_ENV')]
+                        )
+                    )
                 )
-                )
-            )
             {
                 // login successful
                 (!isset($_SESSION['blogixx'])) ? $_SESSION['blogixx'] = array() : false;

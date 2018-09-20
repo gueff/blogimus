@@ -37,7 +37,7 @@ class Index
     protected function __construct()
     {
         \MVC\Event::BIND('mvc.invalidRequest', function() {
-            \MVC\Request::REDIRECT('/');
+            \MVC\Request::REDIRECT('/404/');
         });
         
         /*

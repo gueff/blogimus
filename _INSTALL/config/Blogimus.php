@@ -41,6 +41,139 @@ $aConfig['BLOG_BACKEND'] = array(
 );
 
 /**
+ * get used in /modules/Blogimus/View/Index.php::sendSecurityHeader()
+ * For further Rules Explanation @see https://content-security-policy.com/
+ */
+SECURITY_HEADER_CONFIG: {
+
+    /**
+     * Websites (URLs) which are allowed to embed our Site into e.g. a <frame>
+     */
+    $aConfig['BLOG_CONTENT_SECURITY_FRAME_PARENTS'] = "'none'";
+    $aConfig['BLOG_CONTENT_SECURITY_POLICY'] = ""
+
+        /**
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src
+         */
+        . "default-src  'self'; "
+
+        /**
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
+         */
+        . "script-src   'self' " .
+                        "'unsafe-inline' " .
+                        "http://cdnjs.cloudflare.com/ " .
+                        "https://cdnjs.cloudflare.com/ " .
+                        "http://cdn.jsdelivr.net/ " .
+                        "https://cdn.jsdelivr.net/ " .
+                        "; "
+
+        /**
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src
+         */
+        . "style-src    'self' " .
+                        "'unsafe-inline' " .
+                        "http://cdnjs.cloudflare.com/ " .
+                        "https://cdnjs.cloudflare.com/ " .
+                        "http://cdn.jsdelivr.net/ " .
+                        "https://cdn.jsdelivr.net/ " .
+                        "http://fonts.googleapis.com/ " .
+                        "https://fonts.googleapis.com/ " .
+                        "; "
+
+        /**
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src
+         */
+        . "img-src      'self' " .
+                        "blob: " .
+                        "data: " .
+                        "http://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/images/ " .
+                        "https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/images/ " .
+                        "http://placehold.it/ " .
+                        "https://placehold.it/ " .
+                        "; "
+
+        /**
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/connect-src
+         */
+        . "connect-src  'self'; "
+
+        /**
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/font-src
+         */
+        . "font-src     'self' " .
+                        "http://cdnjs.cloudflare.com " .
+                        "https://cdnjs.cloudflare.com " .
+                        "http://fonts.googleapis.com " .
+                        "https://fonts.googleapis.com/ " .
+                        "http://fonts.gstatic.com/ " .
+                        "https://fonts.gstatic.com/ " .
+                        "; "
+
+        /**
+         * To disallow all plugins, the object-src directive should be set to 'none' which will disallow plugins.
+         * The plugin-types directive is only used if you are allowing plugins with object-src at all.
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/plugin-types
+         */
+        . "object-src   'none'; "
+        #. "plugin-types ;"
+
+        /**
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/media-src
+         */
+        . "media-src    'self'; "
+
+        /**
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/child-src
+         */
+        . "child-src    'self';"
+
+        /**
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/sandbox
+         */
+        . "sandbox      " .
+                        "allow-forms " .
+                        "allow-same-origin " .
+                        "allow-scripts " .
+                        "allow-popups " .
+                        "allow-modals " .
+                        "allow-orientation-lock " .
+                        "allow-pointer-lock " .
+                        "allow-presentation " .
+                        "allow-popups-to-escape-sandbox " .
+                        "allow-top-navigation; "
+
+        /**
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-uri
+         */
+        . "report-uri   /; "
+
+        /**
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/form-action
+         */
+        . "form-action  'self'; "
+
+        /**
+         * The HTTP Content-Security-Policy (CSP) frame-ancestors directive specifies valid parents
+         * that may embed a page using <frame>, <iframe>, <object>, <embed>, or <applet>.
+         * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors
+         */
+        . "frame-ancestors " . $aConfig['BLOG_CONTENT_SECURITY_FRAME_PARENTS'] . "; "
+        ;
+
+    /**
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
+     */
+    $aConfig['BLOG_X_XSS_Protection'] = '1; mode=block';
+
+    /**
+     * 63072000 for 24 months
+     * @see https://support.servertastic.com/knowledgebase/article/http-strict-transport-security-php
+     */
+    $aConfig['BLOG_STRICT_TRANSPORT_SECURITY'] = 'max-age=63072000'; # 63072000 for 24 months
+}
+
+/**
  * responsible Classes
  */
 $aConfig['BLOG_CLASS_CONTROLLER_AJAX'] =    '\\Blogimus\\Controller\\Ajax';

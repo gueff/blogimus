@@ -30,13 +30,15 @@ class Index extends \MVC\View
 	{
 		parent::__construct ();
 
+		$this->sendSecurityHeader();
+
 		// Standard Template
 		$this->sTemplate = $this->sTemplateDir . '/layout/index.tpl';
 
 		// Standard Variable in Standard Template
 		$this->sContentVar = 'sContent';
 	}
-	
+
 	/**
 	 * sends a json header
 	 * 
@@ -60,4 +62,17 @@ class Index extends \MVC\View
 	{
 		header ("HTTP/1.0 404 Not Found");
 	}
+
+    /**
+     * set HTTP Security Header
+     */
+	public function sendSecurityHeader()
+    {
+        header("Content-Security-Policy: " . \MVC\Registry::get('BLOG_CONTENT_SECURITY_POLICY'));      // Default
+        header("X-Content-Security-Policy: " . \MVC\Registry::get('BLOG_CONTENT_SECURITY_POLICY'));    // IE
+        header("X-Webkit-CSP: " . \MVC\Registry::get('BLOG_CONTENT_SECURITY_POLICY'));                 // Chrome und Safari
+        header("X-XSS-Protection: " . \MVC\Registry::get('BLOG_X_XSS_Protection'));
+        header("X-Frame-Options: allow-from " . \MVC\Registry::get('BLOG_CONTENT_SECURITY_FRAME_PARENTS'));
+        header("Strict-Transport-Security: " . \MVC\Registry::get('BLOG_STRICT_TRANSPORT_SECURITY'));
+    }
 }
