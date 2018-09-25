@@ -251,3 +251,6 @@ $aConfig['MVC_COMPOSER_DIR'] = __DIR__ . '/Blogimus';
 
 // routing.json file
 $aConfig['MVC_ROUTING_JSON'] = __DIR__ . '/Blogimus/routing.json';
+
+// we need cookie
+$aConfig['MVC_SESSION_ENABLE'] = true; 
