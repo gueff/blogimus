@@ -403,7 +403,6 @@ class Backend
 
             if (file_exists($sFilePath))
             {
-                \MVC\Helper::DISPLAY($sFilePath);
                 unlink($sFilePath);
             }
         }
