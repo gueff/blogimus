@@ -33,26 +33,21 @@ Demo: http://blog.ueffing.net
 - Linux OS
 - Permission to execute these Linux binaries via PHP's `shell_exec` command: `ls`, `find`, `grep`, `head`, `md5sum` 
 - PHP >=5.4
-- [myMVC](https://www.mymvc.org/) - will be installed automatically when following the [Installation Instruction](#Installation) here on this page.
+- [myMVC 1.1.1](https://github.com/gueff/myMVC/releases/tag/1.1.1) - will be installed automatically when following the [Installation Instruction](#Installation) here on this page.
 
 For Production `live` Environments i strongly recommend a Webserver like Apache2. For `develop` or `test` you could easily run PHP's internal server (see Section [Run](#Run) here).
 
 ## <a name="Installation"></a> Installation
-This will install _myMVC_ + _blogimus Module_ in one Step for a `develop` Environment (PHP >= 5.4 is required).
-~~~bash
-$ export MVC_ENV="develop"; svn co https://github.com/gueff/myMVC.git/trunk/ myMVC; cd myMVC/public; php index.php; cd ../modules; svn co https://github.com/gueff/blogimus.git/trunk/ Blogimus; cd Blogimus; ./install.sh;
-~~~
+This will install _blogimus Module_.
 
-## <a name="Run"></a> Run
-cd to myMVC's `public/` folder and run php's internal server: 
-~~~bash
-$ export MVC_ENV="develop"; php -S 127.0.0.1:1969;
-~~~    
-open Browser and call `http://127.0.0.1:1969`
+1. Download and install [myMVC 1.1.1](https://github.com/gueff/myMVC/releases/tag/1.1.1). Follow [Install Instructions](https://github.com/gueff/myMVC)
 
-you could also "simulate" `test` and `live` environments, by just set the specific value. E.g: `export MVC_ENV="test";php -S 127.0.0.1:1969;`, and `export MVC_ENV="live";php -S 127.0.0.1:1969;`
+2. Install `blogimus` Module
 
-For a live/production environment i **strongly recommended to use Apache2 Webserver** and a Domain pointing to that. Using Apache2 Webserver will allow you to make use the .htaccess file located in `/trunk/public/.htaccess`. In there, you easily can set the environment variable. But of course, you also can make use of Nginx. See myMVC 's documentation for more Info.
+- Download latest Release [blogimus 1.0.0](https://github.com/gueff/blogimus/releases/tag/1.0.0)
+- Extract and place it into the myMVC's `module` folder. 
+- Make sure to name the folder `Blogimus`. 
+- Run the `install.sh` shell script which you will find inside Blogimus folder.
 
 ## <a name="Creating-Content"></a> Creating Content
 The easiest Way is to use the **Backend**. Therefore you need to set up a user and password once: 
