@@ -33,9 +33,7 @@ Demo: http://blog.ueffing.net
 - Linux OS
 - Permission to execute these Linux binaries via PHP's `shell_exec` command: `ls`, `find`, `grep`, `head`, `md5sum` 
 - PHP >=5.4
-- [myMVC 1.1.1](https://github.com/gueff/myMVC/releases/tag/1.1.1) - will be installed automatically when following the [Installation Instruction](#Installation) here on this page.
-
-For Production `live` Environments i strongly recommend a Webserver like Apache2. For `develop` or `test` you could easily run PHP's internal server (see Section [Run](#Run) here).
+- [myMVC 1.1.1](https://github.com/gueff/myMVC/releases/tag/1.1.1) - see the [Installation Instruction](#Installation) here on this page.
 
 ## <a name="Installation"></a> Installation
 This will install _blogimus Module_.
