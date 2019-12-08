@@ -1,6 +1,0 @@
-{
-	"require": {
-		"erusev/parsedown":"1.7.1",
-        	"gueff/idolon":"1.0.1"
-	}
-}
