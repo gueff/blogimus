@@ -29,7 +29,7 @@
               {foreach item=page from=$aPage}<li class="nav-item{if $smarty.server.REQUEST_URI == $page.sUrl} active{/if}"><a class="nav-link" href="{$page.sUrl}">{$page.sName}</a></li>
               {/foreach}			
               <li class="nav-item">
-                  {if isset($smarty.session.blogixx.login) && 'true' == $smarty.session.blogixx.login}
+                  {if isset($smarty.session.blogimus.login) && 'true' == $smarty.session.blogimus.login}
                   <a class="nav-link tooltipper" href="/@logout" data-toggle="tooltip" data-placement="bottom" title="Logout" data-original-title="Logout">
                       <i class="fa fa-sign-out"></i>
                   </a>
@@ -46,7 +46,7 @@
 
 
 {* Backend Buttons *}
-{if isset($smarty.session.blogixx.login) && 'true' == $smarty.session.blogixx.login}
+{if isset($smarty.session.blogimus.login) && 'true' == $smarty.session.blogimus.login}
     
         {include file="backend/modalDelete.tpl"}	
         
@@ -100,7 +100,7 @@
                     {/if}
                 
                     <!-- Logout -->
-                    {if isset($smarty.session.blogixx.login) && 'true' == $smarty.session.blogixx.login}
+                    {if isset($smarty.session.blogimus.login) && 'true' == $smarty.session.blogimus.login}
                     <a class="list-group-item list-group-item-action text-white bg-info tooltipper" href="/@logout" data-toggle="tooltip" data-placement="right" title="" data-original-title="Logout from Backend">
                         <i class="fa fa-sign-out"></i> Logout
                     </a>

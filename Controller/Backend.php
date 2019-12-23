@@ -90,8 +90,8 @@ class Backend
             if  (
                     // login already succeeded before
                     (
-                            isset($_SESSION['blogixx']['login'])
-                        &&  true === $_SESSION['blogixx']['login']
+                            isset($_SESSION['blogimus']['login'])
+                        &&  true === $_SESSION['blogimus']['login']
                     )
                     OR
                     // login success first time
@@ -118,8 +118,8 @@ class Backend
                 )
             {
                 // login successful
-                (!isset($_SESSION['blogixx'])) ? $_SESSION['blogixx'] = array() : false;
-                $_SESSION['blogixx']['login'] = true;
+                (!isset($_SESSION['blogimus'])) ? $_SESSION['blogimus'] = array() : false;
+                $_SESSION['blogimus']['login'] = true;
 
                 switch ($sRequest)
                 {
@@ -416,8 +416,8 @@ class Backend
      */
     private function _loginForm()
     {
-        unset($_SESSION['blogixx']);
-        $_SESSION['blogixx'] = null;
+        unset($_SESSION['blogimus']);
+        $_SESSION['blogimus'] = null;
 
         $this->oControllerIndex->oView->sTemplate = $this->oControllerIndex->oView->sTemplateDir . '/layout/index.tpl';
         

@@ -39,11 +39,11 @@
 
 
                 <!-- Files -->
-                <li>
-                    <a class="btn btn-primary text-white tooltipper" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Files">
-                        <i class="fa fa-file"></i> Files
-                    </a>
-                </li>
+{*                <li>*}
+{*                    <a class="btn btn-primary text-white tooltipper" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Files">*}
+{*                        <i class="fa fa-file"></i> Files*}
+{*                    </a>*}
+{*                </li>*}
 
                 <!-- Delete -->
                 {if $smarty.server.REQUEST_URI|stristr:'/@edit'}
@@ -68,7 +68,7 @@
                 {/if}
                 
                 <!-- Logout -->
-                {if isset($smarty.session.blogixx.login) && 'true' == $smarty.session.blogixx.login}
+                {if isset($smarty.session.blogimus.login) && 'true' == $smarty.session.blogimus.login}
                 <li>
                     <a class="btn btn-primary text-white tooltipper" href="/@logout" data-toggle="tooltip" data-placement="top" title="" data-original-title="Logout from Backend">
                         <i class="fa fa-sign-out"></i> Logout

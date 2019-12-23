@@ -12,8 +12,7 @@
                                             </div>
 
                                             <br>
-                                            <div class="shariff"></div>						
-					{/if}
+  					{/if}
 
 					{*<!-- a Post -->*}
 					{if isset($sPost)}
@@ -26,7 +25,7 @@
                                                 {$sPost}
                                             </div>
                                             <br>
-                                            <div class="shariff"></div>						
+                                            						
 
                                             {if !empty($aSuggestion)}
                                                 <h3>
@@ -54,7 +53,7 @@
                                             </div>
 
                                             <br>
-                                            <div class="shariff"></div>
+                                            
 					{/if}
 
 					{*<!-- Date List -->*}
@@ -70,7 +69,7 @@
                                             </div>	
 
                                             <br>
-                                            <div class="shariff"></div>						
+                                            						
 					{elseif isset($aDate.aMonth)}
                                             <div class="paper shadow prettyBorder padding20">
                                             {foreach item=aDay key=key from=$aDate.aMonth}
@@ -82,7 +81,7 @@
                                             </div>	
 
                                             <br>
-                                            <div class="shariff"></div>						
+                                            						
 					{elseif isset($aDate.aYear)}	
                                             <div class="paper shadow prettyBorder padding20">
                                             {foreach item=aMonth key=key from=$aDate.aYear}
@@ -97,7 +96,7 @@
                                             </div>			
 
                                             <br>
-                                            <div class="shariff"></div>						
+                                            						
 					{/if}
 
 					{*<!-- Posts Overview -->*}
@@ -193,7 +192,7 @@
                                                 </ul>
                                             </nav>	
 
-                                            <div class="shariff"></div>						
+                                            						
 
 					{/if}
 

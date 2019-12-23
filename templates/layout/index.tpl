@@ -23,8 +23,7 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/4.4.1/cosmo/bootstrap.min.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow-night-eighties.min.css">{*@see https://highlightjs.org/static/demo/*}		
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/shariff/1.26.2/shariff.min.css">	
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/gueff/jquery-maxlengthVisualFeedback@2.2/maxlengthVisualFeedback.css"> 
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/gueff/jquery-maxlengthVisualFeedback@2.2/maxlengthVisualFeedback.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/css/lightbox.min.css">
         <link rel="stylesheet" href="/Blogimus/styles/blog.css">		
 
@@ -81,7 +80,6 @@
         <script src="/Blogimus/scripts/popper.min.js"></script>{* this one is compatible to bootswatch themes *}
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/shariff/1.26.2/shariff.min.js" type="text/javascript"></script>
         <script src="//cdn.jsdelivr.net/gh/gueff/jquery-maxlengthVisualFeedback@2.2/maxlengthVisualFeedback.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/js/lightbox.min.js"></script>
         <script src="/myMVC/scripts/cookieConsent.js" type="text/javascript"></script>

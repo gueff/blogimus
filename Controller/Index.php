@@ -136,14 +136,14 @@ class Index implements \MVC\MVCInterface\Controller
                 return true;
             }
 
-            \MVC\Event::RUN('blogixx.delegate.before', $sRequest);
+            \MVC\Event::RUN('blogimus.delegate.before', $sRequest);
 
             // PAGE
             if (true === $this->_oModel->checkRequestOnToken('page/'))
             {
-                \MVC\Event::RUN('blogixx.delegate.page.before', $sRequest);
+                \MVC\Event::RUN('blogimus.delegate.page.before', $sRequest);
                 $aSet = $this->concretePage();
-                \MVC\Event::RUN('blogixx.delegate.page.after', $aSet);
+                \MVC\Event::RUN('blogimus.delegate.page.after', $aSet);
             }
             // POST
             elseif (true === $this->_oModel->checkRequestOnToken('post/'))
@@ -160,44 +160,44 @@ class Index implements \MVC\MVCInterface\Controller
                     \MVC\Request::REDIRECT($sPath);
                 }
 
-                \MVC\Event::RUN('blogixx.delegate.post.before', $sRequest);
+                \MVC\Event::RUN('blogimus.delegate.post.before', $sRequest);
                 $aSet = $this->concretePost();
-                \MVC\Event::RUN('blogixx.delegate.post.after', $aSet);
+                \MVC\Event::RUN('blogimus.delegate.post.after', $aSet);
             }
             // DATE
             elseif (true === $this->_oModel->checkRequestOnToken('date/'))
             {
-                \MVC\Event::RUN('blogixx.delegate.date.before', $aPostDate);
+                \MVC\Event::RUN('blogimus.delegate.date.before', $aPostDate);
                 $aDate = $this->concreteDate($aPostDate);
-                \MVC\Event::RUN('blogixx.delegate.date.after', $aDate);
+                \MVC\Event::RUN('blogimus.delegate.date.after', $aDate);
             }
             // TAG
             elseif (true === $this->_oModel->checkRequestOnToken('tag/'))
             {
-                \MVC\Event::RUN('blogixx.delegate.tag.before', $aTag);
+                \MVC\Event::RUN('blogimus.delegate.tag.before', $aTag);
                 $aTagInterest = $this->concreteTag($aTag);
-                \MVC\Event::RUN('blogixx.delegate.tag.after', $aTagInterest);
+                \MVC\Event::RUN('blogimus.delegate.tag.after', $aTagInterest);
             }
             // BLOG OVERVIEW
             elseif ($this->_aRoutingCurrent['path'] === strtok($_SERVER['REQUEST_URI'], '?'))
             {
-                \MVC\Event::RUN('blogixx.delegate.overview.before', $sRequest);
+                \MVC\Event::RUN('blogimus.delegate.overview.before', $sRequest);
                 $aPostOverview = $this->postOverview();
-                \MVC\Event::RUN('blogixx.delegate.overview.after', $aPostOverview);
+                \MVC\Event::RUN('blogimus.delegate.overview.after', $aPostOverview);
             }
             // invalid Request
             else
             {
-                \MVC\Event::RUN('blogixx.delegate.notfound.before', $sRequest);
+                \MVC\Event::RUN('blogimus.delegate.notfound.before', $sRequest);
                 $this->notFound();
-                \MVC\Event::RUN('blogixx.delegate.notfound.after', $sRequest);
+                \MVC\Event::RUN('blogimus.delegate.notfound.after', $sRequest);
             }
 
-            \MVC\Event::RUN('blogixx.delegate.after', $sRequest);
+            \MVC\Event::RUN('blogimus.delegate.after', $sRequest);
         }
 
         $this->_oModel->setMeta($this->oView);
-        \MVC\Event::RUN('blogixx.delegate.meta.after', $sRequest);
+        \MVC\Event::RUN('blogimus.delegate.meta.after', $sRequest);
 
         // Set Value in sContent Var
         $this->oView->assign(
