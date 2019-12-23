@@ -14,6 +14,11 @@
  */
 namespace Blogimus\Event;
 
+use MVC\Event;
+use MVC\Helper;
+use MVC\Registry;
+use MVC\Request;
+
 /**
  * Index
  */
@@ -29,32 +34,23 @@ class Index
     private static $_oInstance = NULL;
 
     /**
-     * Constructor
-     * 
-     * @access protected
-     * @return void
+     * Index constructor.
+     * @throws \ReflectionException
      */
     protected function __construct()
     {
-        \MVC\Event::BIND('mvc.invalidRequest', function() {
-            \MVC\Request::REDIRECT('/404/');
-        });
-        
-        /*
-         * We want to log the end of the request
-         */
-        \MVC\Event::BIND('mvc.application.destruct', function () {
+        $aEvent = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'));
 
-            \MVC\Log::WRITE(str_repeat('*', 25) . "\t" . 'End of Request' . str_repeat("\n", 6));
-        });
+        foreach ($aEvent['EVENT_BIND'] as $sEvent => $oClosure)
+        {
+            Event::BIND($sEvent, $oClosure);
+        }
     }
 
     /**
      * Singleton instance
-     *
-     * @access public
-     * @static
-     * @return Blogimus\Event\Index
+     * @return Blogimus\Event\Index|Index
+     * @throws \ReflectionException
      */
     public static function getInstance()
     {
@@ -75,6 +71,26 @@ class Index
     private function __clone()
     {
         ;
+    }
+
+    /**
+     * activates Session for Frontend Calls
+     * @param DTArrayObject $oDTArrayObject
+     * @throws \ReflectionException
+     */
+    public static function enableSession(\MVC\DataType\DTArrayObject $oDTArrayObject)
+    {
+        // Request via GUI
+        $bIsGuiRequest = in_array(
+            Request::getInstance()->getController(),
+            Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['SESSION']['aEnableSessionForController']
+        );
+
+        if (true === $bIsGuiRequest &&
+            isset($_COOKIE['myMVC_cookieConsent']) &&
+            "true" == $_COOKIE['myMVC_cookieConsent']) {
+            Registry::set('MVC_SESSION_ENABLE', true);
+        }
     }
 
     /**
