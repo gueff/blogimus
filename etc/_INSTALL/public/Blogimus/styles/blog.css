@@ -1,0 +1,259 @@
+@import url(//fonts.googleapis.com/css?family=Oxygen+Mono);
+
+body {
+    margin: 80px 0 0 0;
+    background-color: #efefef;
+}	
+h1,h2,h3,h4,h5,h6 {
+    /*font-weight: inherit;*/
+}
+
+#mainContent > div a {
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+
+pre {
+    font-family: 'Oxygen Mono', sans-serif !important;
+    background-color: #efefef !important;
+    border: 1px solid #DEE2E6 !important;
+    white-space: pre-wrap;
+}
+    pre code {
+        font-family: 'Oxygen Mono', sans-serif !important;
+        white-space: pre-wrap;
+    }
+p, li, tag {
+}
+hr {
+    border: 0;
+    height: 1px;
+    background: silver;
+}
+section #mainContent {
+    overflow-x: auto;
+}
+aside {
+    height: 100%;
+    padding: 20px;
+}
+aside ul {
+    list-style: none;
+}
+aside ul li {
+    margin: 2px 0 0 -30px;
+}
+tag {
+    margin: 0 0 20px 0;
+    display: block;
+}
+tag strong {
+    font-weight: normal;
+}
+a[name] {/* bootstrap fixed nav anchor jump fix */
+    display: block; 
+    position: relative; 
+    top: -80px; 
+    visibility: hidden;
+}
+blockquote {
+    font-size: small;
+    font-style: italic;
+    font-family: monospace;
+    border-left: 3px solid silver;
+    padding: 0 0 0 20px;
+}
+footer {
+    padding: 20px;
+}
+label span {
+    font-size: smaller;
+    font-style: italic;	
+    font-weight: normal;
+}	
+
+
+#inputSearch{
+    margin: 0 20px 0 0;
+}
+#suggest {
+    z-index: 10;
+    position: absolute;
+    top: 50px;
+    background-color: white;
+    border: 1px solid #DEE2E6;
+    height: auto;
+    width: 400px;
+    padding: 10px 20px;
+}
+    #suggest a {
+        display: block;
+        padding: 5px !important;
+        margin: 0 !important;
+        border-bottom: 1px dotted silver;
+    }
+        #suggest a:hover {
+            background-color: #f5f5f5;
+        }
+.suggestHover {
+    background-color: #f5f5f5;
+}	
+.text-white {
+    color: #fff;
+}
+.text-black {
+    color: #303030 !important;
+}
+.text-shadow {
+    text-shadow: 0px 0px 3px #000;
+}
+.topShadow {
+    box-shadow:0px -10px 40px rgba(0, 0, 0, 0.8);
+}	
+.paper {
+    background-color: #fff; 
+}
+.shadow {
+    box-shadow: 0px 0px 10px #d0d0d0;
+}
+.padding20 {
+    padding: 20px;
+}
+.prettyBorder {
+    border: 1px solid #d0d0d0;
+}
+.space {
+    display: block;
+    height: 1000px;
+}
+
+.dates li a {
+    margin-top: 2px;
+    display: inline-block;
+    padding: 5px 10px;
+}	
+.tags li a {
+    margin: 2px 2px;
+    display: inline-block;
+    float: left;
+}	
+.tags li a .badge {
+    font-family: monospace;
+    padding: 1px 3px;
+}	
+.ucfirst:first-letter
+{
+    text-transform: uppercase;
+}
+.shariff {
+    display: none;
+}
+
+/* 2017-09-06
+ * pagination look and feel
+ */
+.pagination li {
+    width: 48px;
+    height: 40px;
+    float: left;
+}
+.pagination li a {
+    text-align: center;
+    width: 100%;
+}
+
+/* progress CSS
+ */
+.visualizeConsumption {
+}
+.progress {
+    position: absolute;
+}
+    .progress-bar {
+        background-color: #EEEEEE;
+    }
+    .progress-bar-info {
+        background-color: #FFC107;
+    }
+    .progress-bar-warning {
+        background-color: #FF9800;
+    }
+    .progress-bar-danger {
+        background-color: #E51C23;
+    }
+    .progresstext {
+        padding: 0px 2px;
+        position: absolute;
+    }	
+
+@media print {
+    body,h1,h2,h3,h4,h5,h6,p,li,tag {
+        color: #000;
+        background-color: transparent;
+        font-family: serif;
+    }
+    pre {
+        font-family: monospace;
+    }
+    section {
+        margin: 0;
+        padding: 0;
+    }
+    .prettyBorder {
+        border: none;
+    }
+}
+noscript {
+    position: fixed !important;
+    bottom: 0px;
+    left: 0px;
+    min-height: 40px;
+    width: 100%;
+    background-color: #237AFC;
+    padding: 20px;
+    color: #fff !important;
+}
+noscript a {
+    color: #fff !important;
+    text-decoration: underline !important;
+}
+#myMVC_cookieConsent {
+    position: fixed !important;
+    bottom: 0px;
+    left: 0px;
+    min-height: 40px;
+    width: 100%;
+    background-color: #237AFC;
+    display: none;
+    color: #fff;
+    padding: 20px;
+    z-index: 99999999;
+}
+#myMVC_cookieConsentCheckbox {
+    display: inline-block;
+}
+#myMVC_cookieConsent label {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#myMVC_cookieConsent input {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+#myMVC_cookieConsent a {
+    color: #fff !important;
+    text-decoration: underline !important;
+}
+
+#myMVC_cookieConsent button {
+    padding: 5px 10px;
+    color: #333;
+    cursor: pointer;
+}

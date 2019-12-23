@@ -1,0 +1,237 @@
+@import url(http://fonts.googleapis.com/css?family=Oxygen+Mono);
+
+body {
+	margin: 80px 0 0 0;
+	background-color: #efefef;
+}	
+h1,h2,h3,h4,h5,h6 {
+    /*font-weight: inherit;*/
+}
+#blogimus_form_editor { /*<form>*/
+    visibility: hidden;
+}
+#editor pre {
+    border-bottom: 1px dotted #efefef;
+}
+#preview pre {
+    font-family: 'Oxygen Mono', sans-serif !important;
+    background-color: #efefef !important;
+    border: 1px solid #DEE2E6 !important;
+    white-space: pre-wrap;
+}
+    #preview pre code {
+        font-family: 'Oxygen Mono', sans-serif !important;
+        white-space: pre-wrap;
+    }
+a[name] {/* bootstrap fixed nav anchor jump fix */
+  display: block; 
+  position: relative; 
+  top: -80px; 
+  visibility: hidden;
+}
+footer {
+	padding: 20px;
+}
+blockquote {
+    font-size: small;
+    font-style: italic;
+    font-family: monospace;
+    border-left: 3px solid silver;
+    padding: 0 0 0 20px;
+}
+.hide {
+    display: none;
+}
+.text-black {
+	color: #303030 !important;
+}
+.text-shadow {
+    text-shadow: 0px 0px 3px #000;
+}
+.topShadow {
+	box-shadow:0px -10px 40px rgba(0, 0, 0, 0.8);
+}	
+.paper {
+	background-color: #fff; 
+}
+.shadow {
+	box-shadow: 0px 0px 10px #d0d0d0;
+}
+.padding20 {
+	padding: 20px;
+}
+.prettyBorder {
+	border: 1px solid #d0d0d0;
+	border-radius: 3px;
+}
+.space {
+	display: block;
+	height: 1000px;
+}
+.ucfirst:first-letter
+{
+    text-transform: uppercase;
+}
+
+/* progress CSS
+ */
+.progresstext {
+	padding: 0px 2px;
+	position: absolute;
+}	
+	
+@media print {
+	body,h1,h2,h3,h4,h5,h6,p,li,tag {
+		color: #000;
+		background-color: transparent;
+		font-family: serif;
+	}
+	pre {
+		font-family: monospace;
+	}
+	section {
+		margin: 0;
+		padding: 0;
+	}
+	.prettyBorder {
+		border: none;
+	}
+}	
+
+
+
+
+
+/******************************************************************************
+*/
+#taglist {
+    /*border: 1px solid red;*/
+    min-height: 48px;
+    height: auto;
+    display: block;
+}
+.taggle_list {
+  float: left;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+    .taggle_list li {
+      float: left;
+      display: inline-block;
+      white-space: nowrap;
+      font-weight: 500;
+      /*margin-bottom: 5px;*/
+    }
+    .taggle_list .taggle {
+      margin-right: 8px;
+      background: #E2E1DF;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all .3s;
+      -webkit-animation-duration: 1s;
+              animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+              animation-fill-mode: both;
+    }
+        .taggle_list .taggle_hot {
+            background: red !important;
+        }
+        .taggle_list .taggle .close {
+          font-size: 1.1rem;
+          /*position: absolute;*/
+          top: 10px;
+          right: 3px;
+          text-decoration: none;
+          padding: 0;
+          line-height: 0.5;
+          color: #ccc;
+          color: rgba(0, 0, 0, 0.2);
+          padding-bottom: 4px;
+          display: none;
+          border: 0;
+          background: none;
+          cursor: pointer;
+        }
+.close {
+    position: relative !important;
+    top: 5px !important;
+    right: -10px !important;
+    /*z-index: 9999 !important;*/
+    /*display: block !important;*/
+    font-size: 20px !important;
+    color: red !important;
+    /*border: 1px solid red !important;*/ 
+/*    width: 50px !important;
+    height: 50px !important;*/
+}        
+        .taggle_list .taggle:hover {
+          padding: 5px;
+          padding-right: 15px;
+          background: #ccc;
+          transition: all .3s;
+        }
+            .taggle_list .taggle:hover > .close {
+                display: block;
+            }
+        .taggle_list .taggle .close:hover {
+            color: #990033;
+        }
+.taggle_placeholder {
+  /*position: absolute;*/
+  color: #CCC;
+/*  top: 12px;
+  left: 8px;*/
+  transition: opacity, .25s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.taggle_input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 300;
+}
+.taggle_input {
+  padding: 8px;
+  padding-left: 0;
+  float: left;
+  margin-top: 0px;
+  background: none;
+  width: 100%;
+  max-width: 100%;
+}
+.taggle_sizer {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: -500px;
+  z-index: -1;
+  visibility: hidden;
+}
+
+.ui-autocomplete {
+    height: 100px !important;
+    max-height: 100px !important;
+    width: 100% !important;
+    max-width: 99% !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    border: 1px solid #d0d0d0 !important;
+    border-radius: 3px !important;
+    box-shadow: 0px 0px 10px #d0d0d0 !important;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+    height: 100px !important;
+    width: 100% !important;
+}

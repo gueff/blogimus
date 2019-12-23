@@ -1,0 +1,15 @@
+{
+    "\/Ajax\/": {
+        "query": "module=blogimus&c=ajax&m=index"
+    },
+    "\/Ajax\/taglist\/": {
+        "query": "module=blogimus&c=ajax&m=taglist"
+    },
+    "\/feed\/post\/": {
+        "query": "module=blogimus&c=feed&m=post"
+    },
+    "\/": {
+        "Blogimus": true,
+        "query": "module=blogimus&c=index&m=index"
+    }
+}
