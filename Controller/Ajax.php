@@ -14,6 +14,8 @@
  */
 namespace Blogimus\Controller;
 
+use MVC\Registry;
+
 /**
  * Index
  * 
@@ -45,41 +47,39 @@ class Ajax implements \MVC\MVCInterface\Controller
     }
 
     /**
-     * Constructor
-     * 
-     * @access public
-     * @return void
+     * Ajax constructor.
+     * @throws \ReflectionException
      */
     public function __construct()
     {
-        $sView = \MVC\Registry::get('BLOG_CLASS_VIEW_INDEX');
+        $sView = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_VIEW_INDEX'];
         $this->oView = new $sView(); 
-        $this->_aRoutingCurrent = \MVC\Registry::get('MVC_ROUTING_CURRENT');
+        $this->_aRoutingCurrent = Registry::get('MVC_ROUTING_CURRENT');
     }
 
     /**
      * echos out results to requested string as JSON array
-     * @access public
-     * @return void 
+     * @param string $sString
+     * @throws \ReflectionException
      */
     public function index($sString = '')
     {        
         $aFinal = array();
 
         $this->oView->sendJsonHeader();
-        $sModelAjax = \MVC\Registry::get('BLOG_CLASS_MODEL_AJAX');
+        $sModelAjax = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_MODEL_AJAX'];
         $oModel = new $sModelAjax();
         $sResult = $oModel->grep($sString);
 
         $aResult = preg_split("@\n@", $sResult, NULL, PREG_SPLIT_NO_EMPTY);
-        $sPath = \MVC\Registry::get('BLOG_DATA_DIR');
+        $sPath = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'];
 
         foreach ($aResult as $iKey => $sValue)
         {
             $aResult[$iKey] = str_replace($sPath, '', $sValue);
             $sBasename = basename($aResult[$iKey], '.md');
             
-            $sModelIndex = \MVC\Registry::get('BLOG_CLASS_MODEL_INDEX');
+            $sModelIndex = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_MODEL_INDEX'];
             $sBasenameSeo = $sModelIndex::seoname($sBasename);
             
             $aResult[$iKey] = str_replace($sBasename, $sBasenameSeo, $aResult[$iKey]);
@@ -96,7 +96,7 @@ class Ajax implements \MVC\MVCInterface\Controller
             $aResult[$iKey] = str_replace('/', '#|#', $aResult[$iKey]);
             $aResult[$iKey] = mb_substr($aResult[$iKey], 0, (strlen($aResult[$iKey]) - 3)) . '#|#.json';
 
-            $sCacheFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . $aResult[$iKey];
+            $sCacheFile = Registry::get('MVC_CACHE_DIR') . '/' . Registry::get('MODULE_FOLDERNAME') . '/' . $aResult[$iKey];
 
             if (file_exists($sCacheFile))
             {
@@ -113,14 +113,13 @@ class Ajax implements \MVC\MVCInterface\Controller
 
     /**
      * echos out the taglist as JSON array
-     * @access public
-     * @return void 
+     * @throws \ReflectionException
      */
     public function taglist()
     {
         $this->oView->sendJsonHeader();
         
-        $sModelIndex = \MVC\Registry::get('BLOG_CLASS_MODEL_INDEX');
+        $sModelIndex = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_MODEL_INDEX'];
         $oModelIndex = new $sModelIndex();
         
         $aTag = $oModelIndex->getTags();
@@ -134,9 +133,7 @@ class Ajax implements \MVC\MVCInterface\Controller
 
     /**
      * Destructor
-     * 
      * @access public
-     * @return void
      */
     public function __destruct()
     {

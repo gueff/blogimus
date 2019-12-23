@@ -13,6 +13,8 @@
  */
 namespace Blogimus\Controller;
 
+use MVC\Registry;
+
 /**
  * Backend
  */
@@ -42,30 +44,28 @@ class Backend
     );
 
     /**
-     * Constructor
-     * @param object $oControllerIndex
-     * @access public
-     * @return void 
+     * Backend constructor.
+     * @param $oControllerIndex
+     * @throws \ReflectionException
      */
     public function __construct($oControllerIndex)
     {        
-        $sModelIndex = \MVC\Registry::get('BLOG_CLASS_MODEL_INDEX');
-        $sModelBackend = \MVC\Registry::get('BLOG_CLASS_MODEL_BACKEND');
+        $sModelIndex = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_MODEL_INDEX'];
+        $sModelBackend = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_MODEL_BACKEND'];
         
         $this->oControllerIndex = $oControllerIndex;
-        $this->oModelIndex = new $sModelIndex(); # \Blogimus\Model\Index();
-        $this->oModelBackend = new $sModelBackend(); # \Blogimus\Model\Backend();
+        $this->oModelIndex = new $sModelIndex();
+        $this->oModelBackend = new $sModelBackend();
         
         $this->oControllerIndex->oView->assign('aParam', (isset($_GET['a'])) ? json_decode($_GET['a'], true) : array());        
-        $this->oControllerIndex->oView->assign('BLOG_CREATE_MAX_TITLE', ((\MVC\Registry::isRegistered('BLOG_CREATE_MAX_TITLE')) ? \MVC\Registry::get('BLOG_CREATE_MAX_TITLE') : ''));
-        $this->oControllerIndex->oView->assign('BLOG_CREATE_MAX_CONTENT', ((\MVC\Registry::isRegistered('BLOG_CREATE_MAX_CONTENT')) ? \MVC\Registry::get('BLOG_CREATE_MAX_CONTENT') : ''));
+        $this->oControllerIndex->oView->assign('BLOG_CREATE_MAX_TITLE', (isset(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CREATE_MAX_TITLE'])) ? Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CREATE_MAX_TITLE'] : '');
+        $this->oControllerIndex->oView->assign('BLOG_CREATE_MAX_CONTENT', (isset(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CREATE_MAX_CONTENT'])) ? Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CREATE_MAX_CONTENT'] : '');
     }
 
     /**
      * checks login into backend and delegates actions
      * @param string $sRequest
-     * @access public
-     * @return void 
+     * @throws \ReflectionException
      */
     public function backend($sRequest = '')
     {
@@ -75,10 +75,10 @@ class Backend
             $this->oModelBackend->logout();
         }
 
-        if (true === \MVC\Registry::isRegistered('BLOG_BACKEND'))
+        if (isset(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_BACKEND']))
         {
             /** @var array $aBlogBackend */
-            $aBlogBackend = \MVC\Registry::get('BLOG_BACKEND');
+            $aBlogBackend = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_BACKEND'];
 
             // invalid page request
             if (false === in_array($sRequest, $this->aPage))
@@ -103,16 +103,16 @@ class Backend
                                 ||  '' !== trim($_POST['password'])
                             )
                         &&  array_key_exists(
-                                \MVC\Registry::get('MVC_ENV'),
+                                Registry::get('MVC_ENV'),
                                 $aBlogBackend
                             )
-                        &&  is_array($aBlogBackend[\MVC\Registry::get('MVC_ENV')])
+                        &&  is_array($aBlogBackend[Registry::get('MVC_ENV')])
                         &&  true === in_array(
                             array(
                                 'user' => $_POST['user'],
                                 'password' => $_POST['password'],
                             ),
-                            $aBlogBackend[\MVC\Registry::get('MVC_ENV')]
+                            $aBlogBackend[Registry::get('MVC_ENV')]
                         )
                     )
                 )
@@ -156,8 +156,7 @@ class Backend
     /**
      * shows overview
      * @param string $sRequest
-     * @access private
-     * @return void 
+     * @throws \ReflectionException
      */
     private function _overview($sRequest = '')
     {
@@ -167,7 +166,7 @@ class Backend
         $this->oControllerIndex->oView->assign('aPost', $aPost);
 
         // get all pages
-        $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPage.json'), true);
+        $aPage = json_decode(file_get_contents(Registry::get('MVC_CACHE_DIR') . '/' . Registry::get('MODULE_FOLDERNAME') . '/aPage.json'), true);
         $this->oControllerIndex->oView->assign('aPage', $aPage);
 
         $this->oControllerIndex->oView->assign(
@@ -177,8 +176,7 @@ class Backend
 
     /**
      * edit contents
-     * @access public
-     * @return void 
+     * @throws \ReflectionException
      */
     private function _edit()
     {
@@ -225,7 +223,7 @@ class Backend
         // new filename
         if (isset($_POST['type']) && isset($_POST['title']))
         {
-            $sFilePathNew = \MVC\Registry::get('BLOG_DATA_DIR') . '/' . $_POST['type'] . '/' . ((isset($sDate)) ? $sDate . '.' : '') . $_POST['title'] . '.md';
+            $sFilePathNew = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/' . $_POST['type'] . '/' . ((isset($sDate)) ? $sDate . '.' : '') . $_POST['title'] . '.md';
         }
         
         if ($_POST)
@@ -261,7 +259,9 @@ class Backend
             );
             $sSuccess = ((true === $bSuccess) ? 'true' : 'false');
             
-            $sRedirect = '/@edit?a={"type":"' . $aParam['type'] . '","url":"/' . $aParam['type'] . ((isset($sDate)) ? '/' . str_replace('-', '/', $sDate) : '') . '/' . \Blogimus\Model\Index::seoname($_POST['title']) . '/"}';
+            $sRedirect = '/@edit?a={"type":"' . $aParam['type'] . '","url":"/' . $aParam['type'] . ((isset($sDate))
+                    ? '/' . str_replace('-', '/', $sDate)
+                    : '') . '/' . \Blogimus\Model\Index::seoname($_POST['title']) . '/"}';
             \MVC\Request::REDIRECT($sRedirect);
         }
 
@@ -287,8 +287,8 @@ class Backend
 
     /**
      * creates content
-     * @access private
-     * @return boolean success
+     * @return bool
+     * @throws \ReflectionException
      */
     private function _create()
     {
@@ -319,8 +319,8 @@ class Backend
 
             // Path
             $sFilePath = '';
-            ('post' == $_POST['type']) ? $sFilePath = \MVC\Registry::get('BLOG_DATA_DIR') . '/post/' : false;
-            ('page' == $_POST['type']) ? $sFilePath = \MVC\Registry::get('BLOG_DATA_DIR') . '/page/' : false;
+            ('post' == $_POST['type']) ? $sFilePath = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/post/' : false;
+            ('page' == $_POST['type']) ? $sFilePath = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/page/' : false;
 
             if ('' === $sFilePath)
             {
@@ -367,8 +367,7 @@ class Backend
 
     /**
      * deletes a page or post
-     * @access private
-     * @return void 
+     * @throws \ReflectionException
      */
     private function _delete()
     {
@@ -388,14 +387,14 @@ class Backend
 
             if ('post' === $aParam['type'])
             {
-                $aPost = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPost.json'), true);
+                $aPost = json_decode(file_get_contents(Registry::get('MVC_CACHE_DIR') . '/' . Registry::get('MODULE_FOLDERNAME') . '/aPost.json'), true);
                 (!array_key_exists($aParam['url'], $aPost['sUrl'])) ? \MVC\Request::REDIRECT('/@') : false;
                 $aSet = $aPost['sUrl'][$aParam['url']];
                 $sFilePath = $aSet['sFilePath'];
             }
             elseif ('page' === $aParam['type'])
             {
-                $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPage.json'), true);
+                $aPage = json_decode(file_get_contents(Registry::get('MVC_CACHE_DIR') . '/' . Registry::get('MODULE_FOLDERNAME') . '/aPage.json'), true);
                 (!array_key_exists($aParam['url'], $aPage)) ? \MVC\Request::REDIRECT('/@') : false;
                 $aSet = $aPage[$aParam['url']];
                 $sFilePath = $aSet['sFilePath'];

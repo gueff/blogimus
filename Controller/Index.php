@@ -14,6 +14,8 @@
 namespace Blogimus\Controller;
 
     
+use MVC\Registry;
+
 /**
  * Index
  * 
@@ -66,17 +68,16 @@ class Index implements \MVC\MVCInterface\Controller
     }
 
     /**
-     * Constructor
-     * @access public
-     * @return void
+     * Index constructor.
+     * @throws \ReflectionException
      */
     public function __construct()
-    {                         
-        $sViewIndex = \MVC\Registry::get('BLOG_CLASS_VIEW_INDEX');
-        $sModelIndex = \MVC\Registry::get('BLOG_CLASS_MODEL_INDEX');
+    {
+        $sViewIndex = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_VIEW_INDEX'];
+        $sModelIndex = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_MODEL_INDEX'];
         $this->oView = new $sViewIndex();
         $this->_oModel = new $sModelIndex();
-        $this->_aRoutingCurrent = \MVC\Registry::get('MVC_ROUTING_CURRENT');
+        $this->_aRoutingCurrent = Registry::get('MVC_ROUTING_CURRENT');
         
         if (empty($this->_aRoutingCurrent))
         {
@@ -85,17 +86,16 @@ class Index implements \MVC\MVCInterface\Controller
         }
 
         $this->_oModel->init();
-        $this->oView->assign('sTitle', \MVC\Registry::get('BLOG_NAME'));
-        $this->oView->assign('sBlogName', \MVC\Registry::get('BLOG_NAME'));
-        $this->oView->assign('sBlogDescription', \MVC\Registry::get('BLOG_DESCRIPTION'));
+        $this->oView->assign('sTitle', Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_NAME']);
+        $this->oView->assign('sBlogName', Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_NAME']);
+        $this->oView->assign('sBlogDescription', Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DESCRIPTION']);
         $this->oView->assign('aCurrentRequest', \MVC\Request::GETCURRENTREQUEST());
-        $this->oView->assign('aBlogConfig', \MVC\Registry::getInstance()->getStorageArray());
+        $this->oView->assign('aBlogConfig', Registry::getInstance()->getStorageArray());
     }
 
     /**
-     * index
-     * @access public
-     * @return void
+     * @return bool
+     * @throws \ReflectionException
      */
     public function index()
     {
@@ -103,15 +103,15 @@ class Index implements \MVC\MVCInterface\Controller
 
             // All Dates
             // load Post dates
-            $aPostDate = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPostDate.json'), true);
+            $aPostDate = json_decode(file_get_contents(Registry::get('MVC_CACHE_DIR') . '/' . Registry::get('MODULE_FOLDERNAME') . '/aPostDate.json'), true);
 
             // All Tags
             // Sort multidimensional array by number of (value) items @see http://stackoverflow.com/a/7433611/2487859
-            $aTag = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aTag.json'), true);
+            $aTag = json_decode(file_get_contents(Registry::get('MVC_CACHE_DIR') . '/' . Registry::get('MODULE_FOLDERNAME') . '/aTag.json'), true);
             array_multisort(array_map('count', $aTag), SORT_DESC, $aTag);
 
             // All Pages
-            $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPage.json'), true);
+            $aPage = json_decode(file_get_contents(Registry::get('MVC_CACHE_DIR') . '/' . Registry::get('MODULE_FOLDERNAME') . '/aPage.json'), true);
 
             $this->oView->assign('aPostDate', $aPostDate);
             $this->oView->assign('aTag', $aTag);
@@ -123,7 +123,7 @@ class Index implements \MVC\MVCInterface\Controller
             // Backend
             $sRequest = mb_substr(strtok($_SERVER['REQUEST_URI'], '?'), 1, mb_strlen(strtok($_SERVER['REQUEST_URI'], '?')));
             
-            $sControllerBackend = \MVC\Registry::get('BLOG_CLASS_CONTROLLER_BACKEND');
+            $sControllerBackend = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_CONTROLLER_BACKEND'];
             $oControllerBackend = new $sControllerBackend($this);
             
             $this->oView->assign('sPageType', mb_substr($sRequest, 0, 4));
@@ -206,9 +206,8 @@ class Index implements \MVC\MVCInterface\Controller
     }
 
     /**
-     * a concrete page
-     * @access public
-     * @return array $aSet
+     * @return mixed
+     * @throws \ReflectionException
      */
     public function concretePage()
     {
@@ -230,8 +229,8 @@ class Index implements \MVC\MVCInterface\Controller
 
     /**
      * a concrete post
-     * @access public     
-     * @return array $aSet
+     * @return mixed
+     * @throws \ReflectionException
      */
     public function concretePost()
     {
@@ -253,9 +252,9 @@ class Index implements \MVC\MVCInterface\Controller
 
     /**
      * results on a concrete date
-     * @access public
      * @param array $aPostDate
-     * @return array $aDate
+     * @return array
+     * @throws \ReflectionException
      */
     public function concreteDate(array $aPostDate = array())
     {
@@ -301,9 +300,9 @@ class Index implements \MVC\MVCInterface\Controller
 
     /**
      * results to a concrete tag
-     * @access public
      * @param array $aTag
-     * @return array $aTagInterest
+     * @return array
+     * @throws \ReflectionException
      */
     public function concreteTag(array $aTag = array())
     {
@@ -334,9 +333,8 @@ class Index implements \MVC\MVCInterface\Controller
     }
 
     /**
-     * posts for overview
-     * @access public
-     * @return array $aFinal
+     * @return array
+     * @throws \ReflectionException
      */
     public function postOverview()
     {
@@ -345,7 +343,7 @@ class Index implements \MVC\MVCInterface\Controller
         $aFinal = array();
         $aTmp = array();
 
-        $iBlogMaxPostOnPage = \MVC\Registry::get('BLOG_MAX_POST_ON_PAGE');
+        $iBlogMaxPostOnPage = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_MAX_POST_ON_PAGE'];
 
         // a param
         $aQuery = \MVC\Request::getInstance()->getQueryArray();
@@ -383,7 +381,7 @@ class Index implements \MVC\MVCInterface\Controller
 
                 // cut off
                 $sContent = mb_substr(
-                        $sContent, 0, \MVC\Registry::get('BLOG_TEASER_SIZE_IN_OVERVIEW')
+                        $sContent, 0, Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_TEASER_SIZE_IN_OVERVIEW']
                     ) . ' […]';
 
                 // convert markdown to html
@@ -427,7 +425,7 @@ class Index implements \MVC\MVCInterface\Controller
 
         CALC_PAGINATION_SHRINK: {
 
-            $iPaginationRange = round(\MVC\Registry::get('BLOG_MAX_AMOUNT_PAGINATION_STEPS') - 1);
+            $iPaginationRange = round(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_MAX_AMOUNT_PAGINATION_STEPS'] - 1);
             $iArrayIndexStart = null;
             $iArrayIndexEnd = null;
 
@@ -482,22 +480,19 @@ class Index implements \MVC\MVCInterface\Controller
     }
 
     /**
-     * not found
-     * @access public
-     * @return void
+     * @throws \ReflectionException
      */
     public function notFound()
     {
         $this->oView->sendHeader404();
         $this->oView->assign('sTitle', '404');
         $this->oView->assign('aSet', array());
-        $this->oView->assign('sPage', file_get_contents(\MVC\Registry::get('MVC_MODULES') . '/Standard/templates/index/404.tpl'));
+        $this->oView->assign('sPage', file_get_contents(Registry::get('MVC_MODULES') . '/Standard/templates/index/404.tpl'));
     }
 
     /**
      * start rendering
      * @access public
-     * @return void
      */
     public function __destruct()
     {

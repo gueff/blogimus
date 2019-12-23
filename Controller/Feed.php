@@ -14,6 +14,8 @@
  */
 namespace Blogimus\Controller;
 
+use MVC\Registry;
+
 /**
  * Index
  * 
@@ -40,37 +42,34 @@ class Feed implements \MVC\MVCInterface\Controller
     }
 
     /**
-     * Constructor
-     * 
-     * @access public
-     * @return void
+     * Feed constructor.
+     * @throws \ReflectionException
      */
     public function __construct()
     {
         header("Content-type: text/xml");
 
-        $sViewIndex = \MVC\Registry::get('BLOG_CLASS_VIEW_INDEX');
+        $sViewIndex = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_VIEW_INDEX'];
         $this->oView = new $sViewIndex();
 
         $this->oView->sTemplate = $this->oView->sTemplateDir . '/layout/feed.tpl';
 
-        $this->oView->assign('sTitle', \MVC\Registry::get('BLOG_NAME'));
+        $this->oView->assign('sTitle', Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_NAME']);
         $this->oView->assign('sUrl', \MVC\Request::GETCURRENTREQUEST()['protocol'] . \MVC\Request::GETCURRENTREQUEST()['host']);
-        $this->oView->assign('sDescription', \MVC\Registry::get('BLOG_DESCRIPTION'));
+        $this->oView->assign('sDescription', Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DESCRIPTION']);
     }
 
     /**
      * @call /feed/post/
-     * @access public
-     * @return void
+     * @throws \ReflectionException
      */
     public function post()
     {
         // read aPostUrl.json
         $aPost = json_decode(
             file_get_contents(
-                \MVC\Registry::get('MVC_CACHE_DIR')
-                . '/Blogimus/aPostUrl.json'
+                Registry::get('MVC_CACHE_DIR')
+                . '/' . Registry::get('MODULE_FOLDERNAME') . '/aPostUrl.json'
             ), true
         );
 
