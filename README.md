@@ -36,13 +36,20 @@ Demo: http://blog.ueffing.net
 - [myMVC 1.1.1](https://github.com/gueff/myMVC/releases/tag/1.1.1) - see the [Installation Instruction](#Installation) here on this page.
 
 ## <a name="Installation"></a> Installation
-This will install _blogimus Module_.
 
-1. Download and install [myMVC 1.1.1](https://github.com/gueff/myMVC/releases/tag/1.1.1). Follow [Install Instructions](https://github.com/gueff/myMVC)
+### Install & Run Bash Script
 
+You can make use of the setup bash script. This will install Blogimus right at the place you call the command and run a php internal server on port 1969 when installation has finished.  
+~~~bash
+export MVC_ENV="develop"; wget -qO - https://raw.githubusercontent.com/gueff/blogimus/master/etc/setupBlogimus.sh | bash
+~~~
+call: http://127.0.0.1:1969
+
+### Install by Hand
+
+1. Download and install [myMVC master](https://github.com/gueff/myMVC).
 2. Install `blogimus` Module
-
-- Download latest Release [blogimus 1.0.0](https://github.com/gueff/blogimus/releases/tag/1.0.0)
+- Download latest Release [blogimus](https://github.com/gueff/blogimus)
 - Extract and place it into the myMVC's `module` folder. 
 - Make sure to name the folder `Blogimus`. 
 - Run the `install.sh` shell script which you will find inside Blogimus folder.
