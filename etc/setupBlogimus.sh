@@ -2,11 +2,12 @@
 
 sHere=`pwd`;
 sMyMVCVersion="myMVC-master";
-export MVC_ENV="develop";
+#export MVC_ENV="develop";
 
 #---------------------------------------------------
 sStartTime=`date +%s`;
 #---------------------------------------------------
+# Installation
 
 # myMVC
 svn co https://github.com/gueff/myMVC.git/trunk/ $sMyMVCVersion;
@@ -23,6 +24,13 @@ chmod a+x install.sh;
 cd $sHere;
 
 #---------------------------------------------------
+# Ready
+
 sEndTime=`date +%s`;
 sRuntime=$((sEndTime-sStartTime));
 echo -e "\nRuntime: $sRuntime Seconds\n\n";
+
+#---------------------------------------------------
+# Run
+cd myMVC-master/public/;
+./serve.sh
