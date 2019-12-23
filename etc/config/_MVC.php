@@ -6,6 +6,15 @@
 // enable debug output
 $aConfig['MVC_DEBUG'] = false;
 
+/*
+ * Ajax
+ */
+// override MVC's request "a"
+$aConfig['MVC_REQUEST_WHITELIST_PARAMS']['GET']['a'] = array(
+    'regex' => "/[^\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{Pd}\\p{Pc},;.:_\\ ?!&\|\{\}\"']+/u"
+, 'length' => 256
+);
+
 /**
  * Misc
  */
