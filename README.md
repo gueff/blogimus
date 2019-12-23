@@ -41,7 +41,8 @@ Demo: http://blog.ueffing.net
 
 You can make use of the setup bash script. This will install Blogimus right at the place you call the command and run a php internal server on port 1969 when installation has finished.  
 ~~~bash
-export MVC_ENV="develop"; wget -qO - https://raw.githubusercontent.com/gueff/blogimus/master/etc/setupBlogimus.sh | bash
+export MVC_ENV="develop"; \
+wget -qO - https://raw.githubusercontent.com/gueff/blogimus/master/etc/setupBlogimus.sh | bash
 ~~~
 call: http://127.0.0.1:1969
 
