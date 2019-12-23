@@ -53,7 +53,7 @@
 </p>
 {/if}
 
-<form action="" 
+<form id="blogimus_form_editor" action=""
       method="post" 
       >
 	
@@ -144,5 +144,5 @@
         </div>
 	</div>	 
                           
-	<button type="submit" class="btn btn-warning btnWidth100">Update</button>
+	<button id="blogimus_submit" type="submit" class="btn btn-warning btnWidth100">Update</button>
 </form>

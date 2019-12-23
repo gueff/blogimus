@@ -15,6 +15,7 @@
 
 namespace Blogimus\Model;
 
+use MVC\Registry;
 
 /**
  * Ajax
@@ -39,10 +40,10 @@ class Ajax
 
 	/**
 	 * greps in contents for the requested string 
-	 * 
-	 * @param string $sString requested
-	 * @return string $sResult
-	 */
+     * @param string $sString
+     * @return string|null
+     * @throws \ReflectionException
+     */
 	public function grep($sString = '')
 	{
 		$aFallback = array(
@@ -50,16 +51,16 @@ class Ajax
 			, 'length' => 10
 		);		
 		
-		$aFilter = (\MVC\Registry::isRegistered('BLOG_AJAX_FILTER')) ? \MVC\Registry::get('BLOG_AJAX_FILTER') : $aFallback;
+		$aFilter = (isset(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_AJAX_FILTER'])) ? Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_AJAX_FILTER'] : $aFallback;
 		(!isset($aFilter['regex'])) ? $aFilter['regex'] = $aFallback['regex'] : false;
 		(!isset($aFilter['length'])) ? $aFilter['length'] = $aFallback['length'] : false;
 		
 		// filter
 		$sString = preg_replace($aFilter['regex'], '', $sString);		
-		$sCmd = \MVC\Registry::get('BLOG_BIN_GREP') . ' -ril "' . $sString . '" ' . \MVC\Registry::get('BLOG_DATA_DIR') . ' | ' . \MVC\Registry::get('BLOG_BIN_HEAD') . ' -' . $aFilter['length'];
+		$sCmd = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_BIN_GREP'] . ' -ril "' . $sString . '" ' . Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . ' | ' . Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_BIN_HEAD'] . ' -' . $aFilter['length'];
 
 		// logs the Requests if enabled in config
-		(\MVC\Registry::isRegistered('BLOG_AJAX_LOG_REQUESTS') && true === \MVC\Registry::get('BLOG_AJAX_LOG_REQUESTS')) ? \MVC\Log::WRITE($sCmd, 'ajax.log') : false;
+		(isset(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_AJAX_LOG_REQUESTS']) && true === Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_AJAX_LOG_REQUESTS']) ? \MVC\Log::WRITE($sCmd, 'ajax.log') : false;
 
 		// execute
 		$sResult = shell_exec($sCmd);

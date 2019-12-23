@@ -35,8 +35,16 @@
                             <i class="fa fa-eye"></i> Frontend
                         </a>
                     </li>
-                {/if}                
-                
+                {/if}
+
+
+                <!-- Files -->
+                <li>
+                    <a class="btn btn-primary text-white tooltipper" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Files">
+                        <i class="fa fa-file"></i> Files
+                    </a>
+                </li>
+
                 <!-- Delete -->
                 {if $smarty.server.REQUEST_URI|stristr:'/@edit'}
                 <li class="active">
@@ -62,7 +70,7 @@
                 <!-- Logout -->
                 {if isset($smarty.session.blogixx.login) && 'true' == $smarty.session.blogixx.login}
                 <li>
-                    <a class="btn btn-info text-black tooltipper" href="/@logout" data-toggle="tooltip" data-placement="top" title="" data-original-title="Logout from Backend">
+                    <a class="btn btn-primary text-white tooltipper" href="/@logout" data-toggle="tooltip" data-placement="top" title="" data-original-title="Logout from Backend">
                         <i class="fa fa-sign-out"></i> Logout
                     </a>
                 </li>								

@@ -13,6 +13,8 @@
  */
 namespace Blogimus\Model;
 
+use MVC\Registry;
+
 /**
  * Backend
  */
@@ -31,14 +33,13 @@ class Backend
 
     /**
      * logs out from backend
-     * @access public
-     * @return void 
+     * @throws \ReflectionException
      */
     public function logout()
     {
-        unset($_SESSION['blogixx']);
-        $_SESSION['blogixx'] = null;
-        \MVC\Session::getInstance()->kill();
+        unset($_SESSION[Registry::get('MODULE_FOLDERNAME')]);
+        $_SESSION[Registry::get('MODULE_FOLDERNAME')] = null;
+        \MVC\Session::is()->kill();
         \MVC\Request::REDIRECT('/@');
         \MVC\Helper::STOP();
     }
@@ -57,7 +58,9 @@ class Backend
             $iYear = (int) substr($sPostDate, 0, 4);
             $iMonth = (int) substr($sPostDate, 5, 2);
             $iDay = (int) substr($sPostDate, 8, 2);
-            $sDate = (false === checkdate($iMonth, $iDay, $iYear)) ? date('Y-m-d') : $iYear . '-' . str_pad($iMonth, 2, '0', STR_PAD_LEFT) . '-' . str_pad($iDay, 2, '0', STR_PAD_LEFT);
+            $sDate = (false === checkdate($iMonth, $iDay, $iYear))
+                ? date('Y-m-d')
+                : $iYear . '-' . str_pad($iMonth, 2, '0', STR_PAD_LEFT) . '-' . str_pad($iDay, 2, '0', STR_PAD_LEFT);
         }
 
         return $sDate;
@@ -66,11 +69,12 @@ class Backend
     /**
      * gets a post by url key      
      * @param string $sUrl
-     * @return array $aSet | on fail=empty
+     * @return array
+     * @throws \ReflectionException
      */
     public function getPostOnUrl($sUrl = '')
     {
-        $aPost = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPost.json'), true);
+        $aPost = json_decode(file_get_contents(Registry::get('MVC_CACHE_DIR') . '/' . Registry::get('MODULE_FOLDERNAME'). '/aPost.json'), true);
 
         if (!array_key_exists($sUrl, $aPost['sUrl']))
         {
@@ -85,11 +89,12 @@ class Backend
     /**
      * gets a page by url key 
      * @param string $sUrl
-     * @return array $aSet | on fail=empty
+     * @return array
+     * @throws \ReflectionException
      */
     public function getPageOnUrl($sUrl = '')
     {
-        $aPage = json_decode(file_get_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPage.json'), true);
+        $aPage = json_decode(file_get_contents(Registry::get('MVC_CACHE_DIR') . '/' . Registry::get('MODULE_FOLDERNAME') . '/aPage.json'), true);
 
         if (!array_key_exists($sUrl, $aPage))
         {

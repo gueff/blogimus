@@ -20,7 +20,7 @@
         <meta name="robots" content="noindex,follow">
         {/if}
 
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/cosmo/bootstrap.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/4.4.1/cosmo/bootstrap.min.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow-night-eighties.min.css">{*@see https://highlightjs.org/static/demo/*}		
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/shariff/1.26.2/shariff.min.css">	
@@ -49,20 +49,42 @@
 
             <div class="clearfix"></div>
 
-        </div>  
+        </div>
+
+        <noscript>
+            <h1>JavaScript</h1>
+            <p>
+                This website uses JavaScript to provide you with the best possible service.<br>
+                See our <a href="#">Privacy Policy</a> for more information.<br>
+                <b><i class="fa fa-warning text-warning"></i> Please make sure that you accept JavaScript in your browser.</b>
+            </p>
+        </noscript>
+
+        <div id="myMVC_cookieConsent">
+            This website uses Cookies to provide you with the best possible service. Please see our <a href="#">Privacy Policy</a> for more information.
+            Click the check box below to accept cookies.
+            Then confirm with a click on "Save".
+            <input id="myMVC_cookieConsentCheckbox" type="checkbox" name="checked" value="0">
+            <label for="myMVC_cookieConsentCheckbox">Yes, cookies may be saved.</label>
+            <button class="btn btn-warning">
+                Save
+            </button>
+        </div>
 
         <footer>
             {include file="layout/footer.tpl"}
         </footer>
 
-        <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script><![endif]-->	
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>		
+        <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script><![endif]-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/myMVC/assets/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
         <script src="/Blogimus/scripts/popper.min.js"></script>{* this one is compatible to bootswatch themes *}
-        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>                
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>	
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/shariff/1.26.2/shariff.min.js" type="text/javascript"></script>
         <script src="//cdn.jsdelivr.net/gh/gueff/jquery-maxlengthVisualFeedback@2.2/maxlengthVisualFeedback.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/js/lightbox.min.js"></script>
+        <script src="/myMVC/scripts/cookieConsent.js" type="text/javascript"></script>
         <script src="/Blogimus/scripts/blog.js" type="text/javascript"></script>
     </body>
 </html>

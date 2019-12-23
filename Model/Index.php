@@ -14,6 +14,8 @@
  */
 namespace Blogimus\Model;
 
+use MVC\Registry;
+
 /**
  * Index
  */
@@ -33,23 +35,20 @@ class Index
     public $aRoutingCurrent = array();
 
     /**
-     * Construcor
-     * 
-     * @access public
-     * @return void
+     * Index constructor.
+     * @throws \ReflectionException
      */
     public function __construct()
     {
         $this->_createFolders();
-        $this->aRoutingCurrent = \MVC\Registry::get('MVC_ROUTING_CURRENT');
-        $this->sDataDir = \MVC\Registry::get('BLOG_DATA_DIR');
-        $this->sPageDir = \MVC\Registry::get('BLOG_DATA_DIR') . '/page';
-        $this->sPostDir = \MVC\Registry::get('BLOG_DATA_DIR') . '/post';
+        $this->aRoutingCurrent = Registry::get('MVC_ROUTING_CURRENT');
+        $this->sDataDir = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'];
+        $this->sPageDir = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/page';
+        $this->sPostDir = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/post';
     }
 
     /**
-     * @access public
-     * @return void
+     * @throws \ReflectionException
      */
     public function init()
     {
@@ -61,33 +60,33 @@ class Index
     }
 
     /**
-     * @access private
-     * @return void
+     * @throws \ReflectionException
      */
     private function _createFolders()
     {
-        (!file_exists(\MVC\Registry::get('BLOG_DATA_DIR')))                 ? mkdir(\MVC\Registry::get('BLOG_DATA_DIR')) : false;
-        (!file_exists(\MVC\Registry::get('BLOG_DATA_DIR') . '/post'))       ? mkdir(\MVC\Registry::get('BLOG_DATA_DIR') . '/post') : false;
-        (!file_exists(\MVC\Registry::get('BLOG_DATA_DIR') . '/page'))       ? mkdir(\MVC\Registry::get('BLOG_DATA_DIR') . '/page') : false;
-        (!file_exists(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus'))   ? mkdir(\MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus') : false;
+        (!file_exists(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR']))                 ? mkdir(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR']) : false;
+        (!file_exists(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/post'))       ? mkdir(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/post') : false;
+        (!file_exists(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/page'))       ? mkdir(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/page') : false;
+        (!file_exists(Registry::get('MVC_CACHE_DIR') . '/Blogimus'))   ? mkdir(Registry::get('MVC_CACHE_DIR') . '/Blogimus') : false;
     }
 
     /**
      * creates a checksum about folder /data and its contents
      * saves this to the application/cache folder
      * and reads existing from there
-     * 
-     * @access private
-     * @return boolean update (true=there are changes in data folder | false=no changes)
+     * @return bool
+     * @throws \ReflectionException
      */
     private function _updateCheckSum()
     {
-        $sCmd = \MVC\Registry::get('BLOG_BIN_LS') . ' -alR ' . \MVC\Registry::get('BLOG_DATA_DIR') . '/* | ' . \MVC\Registry::get('BLOG_BIN_MD5SUM');
+        $sCmd = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_BIN_LS']
+            . ' -alR ' . Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR']
+            . '/* | ' . Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_BIN_MD5SUM'];
         $this->_sCheckSum = shell_exec($sCmd);
-        $this->_sCheckSum.= '_BLOG_MAX_POST_ON_PAGE:' . \MVC\Registry::get('BLOG_MAX_POST_ON_PAGE');
+        $this->_sCheckSum.= '_BLOG_MAX_POST_ON_PAGE:' . Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_MAX_POST_ON_PAGE'];
         $sCheckSumOld = '';
 
-        $sCheckSumFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/checksum.txt';
+        $sCheckSumFile = Registry::get('MVC_CACHE_DIR') . '/checksum.txt';
 
         if (file_exists($sCheckSumFile))
         {
@@ -96,7 +95,7 @@ class Index
 
         if ($this->_sCheckSum !== $sCheckSumOld)
         {
-            file_put_contents(\MVC\Registry::get('MVC_CACHE_DIR') . '/checksum.txt', $this->_sCheckSum);
+            file_put_contents(Registry::get('MVC_CACHE_DIR') . '/checksum.txt', $this->_sCheckSum);
 
             return true;
         }
@@ -106,9 +105,7 @@ class Index
 
     /**
      * builds a cache index
-     * 
-     * @access private
-     * @return void
+     * @throws \ReflectionException
      */
     private function _buildCache()
     {
@@ -116,13 +113,13 @@ class Index
         $aPage = $this->_getPages();
         $sJsonPage = json_encode($aPage);
 
-        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPage.json';
+        $sFile = Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPage.json';
         (file_exists($sFile)) ? unlink($sFile) : false;
         file_put_contents($sFile, $sJsonPage);
 
         foreach ($aPage as $sUrl => $aValue)
         {
-            $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . self::toCacheName($sUrl) . '.json';
+            $sFile = Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . self::toCacheName($sUrl) . '.json';
             (file_exists($sFile)) ? unlink($sFile) : false;
 
             file_put_contents(
@@ -134,21 +131,21 @@ class Index
         $aPost = $this->_getPosts();
         $aJsonPost = json_encode($this->_getPosts());
 
-        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPost.json';
+        $sFile = Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPost.json';
         (file_exists($sFile)) ? unlink($sFile) : false;
         file_put_contents($sFile, $aJsonPost);
 
-        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPostDate.json';
+        $sFile = Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPostDate.json';
         (file_exists($sFile)) ? unlink($sFile) : false;
         file_put_contents($sFile, json_encode($aPost['sCreateStamp']));
 
-        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPostUrl.json';
+        $sFile = Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPostUrl.json';
         (file_exists($sFile)) ? unlink($sFile) : false;
         file_put_contents($sFile, json_encode($aPost['sUrl']));
 
         foreach ($aPost['sUrl'] as $sUrl => $aValue)
         {
-            $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . self::toCacheName($sUrl) . '.json';
+            $sFile = Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . self::toCacheName($sUrl) . '.json';
             (file_exists($sFile)) ? unlink($sFile) : false;
 
             file_put_contents(
@@ -158,7 +155,7 @@ class Index
 
         // Tags
         $aTag = $this->getTags();
-        $sFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aTag.json';
+        $sFile = Registry::get('MVC_CACHE_DIR') . '/Blogimus/aTag.json';
         (file_exists($sFile)) ? unlink($sFile) : false;
         file_put_contents($sFile, json_encode($aTag));
     }
@@ -170,9 +167,9 @@ class Index
 	 */
 	public function buildGoogleSitemap()
 	{
-		$aPage = array_keys(json_decode(file_get_contents(\MVC\Registry::get ('MVC_CACHE_DIR') . '/Blogimus/aPage.json'), true));
+		$aPage = array_keys(json_decode(file_get_contents(Registry::get ('MVC_CACHE_DIR') . '/Blogimus/aPage.json'), true));
 		$aPage[] = '/';		
-		$aPost = array_keys(json_decode(file_get_contents(\MVC\Registry::get ('MVC_CACHE_DIR') . '/Blogimus/aPostUrl.json'), true));
+		$aPost = array_keys(json_decode(file_get_contents(Registry::get ('MVC_CACHE_DIR') . '/Blogimus/aPostUrl.json'), true));
 		$aTmp = $aFinal = array();
         
 		$aFinal = array_map(
@@ -189,7 +186,7 @@ class Index
 			)
 		);
 		
-		$sSitemapAbsFile = \MVC\Registry::get('MVC_BASE_PATH') . '/public/sitemap.txt';
+		$sSitemapAbsFile = Registry::get('MVC_BASE_PATH') . '/public/sitemap.txt';
 		(file_exists($sSitemapAbsFile)) ? unlink($sSitemapAbsFile) : false;
 			
 		foreach ($aFinal as $sUrl)
@@ -233,7 +230,7 @@ class Index
     private function _getPages()
     {
         $aFiles = array_diff(scandir($this->sPageDir), array('..', '.'));
-        $aCurrent = \MVC\Registry::get('MVC_ROUTING_CURRENT');
+        $aCurrent = Registry::get('MVC_ROUTING_CURRENT');
         $aFinal = array();
 
         foreach ($aFiles as $sFile)
@@ -254,19 +251,18 @@ class Index
 
     /**
      * checks which markdown (*.md) posts exist
-     * 
-     * @access private
-     * @return array	 
+     * @return array
+     * @throws \ReflectionException
      */
     private function _getPosts()
     {
         // get file list
-        $sCmd = \MVC\Registry::get('BLOG_BIN_FIND') . ' ' . $this->sPostDir . ' -name "*.md" -type f -print';
+        $sCmd = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_BIN_FIND'] . ' ' . $this->sPostDir . ' -name "*.md" -type f -print';
         $sList = shell_exec($sCmd);
         $aList = preg_split("@\n@", $sList, NULL, PREG_SPLIT_NO_EMPTY);
         rsort($aList);
 
-        $aCurrent = \MVC\Registry::get('MVC_ROUTING_CURRENT');
+        $aCurrent = Registry::get('MVC_ROUTING_CURRENT');
         $aFinal = array();
         $aFinal['sCreateStamp'] = array();
         $aFinal['sUrl'] = array();
@@ -303,14 +299,13 @@ class Index
 
     /**
      * checks which tags exist in posts
-     * 
-     * @access public
-     * @return array $aFinalTag tags listed
+     * @return array
+     * @throws \ReflectionException
      */
     public function getTags()
     {
         // get file list
-        $sCmd = \MVC\Registry::get('BLOG_BIN_GREP') . ' -or "<tag>.*</tag>" ' . $this->sDataDir;
+        $sCmd = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_BIN_GREP'] . ' -or "<tag>.*</tag>" ' . $this->sDataDir;
         $sList = shell_exec($sCmd);
         $aList = preg_split("@\n@", $sList, NULL, PREG_SPLIT_NO_EMPTY);
 
@@ -342,7 +337,7 @@ class Index
 
             foreach ($aTag as $sTag)
             {
-                $aFinalTag[trim($sTag)][] = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . $sCacheFile;
+                $aFinalTag[trim($sTag)][] = Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . $sCacheFile;
             }
         }
 
@@ -351,13 +346,12 @@ class Index
 
     /**
      * checks main path + sets current routing to registry
-     * 
-     * @access public
      * @return array
+     * @throws \ReflectionException
      */
     public function findMainPath()
     {
-        $aRouting = \MVC\Registry::get('MVC_ROUTING');
+        $aRouting = Registry::get('MVC_ROUTING');
 
         foreach ($aRouting as $sKey => $aRoute)
         {
@@ -373,7 +367,7 @@ class Index
                 $aTmp['class'] = ucfirst($aParseString['module']) . "\\Controller\\" . ucfirst($aParseString['c']);
                 $aTmp['method'] = $aParseString['m'];
 
-                \MVC\Registry::set('MVC_ROUTING_CURRENT', $aTmp);
+                Registry::set('MVC_ROUTING_CURRENT', $aTmp);
 
                 return $aTmp;
             }
@@ -384,13 +378,12 @@ class Index
 
     /**
      * loads a (post|page) file from cache, reads its content and returns it
-     * 
-     * @access public
-     * @return array $aSet
+     * @return array|mixed|string
+     * @throws \ReflectionException
      */
     public function getConcreteFile()
     {
-        $sCacheFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . \Blogimus\Model\Index::toCacheName(strtok($_SERVER['REQUEST_URI'], '?')) . '.json';
+        $sCacheFile = Registry::get('MVC_CACHE_DIR') . '/Blogimus/' . \Blogimus\Model\Index::toCacheName(strtok($_SERVER['REQUEST_URI'], '?')) . '.json';
 
         if (!file_exists($sCacheFile))
         {
@@ -418,13 +411,12 @@ class Index
 
     /**
      * get all posts
-     * 
-     * @access public
-     * @return array posts
+     * @return mixed|string
+     * @throws \ReflectionException
      */
     public function getPostsOverview()
     {
-        $sCacheFile = \MVC\Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPostUrl.json';
+        $sCacheFile = Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPostUrl.json';
 
         if (!file_exists($sCacheFile))
         {
