@@ -14,6 +14,8 @@
  */
 namespace Blogimus\Model;
 
+use MVC\Helper;
+use MVC\Log;
 use MVC\Registry;
 
 /**
@@ -56,6 +58,7 @@ class Index
         {
             $this->buildCache();
             $this->buildGoogleSitemap();
+            Cache::autoCleanUpCachedFiles();
         }
     }
 
@@ -129,7 +132,7 @@ class Index
 
         // Post		
         $aPost = $this->_getPosts();
-        $aJsonPost = json_encode($this->_getPosts());
+        $aJsonPost = json_encode($aPost);
 
         $sFile = Registry::get('MVC_CACHE_DIR') . '/Blogimus/aPost.json';
         (file_exists($sFile)) ? unlink($sFile) : false;
@@ -244,6 +247,7 @@ class Index
             $aFinal[$sUrl]['sFilePath'] = $this->sPageDir . '/' . $sFile;
             $aFinal[$sUrl]['sCreateStamp'] = date("Y-m-d H:i:s", filectime($aFinal[$sUrl]['sFilePath']));
             $aFinal[$sUrl]['sChangeStamp'] = date("Y-m-d H:i:s", filemtime($aFinal[$sUrl]['sFilePath']));
+            $aFinal[$sUrl]['sCachefile'] = Helper::convertObjectToArray(Cache::fromFilenameAbsToCacheFilename($aFinal[$sUrl]['sFilePath'], 'page'));
         }
 
         return $aFinal;
@@ -317,6 +321,7 @@ class Index
         $aTmp['sFilePath'] = $sFileAbs;
         $aTmp['sCreateStamp'] = $iYear . '-' . $iMonth . '-' . $iDay;
         $aTmp['sChangeStamp'] = $sChangeStamp;
+        $aTmp['sCachefile'] = Helper::convertObjectToArray(Cache::fromFilenameAbsToCacheFilename($sFileAbs, 'page'));
 
         return $aTmp;
     }
@@ -354,6 +359,9 @@ class Index
         $aTmp['sFilePath'] = $sFileAbs;
         $aTmp['sCreateStamp'] = $iYear . '-' . $iMonth . '-' . $iDay;
         $aTmp['sChangeStamp'] = date("Y-m-d H:i:s", (file_exists($sFileAbs)) ? filemtime($sFileAbs) : 0);
+        $aTmp['sCachefile'] = Helper::convertObjectToArray(Cache::fromFilenameAbsToCacheFilename($sFileAbs, 'post'));
+
+        Log::WRITE($aTmp, 'debug.log');
 
         return $aTmp;
     }
