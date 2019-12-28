@@ -14,9 +14,7 @@
  */
 namespace Blogimus\Controller;
 
-use Blogimus\DataType\Post;
-use MVC\Helper;
-use MVC\Log;
+use Blogimus\DataType\DTPostData;
 use MVC\Registry;
 
 /**
@@ -146,7 +144,7 @@ class Ajax implements \MVC\MVCInterface\Controller
      */
     public function update()
     {
-        $oPost = Post::create($_POST);
+        $oPost = DTPostData::create($_POST);
         $oResponse = $this->oModelBackend->save($oPost);
 
         $this->oView->sendJsonHeader();
