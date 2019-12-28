@@ -1,3 +1,4 @@
+
 /**
  * this is for codemirror
  */
@@ -42,21 +43,218 @@ function editorMaxlengthVisualFeedback(oObject, iSectionA, iSectionB, iSectionC,
     return true
 }
 
+function notify(sText, sType, sTitle) {
+
+    if (typeof sText === 'undefined') {
+        sText = 'undefined';
+    }
+
+    if (typeof sType === 'undefined') {
+        sType = 'info';
+    }
+
+    if (typeof sTitle === 'undefined') {
+        sTitle = sType.toUpperCase();
+    }
+
+    new PNotify({
+        title: sTitle, //'Notify',
+        text: sText,
+        addclass: "stack-bottomright",
+        // stack: {dir1: "up", dir2: "left", firstpos1: 25, firstpos2: 25},
+        type: sType // success, info, error
+    });
+}
+
+function btnOnCreateInit() {
+
+    $('#btn_frontend').removeClass('active');
+    $('#btn_frontend a').addClass('disabled');
+    $('#btn_frontend a').attr('href', '#');     // path
+
+    $('#btn_delete').removeClass('active');
+    $('#btn_delete a').addClass('disabled');
+    $('#btn_delete a').attr('data-type', '');   // post|page
+    $('#btn_delete a').attr('data-url', '');    // path
+    $('#btn_delete a').attr('data-name', '');   // name of page
+}
+
+function setBtnOnCreateSave(oResponse) {
+
+    $('#btn_frontend').addClass('active');
+    $('#btn_frontend a').removeClass('disabled');
+    $('#btn_frontend a').attr('href', oResponse.aInfo.sUrl);        // path
+
+    $('#btn_delete').addClass('active');
+    $('#btn_delete a').removeClass('disabled');
+    $('#btn_delete a').attr('data-type', oResponse.sType);    // post|page
+    $('#btn_delete a').attr('data-url', oResponse.aInfo.sUrl);      // path
+    $('#btn_delete a').attr('data-name', oResponse.aInfo.sName);    // name of page
+
+    $('#info_lastModificationDate small span').html(oResponse.aInfo.sChangeStamp);
+}
+
 /**
- * keyboard shortcuts
+ * @param sParam
+ * @returns {*}
  */
-$(window).bind('keydown', function(event) {
-    if (event.ctrlKey || event.metaKey) {
-        switch (String.fromCharCode(event.which).toLowerCase()) {
-            // ctrl+s (save)
-            case 's':
-                event.preventDefault();
-                $('form'). submit();
-                break;
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
         }
     }
-});
+};
 
+function getFormData(sAction) {
+
+    var oDataRecent = JSON.parse(localStorage.getItem('oDataRecent'));
+    // (null !== oDataRecent) ? console.log('oDataRecent.sTitle', oDataRecent.sTitle) : false;
+
+    var aParam = getUrlParameter('a');
+    var oParam =  ('undefined' !== typeof (aParam)) ? JSON.parse(aParam) : {};
+    var sType = '';
+
+    // on "create"
+    if ('undefined' === typeof oParam.type) {
+        sType = $('input[name="type"]:checked').val();
+    } else {
+        sType = oParam.type;
+    }
+
+    var sTitle = $('#title').val();
+    var sDate = $('#date').val();
+    var sMarkdown = oCodeMirror.getValue();
+    var aTaglist = [];
+    $('input[name="taggles[]"]').each(function (index, item){
+        aTaglist.push($(item).val());
+    });
+
+    var sMethod = $('#blogimus_submit').attr('data-type');
+    var sAction = ('undefined' === typeof sAction) ? 'init' : sAction;
+
+    // btn_frontend a href
+    var sUrl = $('#btn_frontend a').attr('href');
+
+    var oData = {
+        "sMethod":sMethod,
+        "sAction":sAction,
+        "oParam":oParam,
+        "sUrl":sUrl,
+        "sType":sType,
+        "sTitle":sTitle,
+        "sDate":sDate,
+        "sMarkdown":sMarkdown,
+        "aTaglist":aTaglist
+    };
+
+    return {
+        "oDataCurrent": oData,
+        "oDataRecent": oDataRecent
+    };
+}
+
+
+function update(oCodeMirror, oTaggle, sAction) {
+
+    var oFormData = getFormData();
+    var oDataCurrent = oFormData.oDataCurrent;
+    var oDataRecent = oFormData.oDataRecent;
+
+    // add recent to current
+    oDataCurrent.oDataRecent = oDataRecent;
+
+    if ('' === oDataCurrent.sTitle) {
+        notify('Title missing', 'error');
+        return false;
+    }
+
+    if ('' === oDataCurrent.sMarkdown) {
+        notify('Content missing', 'error');
+        return false;
+    }
+
+    var oForm = $('form');
+    var oAjax = $.ajax({
+        url: '/Ajax/update/',
+        type: 'POST',
+        data: oDataCurrent,
+        statusCode: {
+            404: function() {
+                notify("404 page not found", 'error');
+                // console.log("404 page not found");
+            }
+        },
+        success: function(oResponse, status, xhr){
+
+            // console.log('oResponse.sMessage', typeof oResponse.sMessage);
+            // console.log('success oResponse', oResponse);
+            // console.log('success status', status);
+            // console.log('success xhr', xhr);
+        },
+        complete: function(xhr, status){
+
+            // notify('complete', 'info');
+            // console.log('complete xhr', xhr);
+            // console.log('complete status', status);
+        },
+        error: function(xhr, status, error){
+
+            notify(error, 'error');
+            // console.log('error xhr', xhr);
+            // console.log('error status', status);
+            // console.log('error error', error);
+        }
+    }).done(function(oResponse) {
+
+        // save to storage only on success
+        if ('true' === oResponse.bSuccess) {
+
+            // save the current one as recent to storage
+            localStorage.setItem('oDataRecent', JSON.stringify(oDataCurrent));
+            // console.log('oDataRecent: ' + JSON.parse(localStorage.getItem('oDataRecent')));
+        }
+
+        notify(oResponse.sMessage, ('true' === oResponse.bSuccess) ? 'success' : 'error');
+        // console.log('oResponse', oResponse);
+        // console.log('sAction', sAction);
+
+        setBtnOnCreateSave(oResponse);
+
+        // after create, set mode to edit
+        if ('@create' === sAction) {
+            localStorage.setItem('action', '@edit');
+            var sAction = localStorage.getItem('action');
+            // console.log('sAction', sAction);
+        }
+    });
+
+    return false;
+}
+
+/**
+ * codemirror
+ * https://codemirror.net/mode/markdown/#
+ * https://cdnjs.com/libraries/codemirror
+ */
+if ($('#markdownEdit').length) {
+    var oCodeMirror = CodeMirror.fromTextArea(document.getElementById("markdownEdit"), {
+        mode: 'markdown',
+        lineNumbers: true,
+        theme: "default",
+        lineWrapping: true,
+        extraKeys: {
+            "Enter": "newlineAndIndentContinueMarkdownList"
+        }
+    });
+}
 
 $(document).ready(function() {
 	
@@ -65,6 +263,12 @@ $(document).ready(function() {
 
     var iBindScrolling = 1;
     var iBindScrollingType = 2;
+
+    $('#btn_create a').on('click', function () {
+        // console.log('oDataRecent gelöscht!');
+        localStorage.setItem('oDataRecent', JSON.stringify(false));
+        return true;
+    });
 
     // bind scrolling in preview to editor
     $('#iBindScrolling').on('click', function(){
@@ -79,7 +283,6 @@ $(document).ready(function() {
         var iBindScrollingType2 = $(this).prop('checked');
         iBindScrollingType = iBindScrollingType2 ? 2 : 1;
     });
-        
         
 	window.mobileAndTabletcheck = function() {
 	  var check = false;
@@ -106,7 +309,7 @@ $(document).ready(function() {
 	$('#modalBtnDelete').on('click', function(e){
         $('#modalDelete').modal('hide');
         var sUrl = '/@delete?a={"type":"' + $('modalDeleteType').text() + '","url":"' + $('modalDeleteUrl').text() + '"}';
-        console.log(sUrl);
+        // console.log(sUrl);
         location.href = sUrl;
 	});
         
@@ -122,7 +325,7 @@ $(document).ready(function() {
             "tabIndex": 4,
             tags: aTagList,
             "preserveCase": true
-        });            
+        });
 
         var oContainerTaglist = oTaggle.getContainer();
         var input = oTaggle.getInput();
@@ -149,25 +352,34 @@ $(document).ready(function() {
                 }
             }
         );
-    }    
+    }
 
     /**
-     * codemirror
-     * https://codemirror.net/mode/markdown/#
-     * https://cdnjs.com/libraries/codemirror
+     * submit button clicked
      */
-    if ($('#markdownEdit').length) {            
-        var oCodeMirror = CodeMirror.fromTextArea(document.getElementById("markdownEdit"), {
-            mode: 'markdown',
-            lineNumbers: true,
-            theme: "default",
-            lineWrapping: true,
-            extraKeys: {
-                "Enter": "newlineAndIndentContinueMarkdownList"
-            }
-        });         
-    }       
+    $(document).on('submit','form',function(oEvent){
+        oEvent.preventDefault();
+        update(oCodeMirror, oTaggle, 'save BUTTON CLICK');
+    });
 
+    /**
+     * keyboard shortcuts
+     * ctrl+s: send form
+     */
+    $(window).bind('keydown', function(oEvent) {
+
+        if (oEvent.ctrlKey || oEvent.metaKey) {
+
+            switch (String.fromCharCode(oEvent.which).toLowerCase()) {
+
+                // ctrl+s (save)
+                case 's':
+                    oEvent.preventDefault();
+                    update(oCodeMirror, oTaggle, 'save CTRL+S');
+                    break;
+            }
+        }
+    });
 
     /**
      * maximize editor windows
@@ -175,7 +387,7 @@ $(document).ready(function() {
     function adjustEditorHeight() {
         if ($('#markdownEdit').length) {
             var iInnerHeight = window.innerHeight;
-            var iMarkdownEditHeightMax = (iInnerHeight - 400);    
+            var iMarkdownEditHeightMax = (iInnerHeight - 330);
             $('#editor').height(iMarkdownEditHeightMax);
 
             $('#markdownEdit').height(iMarkdownEditHeightMax - 70);
@@ -190,9 +402,7 @@ $(document).ready(function() {
 
     /**
      * sync scrollbars
-     * 
-     * evtl. bessere Lösung:
-     * @see https://stackoverflow.com/a/24168814/2487859    http://jsfiddle.net/XNVNj/2/
+     * maybe better solution: https://stackoverflow.com/a/24168814/2487859, http://jsfiddle.net/XNVNj/2/
      */
     var iScrollHeightLeft;
 
@@ -223,11 +433,12 @@ $(document).ready(function() {
             // sync scrolling for preview is enabled
             if (1 === iBindScrolling) {
 
-                (1 === iBindScrollingType) ? $('#preview').scrollTop(iScrollTopLeft) : false;       // Version 1: genau wie links            
-                (2 === iBindScrollingType) ? $('#preview').scrollTop(iScrollTopRight) : false;      // Version 2: angepasst auf rechts         
+                (1 === iBindScrollingType) ? $('#preview').scrollTop(iScrollTopLeft) : false;       // Version 1: same as left
+                (2 === iBindScrollingType) ? $('#preview').scrollTop(iScrollTopRight) : false;      // Version 2: adjust on right
             }
         }
-    }        
+    }
+
     $('.CodeMirror-vscrollbar').on('scroll', function () {
         adjustScrolling();
     });               
@@ -243,7 +454,7 @@ $(document).ready(function() {
         "omitExtraWLInCodeBlocks": true
     });          
     
-    // dp preview automatically
+    // auto preview
     if ($('#markdownEdit').length) {
         
         var sCodeMirrorValue = '';
@@ -271,8 +482,10 @@ $(document).ready(function() {
             }
         }, 500);    // 1000 === 1 second
     }
-    
-    //CodeMirror
+
+    /**
+     * CodeMirror
+     */
     $('.CodeMirror').on('keypress keyup', function() {
 
         if ($(".CodeMirror-vscrollbar div").length >= 2) {
@@ -295,21 +508,45 @@ $(document).ready(function() {
             $(this),
             0, 70, 100
         );
-    }); 
-        
+    });
+
     /**
      * inits
      */
     adjustEditorHeight();
     adjustScrolling();
 
-    /** Fixes
+    /**
+     * style Fixes
      */
     $('.CodeMirror-vscrollbar').append('<div id="codemirrorScrollfix" style="min-width: 1px; height: auto; min-height: ' + iScrollHeightLeft + 'px;"></div>');
     $('.CodeMirror-vscrollbar').prop('style', 'bottom: 0px; display: block !important;');
 
     // show editor area
     $('#blogimus_form_editor').css('visibility', 'visible');
+    $('#navbar ul li').css('visibility', 'visible');
+    $('#title').focus();
+
+    // manage buttons at start
+    var sAction = localStorage.getItem('action');
+
+    if ('@create' === sAction) {btnOnCreateInit();}
+
+
+    var oFormData = getFormData();
+    var oDataRecent = JSON.parse(localStorage.getItem('oDataRecent'));
+    // console.log('oDataRecent', oDataRecent);
+
+    if (false === oDataRecent) {
+
+        var oDataCurrent = oFormData.oDataCurrent;
+        var oDataRecent = oFormData.oDataRecent;
+
+        // save the current one as recent to storage
+        localStorage.setItem('oDataRecent', JSON.stringify(oDataCurrent));
+        // console.log('oDataRecent: ' + JSON.parse(localStorage.getItem('oDataRecent')));
+    }
+
 });
 
 

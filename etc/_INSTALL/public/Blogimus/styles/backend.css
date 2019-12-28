@@ -235,3 +235,42 @@ blockquote {
     height: 100px !important;
     width: 100% !important;
 }
+#btn_create, #btn_frontend, #btn_files, #btn_delete {
+    visibility: hidden;
+}
+.custom-control-label {
+    cursor: pointer;
+}
+
+#markdownEdit, #preview {
+    width: 100%;
+}
+
+#preview {
+    background-color: #fff;
+    overflow: auto;
+}
+.btnWidth100 {
+    width: 100%;
+}
+
+/** codemirror
+*/
+.CodeMirror {
+    height: auto;
+    box-shadow: 0px 0px 10px #d0d0d0;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+}
+.btnWidth100 {
+    width: 100%;
+}
+
+
+.brighttheme, .ui-pnotify-container, .brighttheme-error, .ui-pnotify-shadow {
+    box-shadow: 0px 0px 100px #d0d0d0 !important;
+}
+div.brighttheme {
+    border: 1px solid silver !important;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 1) !important;
+}

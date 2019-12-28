@@ -22,11 +22,6 @@ use MVC\Registry;
  */
 class Ajax
 {
-
-	public $sPageDir;
-	public $sPostDir;
-	private $_sCheckSum;
-
 	/**
 	 * Constructor
 	 * 

@@ -14,6 +14,9 @@
  */
 namespace Blogimus\Controller;
 
+use Blogimus\DataType\Post;
+use MVC\Helper;
+use MVC\Log;
 use MVC\Registry;
 
 /**
@@ -23,6 +26,12 @@ use MVC\Registry;
  */
 class Ajax implements \MVC\MVCInterface\Controller
 {
+
+    /**
+     * @var \Blogimus\Model\Backend
+     */
+    public $oModelBackend;
+
     /**
      * View Object
      * @access public
@@ -42,8 +51,7 @@ class Ajax implements \MVC\MVCInterface\Controller
      */
     public static function __preconstruct()
     {
-        // start event listener
-        \Blogimus\Event\Ajax::getInstance();
+        ;
     }
 
     /**
@@ -53,7 +61,8 @@ class Ajax implements \MVC\MVCInterface\Controller
     public function __construct()
     {
         $sView = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_VIEW_INDEX'];
-        $this->oView = new $sView(); 
+        $this->oView = new $sView();
+        $this->oModelBackend = new \Blogimus\Model\Backend();
         $this->_aRoutingCurrent = Registry::get('MVC_ROUTING_CURRENT');
     }
 
@@ -63,10 +72,9 @@ class Ajax implements \MVC\MVCInterface\Controller
      * @throws \ReflectionException
      */
     public function index($sString = '')
-    {        
+    {
         $aFinal = array();
 
-        $this->oView->sendJsonHeader();
         $sModelAjax = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_MODEL_AJAX'];
         $oModel = new $sModelAjax();
         $sResult = $oModel->grep($sString);
@@ -108,6 +116,7 @@ class Ajax implements \MVC\MVCInterface\Controller
             }
         }
 
+        $this->oView->sendJsonHeader();
         echo json_encode($aFinal);
     }
 
@@ -117,18 +126,31 @@ class Ajax implements \MVC\MVCInterface\Controller
      */
     public function taglist()
     {
-        $this->oView->sendJsonHeader();
-        
         $sModelIndex = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_CLASS_MODEL_INDEX'];
         $oModelIndex = new $sModelIndex();
         
         $aTag = $oModelIndex->getTags();
         ksort($aTag, SORT_STRING | SORT_FLAG_CASE);
+
+        $this->oView->sendJsonHeader();
         echo json_encode(
             array_keys(
                 $aTag
             )
         );
+    }
+
+    /**
+     * @todo für diese Methode Session aktivieren !
+     * @throws \ReflectionException
+     */
+    public function update()
+    {
+        $oPost = Post::create($_POST);
+        $oResponse = $this->oModelBackend->save($oPost);
+
+        $this->oView->sendJsonHeader();
+        echo json_encode($oResponse->getPropertyArray());
     }
 
     /**

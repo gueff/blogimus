@@ -58,42 +58,24 @@ call: http://127.0.0.1:1969
 ## <a name="Creating-Content"></a> Creating Content
 The easiest Way is to use the **Backend**. Therefore you need to set up a user and password once: 
 
-After you [installed blogimus](#Installation) successfully, open `/trunk/config/blogimus.php` and create an account for login. 
+After you [installed blogimus](#Installation) successfully, open  
+`/modules/Blogimus/etc/config/Blogimus/config/{MVC_ENV}.php`  
+and create an account for login. 
 
 **Example** 
 
-Creating an Account for Environment `develop` with user=`test` and password=`test`:
+Creating an Account with user=`test` and password=`test`:
 ~~~php
-// Backend User Accounts for different Environments set by MVC_ENV
+// Backend User Accounts
 // Notice: empty "user" or "password" means no login is possible
 $aConfig['BLOG_BACKEND'] = array(
 
-	'develop' => array(
-		
-		// 1. account
-		array(
-			'user' 		=> 'test', 
-			'password' 	=> 'test'
-		)
-	),
-	
-	'test' => array(
-		
-		// 1. account
-		array(
-			'user' 		=> '', 
-			'password' 	=> ''
-		)
-	),
-	
-	'live' => array(
-		
-		// 1. account
-		array(
-			'user' 		=> '', 
-			'password' 	=> ''
-		)	
-	)
+    // 1. account
+    array(
+        'user' 		=> 'test', 
+        'password' 	=> 'test'
+    ),
+
 );
 ~~~
 
@@ -139,13 +121,11 @@ See `/trunk/modules/blogimus/templates/` for the Smarty template files which wil
 ### Frontend
 For the Frontend, blogimus further makes use of 
 
-- [Bootstrap 4](http://getbootstrap.com/)
-- [Bootswatch 4](http://bootswatch.com/) (HTML5 Boostrap Designs)
-- [Font Awesome 4.7](http://fortawesome.github.io/Font-Awesome/)
-- [jQuery 3](https://jquery.com/)
+- [Bootstrap](http://getbootstrap.com/)
+- [Bootswatch](http://bootswatch.com/)
+- [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
+- [jQuery](https://jquery.com/)
 - [highlight.js](https://highlightjs.org/)
-- [Shariff](https://github.com/heiseonline/shariff)
-- 
 
 So blogimus makes use of Bootswatch 4, where its Design `cosmo` here is set as the default one. 
 But you can easily switch to another Bootswatch Design by changing in `/modules/blogimus/templates/layout/index.tpl`:
@@ -161,14 +141,132 @@ into `united`:
    
 See  [Bootswatch](http://bootswatch.com/) for available Bootswatch Designs.
 
-See Folder `/public/blogimus/` for CSS and Scripts
+See Folder `/public/Blogimus/` for CSS and Scripts
+
+## Events
+
+- blogimus.controller.index.delegate.before
+- blogimus.controller.index.delegate.page.before
+- blogimus.controller.index.delegate.page.after
+- blogimus.controller.index.delegate.post.before
+- blogimus.controller.index.delegate.post.after
+- blogimus.controller.index.delegate.date.before
+- blogimus.controller.index.delegate.date.after
+- blogimus.controller.index.delegate.tag.before
+- blogimus.controller.index.delegate.tag.after
+- blogimus.controller.index.delegate.overview.before
+- blogimus.controller.index.delegate.overview.after
+- blogimus.controller.index.delegate.notfound.before
+- blogimus.controller.index.delegate.notfound.after
+- blogimus.controller.index.delegate.after
+- blogimus.controller.index.delegate.meta.after
 
 ___
 
+- blogimus.controller.index.delegate.before
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.before', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+));
+~~~
+
+- blogimus.controller.index.delegate.page.before
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.page.before', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+));
+~~~
+
+- blogimus.controller.index.delegate.page.after
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.page.after', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('aSet')->set_sValue($aSet)
+));
+~~~
+
+- blogimus.controller.index.delegate.post.before
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.post.before', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+));
+~~~
+
+- blogimus.controller.index.delegate.post.after
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.post.after', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('aSet')->set_sValue($aSet)
+));
+~~~
+
+- blogimus.controller.index.delegate.date.before
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.date.before', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('aPostDate')->set_sValue($aPostDate)
+));
+~~~
+
+- blogimus.controller.index.delegate.date.after
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.date.after', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('aDate')->set_sValue($aDate)
+));
+~~~
+
+- blogimus.controller.index.delegate.tag.before
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.tag.before', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('aTag')->set_sValue($aTag)
+));
+~~~
+
+- blogimus.controller.index.delegate.tag.after
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.tag.after', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('aTagInterest')->set_sValue($aTagInterest)
+));
+~~~
+
+- blogimus.controller.index.delegate.overview.before
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.overview.before', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+));
+~~~
+
+- blogimus.controller.index.delegate.overview.after
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.overview.after', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('aPostOverview')->set_sValue($aPostOverview)
+));
+~~~
+
+- blogimus.controller.index.delegate.notfound.before
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.notfound.before', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+));
+~~~
+
+- blogimus.controller.index.delegate.notfound.after
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.notfound.after', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+));
+~~~
+
+- blogimus.controller.index.delegate.after
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.after', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+));
+~~~
+
+- blogimus.controller.index.delegate.meta.after
+~~~
+\MVC\Event::RUN('blogimus.controller.index.delegate.meta.after', DTArrayObject::create()->add_aKeyValue(
+	DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+));
+___
+
 ## <a name="blogimus-Screenshot"></a> blogimus Screenshots
-![](http://kanbanix.ueffing.net/Blogixx2/screenshot1.png)
-![](http://kanbanix.ueffing.net/Blogixx2/screenshot2.png)
-![](http://kanbanix.ueffing.net/Blogixx2/screenshot3.png)
-![](http://kanbanix.ueffing.net/Blogixx2/screenshot4.png)
-![](http://kanbanix.ueffing.net/Blogixx2/screenshot5.png)
-![](http://kanbanix.ueffing.net/Blogixx2/screenshot6.png)
+

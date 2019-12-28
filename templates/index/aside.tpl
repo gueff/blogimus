@@ -5,7 +5,7 @@
 							<a href="/feed/post/" title="RSS Feed"><i class="fa fa-rss-square"></i></a>
 {*							<a href="#" title="twitter"><i class="fa fa-twitter"></i></a>*}
 {*							<a href="#" title="github"><i class="fa fa-github"></i></a>*}
-{*							<a href="#" title="google plus"><i class="fa fa-google-plus-square"></i></a>*}
+{*							<a href="#" title="facebook"><i class="fa fa-facebook-official"></i></a>*}
 {*							<a href="mailto:{'foo@example.com'|escape:"hexentity"}" title="E-Mail"><i class="fa fa-envelope"></i></a>*}
 						</h3>             
                         

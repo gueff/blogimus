@@ -15,7 +15,6 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.css" />
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.brighttheme.css" />
         <link rel="stylesheet" href="/Blogimus/styles/backend.css">
-
         <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
     </head>
     <body>
@@ -37,34 +36,20 @@
 
         {include file="backend/modalDelete.tpl"}
         
-        <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script><![endif]-->	
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>		
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"></script>
         <script src="/Blogimus/scripts/popper.min.js"></script>{* this one is compatible to bootswatch materia theme *}
-
-        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>                
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>	
-        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script src="//cdn.jsdelivr.net/gh/gueff/jquery-maxlengthVisualFeedback@2.2/maxlengthVisualFeedback.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/mode/markdown/markdown.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/edit/continuelist.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.js"></script>
-
-        <script src="//cdnjs.cloudflare.com/ajax/libs/taggle/1.13.0/taggle.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/taggle/1.14.0/taggle.min.js"></script>
         <script>var aTagList = [{if isset($sTag)}{$sTag}{/if}];</script>
-
         <script src="/Blogimus/scripts/backend.js" type="text/javascript"></script>
-        {if (isset($sNotifyText) && '' != $sNotifyText)|| (isset($sError) && '' != $sError)}
-        <script>
-            new PNotify({ldelim}
-                title: 'Notify',
-                text: '{if isset($sNotifyText) && '' != $sNotifyText}{$sNotifyText|escape}{elseif (isset($sError) && '' != $sError)}{$sError|escape}{/if}',
-                type: '{if isset($bSuccess) && 'true' == $bSuccess}success{elseif isset($sError) && '' != $sError}error{/if}'
-            {rdelim});            
-        </script>
-        {/if}                   
     </body>
 </html>

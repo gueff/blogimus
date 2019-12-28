@@ -14,6 +14,8 @@
 namespace Blogimus\Controller;
 
     
+use MVC\DataType\DTArrayObject;
+use MVC\DataType\DTKeyValue;
 use MVC\Registry;
 
 /**
@@ -136,14 +138,20 @@ class Index implements \MVC\MVCInterface\Controller
                 return true;
             }
 
-            \MVC\Event::RUN('blogimus.delegate.before', $sRequest);
+            \MVC\Event::RUN('blogimus.controller.index.delegate.before', DTArrayObject::create()->add_aKeyValue(
+                DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+            ));
 
             // PAGE
             if (true === $this->_oModel->checkRequestOnToken('page/'))
             {
-                \MVC\Event::RUN('blogimus.delegate.page.before', $sRequest);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.page.before', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+                ));
                 $aSet = $this->concretePage();
-                \MVC\Event::RUN('blogimus.delegate.page.after', $aSet);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.page.after', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('aSet')->set_sValue($aSet)
+                ));
             }
             // POST
             elseif (true === $this->_oModel->checkRequestOnToken('post/'))
@@ -160,44 +168,68 @@ class Index implements \MVC\MVCInterface\Controller
                     \MVC\Request::REDIRECT($sPath);
                 }
 
-                \MVC\Event::RUN('blogimus.delegate.post.before', $sRequest);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.post.before', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+                ));
                 $aSet = $this->concretePost();
-                \MVC\Event::RUN('blogimus.delegate.post.after', $aSet);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.post.after', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('aSet')->set_sValue($aSet)
+                ));
             }
             // DATE
             elseif (true === $this->_oModel->checkRequestOnToken('date/'))
             {
-                \MVC\Event::RUN('blogimus.delegate.date.before', $aPostDate);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.date.before', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('aPostDate')->set_sValue($aPostDate)
+                ));
                 $aDate = $this->concreteDate($aPostDate);
-                \MVC\Event::RUN('blogimus.delegate.date.after', $aDate);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.date.after', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('aDate')->set_sValue($aDate)
+                ));
             }
             // TAG
             elseif (true === $this->_oModel->checkRequestOnToken('tag/'))
             {
-                \MVC\Event::RUN('blogimus.delegate.tag.before', $aTag);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.tag.before', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('aTag')->set_sValue($aTag)
+                ));
                 $aTagInterest = $this->concreteTag($aTag);
-                \MVC\Event::RUN('blogimus.delegate.tag.after', $aTagInterest);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.tag.after', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('aTagInterest')->set_sValue($aTagInterest)
+                ));
             }
             // BLOG OVERVIEW
             elseif ($this->_aRoutingCurrent['path'] === strtok($_SERVER['REQUEST_URI'], '?'))
             {
-                \MVC\Event::RUN('blogimus.delegate.overview.before', $sRequest);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.overview.before', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+                ));
                 $aPostOverview = $this->postOverview();
-                \MVC\Event::RUN('blogimus.delegate.overview.after', $aPostOverview);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.overview.after', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('aPostOverview')->set_sValue($aPostOverview)
+                ));
             }
             // invalid Request
             else
             {
-                \MVC\Event::RUN('blogimus.delegate.notfound.before', $sRequest);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.notfound.before', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+                ));
                 $this->notFound();
-                \MVC\Event::RUN('blogimus.delegate.notfound.after', $sRequest);
+                \MVC\Event::RUN('blogimus.controller.index.delegate.notfound.after', DTArrayObject::create()->add_aKeyValue(
+                    DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+                ));
             }
 
-            \MVC\Event::RUN('blogimus.delegate.after', $sRequest);
+            \MVC\Event::RUN('blogimus.controller.index.delegate.after', DTArrayObject::create()->add_aKeyValue(
+                DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+            ));
         }
 
         $this->_oModel->setMeta($this->oView);
-        \MVC\Event::RUN('blogimus.delegate.meta.after', $sRequest);
+        \MVC\Event::RUN('blogimus.controller.index.delegate.meta.after', DTArrayObject::create()->add_aKeyValue(
+            DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
+        ));
 
         // Set Value in sContent Var
         $this->oView->assign(
@@ -487,7 +519,7 @@ class Index implements \MVC\MVCInterface\Controller
         $this->oView->sendHeader404();
         $this->oView->assign('sTitle', '404');
         $this->oView->assign('aSet', array());
-        $this->oView->assign('sPage', file_get_contents(Registry::get('MVC_MODULES') . '/Standard/templates/index/404.tpl'));
+        $this->oView->assign('sPage', trim($this->oView->loadTemplateAsString ('index/404.tpl')));
     }
 
     /**

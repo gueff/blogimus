@@ -109,10 +109,10 @@ $(document).ready(function() {
     /** @see https://blog.ueffing.net/post/2018/02/17/jquery-maxlength-visual-feedback/ */
     $(".maxlengthVisualFeedback").on('click keyup keypress', function() {
         maxlengthVisualFeedback($(this));
-    }); 
+    });
 
-    $('.shariff ul').removeClass('col-4');
-    $('.shariff').fadeIn();
+    // empty storage
+	localStorage.setItem('oDataRecent', JSON.stringify(false));
 });
 
 

@@ -54,7 +54,7 @@ class Index
     {
         if (true === $this->_updateCheckSum())
         {
-            $this->_buildCache();
+            $this->buildCache();
             $this->buildGoogleSitemap();
         }
     }
@@ -62,7 +62,7 @@ class Index
     /**
      * @throws \ReflectionException
      */
-    private function _createFolders()
+    protected function _createFolders()
     {
         (!file_exists(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR']))                 ? mkdir(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR']) : false;
         (!file_exists(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/post'))       ? mkdir(Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/post') : false;
@@ -77,7 +77,7 @@ class Index
      * @return bool
      * @throws \ReflectionException
      */
-    private function _updateCheckSum()
+    protected function _updateCheckSum()
     {
         $sCmd = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_BIN_LS']
             . ' -alR ' . Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR']
@@ -107,7 +107,7 @@ class Index
      * builds a cache index
      * @throws \ReflectionException
      */
-    private function _buildCache()
+    public function buildCache()
     {
         // Page
         $aPage = $this->_getPages();
@@ -227,7 +227,7 @@ class Index
      * checks which markdown (*.md) pages exist
      * @access public
      */
-    private function _getPages()
+    protected function _getPages()
     {
         $aFiles = array_diff(scandir($this->sPageDir), array('..', '.'));
         $aCurrent = Registry::get('MVC_ROUTING_CURRENT');
@@ -236,7 +236,7 @@ class Index
         foreach ($aFiles as $sFile)
         {
             $sName = basename($sFile, '.md');
-            $sUrl = $aCurrent['path'] . 'page/' . $this->seoname($sName) . '/';
+            $sUrl = $aCurrent['path'] . 'page/' . self::seoname($sName) . '/';
 
             $aFinal[$sUrl] = array();
             $aFinal[$sUrl]['sName'] = $sName;
@@ -254,7 +254,7 @@ class Index
      * @return array
      * @throws \ReflectionException
      */
-    private function _getPosts()
+    protected function _getPosts()
     {
         // get file list
         $sCmd = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_BIN_FIND'] . ' ' . $this->sPostDir . ' -name "*.md" -type f -print';
@@ -269,33 +269,95 @@ class Index
 
         foreach ($aList as $sFileAbs)
         {
-            $sFile = str_replace($this->sPostDir, '', $sFileAbs);
+            $aTmp = self::getInfoArrayOnPostFileAbs($sFileAbs);
+            $aFinal['sUrl'][$aTmp['sUrl']] = $aTmp;
 
-            // get dates
-            $sDate = mb_substr($sFile, 1, 10);
-            $iYear = mb_substr($sFile, 1, 4);
-            $iMonth = mb_substr($sFile, 6, 2);
-            $iDay = mb_substr($sFile, 9, 2);
-
-            $sName = basename(mb_substr($sFile, 12, mb_strlen($sFile)), '.md');
-            $sUrl = $aCurrent['path'] . 'post/' . $iYear . '/' . $iMonth . '/' . $iDay . '/' . $this->seoname($sName) . '/';
-
-            $aTmp = array();
-            $aTmp['sName'] = $sName;
-            $aTmp['sUrl'] = $sUrl;
-            $aTmp['sFilePath'] = $sFileAbs;
-            $aTmp['sCreateStamp'] = $iYear . '-' . $iMonth . '-' . $iDay;
-            $aTmp['sChangeStamp'] = date("Y-m-d H:i:s", filemtime($sFileAbs));
-
-            $aFinal['sUrl'][$sUrl] = $aTmp;
-            $aFinal['sCreateStamp'][$iYear][$iMonth][$iDay][] = array(
-                'sName' => $aFinal['sUrl'][$sUrl]['sName'],
-                'sUrl' => $aFinal['sUrl'][$sUrl]['sUrl']
+            $aFinal['sCreateStamp'][$aTmp['aDate']['iYear']][$aTmp['aDate']['iMonth']][$aTmp['aDate']['iDay']][] = array(
+                'sName' => $aTmp['sName'],
+                'sUrl' => $aTmp['sUrl']
             );
         }
 
         return $aFinal;
     }
+
+    /**
+     * @param string $sFileAbs
+     * @return string
+     * @throws \ReflectionException
+     */
+    public static function getInfoArrayOnPageFileAbs($sFileAbs = '')
+    {
+        $sPageDir = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/page';
+        $sFile = str_replace($sPageDir, '', $sFileAbs);
+
+        $sCreateStamp = trim(date("Y-m-d H:i:s", (file_exists($sFileAbs)) ? filemtime($sFileAbs) : 0));
+        $sChangeStamp = trim(date("Y-m-d H:i:s", (file_exists($sFileAbs)) ? filemtime($sFileAbs) : 0));
+
+        // get dates
+        $sDate = mb_substr($sCreateStamp, 0, 10);
+        $iYear = mb_substr($sCreateStamp, 0, 4);
+        $iMonth = mb_substr($sCreateStamp, 5, 2);
+        $iDay = mb_substr($sCreateStamp, 8, 2);
+
+        $sName = basename($sFile, '.md');
+
+        // post
+        $sUrl = '/page/' . self::seoname($sName) . '/';
+
+        $aTmp = array();
+        $aTmp['aDate'] = array(
+            'sDate' => $sDate,
+            'iYear' => $iYear,
+            'iMonth' => $iMonth,
+            'iDay' => $iDay,
+        );
+        $aTmp['sName'] = $sName;
+        $aTmp['sUrl'] = $sUrl;
+        $aTmp['sFilePath'] = $sFileAbs;
+        $aTmp['sCreateStamp'] = $iYear . '-' . $iMonth . '-' . $iDay;
+        $aTmp['sChangeStamp'] = $sChangeStamp;
+
+        return $aTmp;
+    }
+
+    /**
+     * @param string $sFileAbs
+     * @return string
+     * @throws \ReflectionException
+     */
+    public static function getInfoArrayOnPostFileAbs($sFileAbs = '')
+    {
+        $sPostDir = Registry::get('MODULE_' . Registry::get('MODULE_FOLDERNAME'))['BLOG_DATA_DIR'] . '/post';
+        $sFile = str_replace($sPostDir, '', $sFileAbs);
+
+        // get dates
+        $sDate = mb_substr($sFile, 1, 10);
+        $iYear = mb_substr($sFile, 1, 4);
+        $iMonth = mb_substr($sFile, 6, 2);
+        $iDay = mb_substr($sFile, 9, 2);
+
+        $sName = basename(mb_substr($sFile, 12, mb_strlen($sFile)), '.md');
+
+        // post
+        $sUrl = '/post/' . $iYear . '/' . $iMonth . '/' . $iDay . '/' . self::seoname($sName) . '/';
+
+        $aTmp = array();
+        $aTmp['aDate'] = array(
+            'sDate' => $sDate,
+            'iYear' => $iYear,
+            'iMonth' => $iMonth,
+            'iDay' => $iDay,
+        );
+        $aTmp['sName'] = $sName;
+        $aTmp['sUrl'] = $sUrl;
+        $aTmp['sFilePath'] = $sFileAbs;
+        $aTmp['sCreateStamp'] = $iYear . '-' . $iMonth . '-' . $iDay;
+        $aTmp['sChangeStamp'] = date("Y-m-d H:i:s", (file_exists($sFileAbs)) ? filemtime($sFileAbs) : 0);
+
+        return $aTmp;
+    }
+
 
     /**
      * checks which tags exist in posts
@@ -321,7 +383,7 @@ class Index
             $aTag = preg_split("@,@", $sTags, NULL, PREG_SPLIT_NO_EMPTY);
 
             $sName = basename($sFile, '.md');
-            $sNameSeo = $this->seoname($sName);
+            $sNameSeo = self::seoname($sName);
             $sFile = str_replace($sName, $sNameSeo, $sFile);
             $sFile = mb_substr($sFile, 1, (mb_strlen($sFile) - 4));
 
@@ -544,31 +606,7 @@ class Index
     }
 
     /**
-     * searches for email adresses inside angle brackets like <fo@example.com>. 
-     * Thanks to unicode parsing it can detect umlauts also. e.g.: <föö@exämple.com>
-     * 
-     * @access public
-     * @param type $sString
-     * @return type
-     */
-    public static function getEmailArrayFromString($sString = '')
-    {
-        $sPattern = '/<[\._\p{L}\p{M}\p{N}-]+@[\._\p{L}\p{M}\p{N}-]+>/u';
-
-        preg_match_all(
-            $sPattern, $sString, $aMatch
-        );
-
-        $aMatch = array_keys(array_flip(current($aMatch)));
-
-        return $aMatch;
-    }
-
-    /**
-     * delegate helper
-     * 
-     * @access public
-     * @param type $sToken
+     * @param string $sToken
      * @return boolean success
      */
     public function checkRequestOnToken($sToken = '')

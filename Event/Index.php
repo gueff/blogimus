@@ -15,7 +15,6 @@
 namespace Blogimus\Event;
 
 use MVC\Event;
-use MVC\Helper;
 use MVC\Registry;
 use MVC\Request;
 

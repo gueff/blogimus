@@ -26,32 +26,12 @@ $aConfig['MODULE_' . $sModuleFolderName] = array(
     */
     'BLOG_BACKEND' => array(
 
-        'develop' => array(
-
-            // 1. account
-            array(
-                'user' 		=> '',
-                'password' 	=> ''
-            ),
+        // 1. account
+        array(
+            'user' 		=> '',
+            'password' 	=> ''
         ),
 
-        'test' => array(
-
-            // 1. account
-            array(
-                'user' 		=> '',
-                'password' 	=> ''
-            ),
-        ),
-
-        'live' => array(
-
-            // 1. account
-            array(
-                'user' 		=> '',
-                'password' 	=> ''
-            ),
-        )
     ),
 
     /**

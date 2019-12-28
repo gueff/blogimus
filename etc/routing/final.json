@@ -11,5 +11,8 @@
     "\/": {
         "Blogimus": true,
         "query": "module=blogimus&c=index&m=index"
+    },
+    "\/Ajax\/update\/": {
+        "query": "module=blogimus&c=ajax&m=update"
     }
 }
