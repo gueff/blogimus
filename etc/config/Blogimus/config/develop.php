@@ -26,32 +26,12 @@ $aConfig['MODULE_' . $sModuleFolderName] = array(
     */
     'BLOG_BACKEND' => array(
 
-        'develop' => array(
-
-            // 1. account
-            array(
-                'user' 		=> '',
-                'password' 	=> ''
-            ),
+        // 1. account
+        array(
+            'user' 		=> 'test',
+            'password' 	=> 'test'
         ),
 
-        'test' => array(
-
-            // 1. account
-            array(
-                'user' 		=> '',
-                'password' 	=> ''
-            ),
-        ),
-
-        'live' => array(
-
-            // 1. account
-            array(
-                'user' 		=> '',
-                'password' 	=> ''
-            ),
-        )
     ),
 
     /**
@@ -149,6 +129,17 @@ $aConfig['MODULE_' . $sModuleFolderName] = array(
         // get consent to set session cookie
         'mvc.setSession.begin' => function(\MVC\DataType\DTArrayObject $oDTArrayObject) {
             \Blogimus\Event\Index::enableSession($oDTArrayObject);
+        },
+        /** @var \MVC\DataType\DTArrayObject $oDTArrayObject */
+        'mvc.reflex.reflect.targetObject.after' => function (\MVC\DataType\DTArrayObject $oDTArrayObject) {
+
+            $oView = $oDTArrayObject
+                ->getDTKeyValueByKey('oReflectionObject')
+                ->get_sValue()
+                ->oView;
+
+            // switch on InfoTool
+            new \InfoTool\Model\Index ($oView);
         },
     ),
 );
