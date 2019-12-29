@@ -184,6 +184,7 @@ function update(oCodeMirror, oTaggle, sAction) {
     var oForm = $('form');
     var oAjax = $.ajax({
         url: '/Ajax/update/',
+        dataType: 'json',
         type: 'POST',
         data: oDataCurrent,
         statusCode: {
