@@ -224,6 +224,7 @@ $aConfig['CONTENT_SECURITY_POLICY']['Content-Security-Policy'] = ""
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/sandbox
      */
     .   "sandbox      " .
+        "allow-downloads " .
         "allow-forms " .
         "allow-same-origin " .
         "allow-scripts " .
