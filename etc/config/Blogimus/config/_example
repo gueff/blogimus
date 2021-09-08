@@ -127,7 +127,7 @@ $aConfig['MODULE_' . $sModuleFolderName] = array(
             \MVC\Log::WRITE($oDTArrayObject, 'mvc.log');
         },
         // get consent to set session cookie
-        'mvc.setSession.begin' => function(\MVC\DataType\DTArrayObject $oDTArrayObject) {
+        'mvc.setSession.before' => function(\MVC\DataType\DTArrayObject $oDTArrayObject) {
             \Blogimus\Event\Index::enableSession($oDTArrayObject);
         },
     ),
