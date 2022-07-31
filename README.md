@@ -33,7 +33,7 @@ Demo: http://blog.ueffing.net
 - Linux OS
 - Permission to execute these Linux binaries via PHP's `shell_exec` command: `ls`, `find`, `grep`, `head`, `md5sum` 
 - PHP >=5.4
-- [myMVC master](https://github.com/gueff/myMVC)
+- [myMVC 1.3.0](https://github.com/gueff/myMVC/releases/tag/1.3.0)
 
 ## <a name="Installation"></a> Installation
 
