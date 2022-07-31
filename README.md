@@ -48,7 +48,7 @@ call: http://127.0.0.1:1969
 
 ### Install by Hand
 
-1. Download and install [myMVC master](https://github.com/gueff/myMVC).
+1. Download and install [myMVC 1.3.0](https://github.com/gueff/myMVC/releases/tag/1.3.0).
 2. Install `blogimus` Module
 - Download latest Release [blogimus](https://github.com/gueff/blogimus)
 - Extract and place it into the myMVC's `module` folder. 
