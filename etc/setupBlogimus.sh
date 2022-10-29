@@ -12,7 +12,7 @@ sStartTime=$(date +%s);
 git clone --branch 3.2.x https://github.com/gueff/myMVC.git;
 cd myMVC/public || exit;
 php index.php
-cd $sHere || exit;
+cd "$sHere" || exit;
 
 # myMVC_module_Blogimus
 cd myMVC/modules/ || exit;
@@ -20,7 +20,7 @@ git clone --brancg master https://github.com/gueff/blogimus.git Blogimus;
 cd Blogimus || exit;
 chmod a+x install.sh;
 ./install.sh
-cd $sHere || exit;
+cd "$sHere" || exit;
 
 #---------------------------------------------------
 # Ready
