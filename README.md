@@ -48,7 +48,7 @@ You can make use of the setup bash script. This will install Blogimus right at t
 
 ~~~bash
 export MVC_ENV="develop"; \
-wget -qO - https://raw.githubusercontent.com/gueff/blogimus/master/etc/setupBlogimus.sh | bash
+wget -qO - https://raw.githubusercontent.com/gueff/blogimus/1.1.x/etc/setupBlogimus.sh | bash
 ~~~
 
 call: [http://127.0.0.1:1969](http://127.0.0.1:1969)
