@@ -9,14 +9,14 @@ sStartTime=`date +%s`;
 # Installation
 
 # myMVC
-git clone https://github.com/gueff/myMVC.git --branch 1.3.0;
+git clone --branch 3.2.x https://github.com/gueff/myMVC.git;
 cd myMVC/public;
 php index.php
 cd $sHere;
 
 # myMVC_module_Blogimus
 cd myMVC/modules/;
-git clone https://github.com/gueff/blogimus.git Blogimus;
+git clone --brancg master https://github.com/gueff/blogimus.git Blogimus;
 cd Blogimus;
 chmod a+x install.sh;
 ./install.sh

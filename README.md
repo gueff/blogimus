@@ -37,31 +37,46 @@ Demo: [http://blog.ueffing.net](http://blog.ueffing.net)
 
 - Linux OS
 - Permission to execute these Linux binaries via PHP's `shell_exec` command: `ls`, `find`, `grep`, `head`, `md5sum`
-- PHP >=5.4
-- [myMVC 1.3.0](https://github.com/gueff/myMVC/releases/tag/1.3.0)
+- PHP >=7.4
+- [myMVC 3.2.x](https://github.com/gueff/myMVC/tree/3.2.x)
 
 ## <a name="Installation"></a> Installation
 
 ### Install & Run Bash Script
 
-You can make use of the setup bash script. This will install Blogimus right at the place you call the command and run a php internal server on port 1969 when installation has finished.
+You can make use of the setup bash script.
+
+This will install Blogimus right at the place you call the command and run a php internal server on port 1969 when installation has finished.
 
 ~~~bash
 export MVC_ENV="develop"; \
 wget -qO - https://raw.githubusercontent.com/gueff/blogimus/master/etc/setupBlogimus.sh | bash
 ~~~
+  
+After Instalation has finished, call: [http://127.0.0.1:1969](http://127.0.0.1:1969)
 
-call: [http://127.0.0.1:1969](http://127.0.0.1:1969)
 
 ### Install by Hand
 
-1. Download and install [myMVC 1.3.0](https://github.com/gueff/myMVC/releases/tag/1.3.0).
-2. Install `blogimus` Module
+_Install myMVC 3.2.x_  
+~~~bash
+# myMVC
+git clone --branch 3.2.x https://github.com/gueff/myMVC.git myMVC;
+cd myMVC/public;
+php index.php
+cd $sHere;
+~~~
 
-- Download latest Release [blogimus](https://github.com/gueff/blogimus)
-- Extract and place it into the myMVC's `module` folder.
-- Make sure to name the folder `Blogimus`.
-- Run the `install.sh` shell script which you will find inside Blogimus folder.
+_Install blogimus_  
+~~~bash
+# myMVC_module_Blogimus
+cd myMVC/modules/;
+git clone --brancg master https://github.com/gueff/blogimus.git Blogimus;
+cd Blogimus;
+chmod a+x install.sh;
+./install.sh
+cd $sHere;
+~~~
 
 ## <a name="Creating-Content"></a> Creating Content
 
