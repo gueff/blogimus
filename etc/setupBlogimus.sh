@@ -1,35 +1,35 @@
 #!/bin/bash
 
-sHere=`pwd`;
+sHere=$(pwd);
 export MVC_ENV="develop";
 
 #---------------------------------------------------
-sStartTime=`date +%s`;
+sStartTime=$(date +%s);
 #---------------------------------------------------
 # Installation
 
 # myMVC
 git clone --branch 3.2.x https://github.com/gueff/myMVC.git;
-cd myMVC/public;
+cd myMVC/public || exit;
 php index.php
-cd $sHere;
+cd $sHere || exit;
 
 # myMVC_module_Blogimus
-cd myMVC/modules/;
+cd myMVC/modules/ || exit;
 git clone --brancg master https://github.com/gueff/blogimus.git Blogimus;
-cd Blogimus;
+cd Blogimus || exit;
 chmod a+x install.sh;
 ./install.sh
-cd $sHere;
+cd $sHere || exit;
 
 #---------------------------------------------------
 # Ready
 
-sEndTime=`date +%s`;
+sEndTime=$(date +%s);
 sRuntime=$((sEndTime-sStartTime));
 echo -e "\nRuntime: $sRuntime Seconds\n\n";
 
 #---------------------------------------------------
 # Run
-cd myMVC/public/;
+cd myMVC/public/ || exit;
 ./serve.sh
