@@ -3,7 +3,7 @@
 
 ![Lint Code Base image](https://github.com/gueff/blogimus/actions/workflows/super-linter.yml/badge.svg)
 
-a PHP markdown Blog System using [myMVC](https://mymvc.ueffing.net/).
+a PHP Markdown Blog System using [myMVC](https://mymvc.ueffing.net/).
 
 This is so called "_flat file blog system_", which means there is no database required.
 
@@ -14,10 +14,9 @@ Demo: [http://blog.ueffing.net](http://blog.ueffing.net)
 - [Features](#Features)
 - [Requirements](#Requirements)
 - [Installation](#Installation)
-- [Run](#Run)
 - [Creating Content](#Creating-Content)
 - [Templating / Design](#Templating)
-- [blogimus Screenshots](#blogimus-Screenshot)
+- [Events](#Events)
 
 ## <a name="Features"></a> Features
 
@@ -30,8 +29,8 @@ Demo: [http://blog.ueffing.net](http://blog.ueffing.net)
 - automatic Date list
 - automatic meta tags: keyword, description
 - Full text Search with Pulldown/Suggest Field included, no need to update any Index for this
-- easily add a new Post as a markdown file
-- easily add a new Page as a markdown file
+- easily add a new Post as a Markdown file
+- easily add a new Page as a Markdown file
 - HTML5 Bootstrap Frontend with Bootswatch Design
 
 ## <a name="Requirements"></a> Requirements
@@ -92,9 +91,9 @@ $aConfig['BLOG_BACKEND'] = array(
 
 Just login by calling `/@` and create a post or page.
 
-#### <a name="Creating-Content-manually"></a> Manually (optional)
+### <a name="Creating-Content-manually"></a> Manually (optional)
 
-Maybe you want to edit your Blog locally and `rsync` it to your Production `live` Server, or you just want to use the markdown editor of your choice (like ReText) locally, then the following way may be one for you.
+Maybe you want to edit your Blog locally and `rsync` it to your Production `live` Server, or you just want to use the Markdown editor of your choice (like ReText) locally, then the following way may be one for you.
 
 **<a name="WriteAPost"></a> Write a Post**
 
@@ -160,7 +159,7 @@ See  [Bootswatch](http://bootswatch.com/) for available Bootswatch Designs.
 
 See Folder `/public/Blogimus/` for CSS and Scripts
 
-## Events
+## <a name="Events"></a> Events
 
 - blogimus.controller.index.delegate.before
 - blogimus.controller.index.delegate.page.before
@@ -182,7 +181,7 @@ ___
 
 - blogimus.controller.index.delegate.before
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.before', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
 ));
@@ -190,7 +189,7 @@ ___
 
 - blogimus.controller.index.delegate.page.before
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.page.before', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
 ));
@@ -198,7 +197,7 @@ ___
 
 - blogimus.controller.index.delegate.page.after
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.page.after', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('aSet')->set_sValue($aSet)
 ));
@@ -206,7 +205,7 @@ ___
 
 - blogimus.controller.index.delegate.post.before
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.post.before', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
 ));
@@ -214,7 +213,7 @@ ___
 
 - blogimus.controller.index.delegate.post.after
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.post.after', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('aSet')->set_sValue($aSet)
 ));
@@ -222,7 +221,7 @@ ___
 
 - blogimus.controller.index.delegate.date.before
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.date.before', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('aPostDate')->set_sValue($aPostDate)
 ));
@@ -230,7 +229,7 @@ ___
 
 - blogimus.controller.index.delegate.date.after
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.date.after', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('aDate')->set_sValue($aDate)
 ));
@@ -238,7 +237,7 @@ ___
 
 - blogimus.controller.index.delegate.tag.before
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.tag.before', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('aTag')->set_sValue($aTag)
 ));
@@ -246,7 +245,7 @@ ___
 
 - blogimus.controller.index.delegate.tag.after
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.tag.after', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('aTagInterest')->set_sValue($aTagInterest)
 ));
@@ -254,7 +253,7 @@ ___
 
 - blogimus.controller.index.delegate.overview.before
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.overview.before', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
 ));
@@ -262,7 +261,7 @@ ___
 
 - blogimus.controller.index.delegate.overview.after
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.overview.after', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('aPostOverview')->set_sValue($aPostOverview)
 ));
@@ -270,7 +269,7 @@ ___
 
 - blogimus.controller.index.delegate.notfound.before
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.notfound.before', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
 ));
@@ -278,7 +277,7 @@ ___
 
 - blogimus.controller.index.delegate.notfound.after
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.notfound.after', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
 ));
@@ -286,7 +285,7 @@ ___
 
 - blogimus.controller.index.delegate.after
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.after', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
 ));
@@ -294,7 +293,7 @@ ___
 
 - blogimus.controller.index.delegate.meta.after
 
-~~~
+~~~php
 \MVC\Event::RUN('blogimus.controller.index.delegate.meta.after', DTArrayObject::create()->add_aKeyValue(
  DTKeyValue::create()->set_sKey('sRequest')->set_sValue($sRequest)
 ));
