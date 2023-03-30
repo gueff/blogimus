@@ -71,7 +71,7 @@ _Install blogimus_
 ~~~bash
 # myMVC_module_Blogimus
 cd myMVC/modules/;
-git clone --brancg master https://github.com/gueff/blogimus.git Blogimus;
+git clone --branch master https://github.com/gueff/blogimus.git Blogimus;
 cd Blogimus;
 chmod a+x install.sh;
 ./install.sh
