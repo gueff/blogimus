@@ -16,7 +16,7 @@ cd "$sHere" || exit;
 
 # myMVC_module_Blogimus
 cd myMVC/modules/ || exit;
-git clone --brancg master https://github.com/gueff/blogimus.git Blogimus;
+git clone --branch master https://github.com/gueff/blogimus.git Blogimus;
 cd Blogimus || exit;
 chmod a+x install.sh;
 ./install.sh
